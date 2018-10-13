@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cabc8d1f86c77df83edd2cb19c372431",
+    "content-hash": "d9bf3eb31e244518462b51a7a35dc1e9",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -60,16 +60,16 @@
         },
         {
             "name": "auth0/auth0-php",
-            "version": "5.2.0",
+            "version": "5.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auth0/auth0-PHP.git",
-                "reference": "c8aa6ea5dce87d112f3ff62d2b379202dd0bd217"
+                "reference": "551bb5ec385cf1df5da3be37b8473bf0f493189d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/c8aa6ea5dce87d112f3ff62d2b379202dd0bd217",
-                "reference": "c8aa6ea5dce87d112f3ff62d2b379202dd0bd217",
+                "url": "https://api.github.com/repos/auth0/auth0-PHP/zipball/551bb5ec385cf1df5da3be37b8473bf0f493189d",
+                "reference": "551bb5ec385cf1df5da3be37b8473bf0f493189d",
                 "shasum": ""
             },
             "require": {
@@ -79,8 +79,11 @@
                 "php": "^5.5 || ^7.0"
             },
             "require-dev": {
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.4.4",
                 "josegonzalez/dotenv": "^2.0",
-                "phpunit/phpunit": "^4.8 || ^5.7"
+                "phpcompatibility/php-compatibility": "^8.1",
+                "phpunit/phpunit": "^4.8 || ^5.7",
+                "squizlabs/php_codesniffer": "^3.2"
             },
             "type": "library",
             "autoload": {
@@ -100,7 +103,8 @@
                 }
             ],
             "description": "Auth0 PHP SDK.",
-            "time": "2018-06-13T18:07:09+00:00"
+            "homepage": "https://github.com/auth0/auth0-PHP",
+            "time": "2018-10-09T19:46:11+00:00"
         },
         {
             "name": "auth0/login",
@@ -210,6 +214,52 @@
                 "laravel"
             ],
             "time": "2018-09-06T13:20:53+00:00"
+        },
+        {
+            "name": "bramus/router",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bramus/router.git",
+                "reference": "e1a2b6da8e555fd5344706900861375852d22bea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bramus/router/zipball/e1a2b6da8e555fd5344706900861375852d22bea",
+                "reference": "e1a2b6da8e555fd5344706900861375852d22bea",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/php-code-coverage": "^2.1.0",
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Bramus": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bram(us) Van Damme",
+                    "email": "bramus@bram.us",
+                    "homepage": "http://www.bram.us"
+                }
+            ],
+            "description": "A lightweight and simple object oriented PHP Router",
+            "homepage": "https://github.com/bramus/router",
+            "keywords": [
+                "router",
+                "routing"
+            ],
+            "time": "2017-12-22T09:43:53+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -4602,7 +4652,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "bramus/router": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
