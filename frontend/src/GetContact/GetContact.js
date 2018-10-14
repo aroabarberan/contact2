@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { addContact } from "../Actions/ContactAction";
 
-const url_getContact = 'http://localhost:3010/api/private'
+// const url_getContact = 'http://localhost:3010/api/private'
+const url_getContact = 'http://192.168.1.106:3010/api/private'
 
 class GetContact extends Component {
 

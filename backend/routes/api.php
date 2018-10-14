@@ -22,7 +22,7 @@ Route::get('/public', function (Request $request) {
 Route::post('/private', function (Request $request) {
     if ($request['sub'] !== null) {
         $results = DB::select('select * from contacts where user = :user', ['user' => $request['sub']]);
-        return response()->json($results)->toArray();
+        return response()->json($results);
     }
 })->middleware('jwt');
 
