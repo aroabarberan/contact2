@@ -36,7 +36,7 @@ class GetContact extends Component {
     const sub = this.state.profile.sub
     const { getAccessToken } = this.props.auth;
     
-    fetch('http://192.168.1.106:3010/api/contacts', {
+    fetch('http://localhost:3010/api/contacts', {
       method: "POST",
       headers: {
         'Accept': 'application/json',
