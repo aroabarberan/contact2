@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Drawer from "./Components/DrawerComponent"
-
+import Drawer from "./DrawerComponent"
 
 class App extends Component {
+
   goTo(route) {
     this.props.history.replace(`/${route}`)
   }
@@ -29,12 +29,11 @@ class App extends Component {
             {isAuthenticated() &&
               (
                 <div>
-                  <Drawer profile={this.props.auth.getProfile}/>
-                  <button onClick={this.logout.bind(this)}>Log Out</button>
-                  <button onClick={this.goTo.bind(this, 'home')}>Home</button>
-                  <button onClick={this.goTo.bind(this, 'profile')}>Profile</button>
-                  <button onClick={this.goTo.bind(this, 'getContact')}>GetContact</button>
-                  <button onClick={this.goTo.bind(this, 'createContact')}>CreateContact</button>
+                  <Drawer auth={this.props.auth}/>
+                  {/* <button onClick={this.logout.bind(this)}>Log Out</button> */}
+                  {/* <button onClick={this.goTo.bind(this, 'home')}>Home</button> */}
+                  {/* <button onClick={this.goTo.bind(this, 'profile')}>Profile</button> */}
+                  {/* <button onClick={this.goTo.bind(this, 'createContact')}>CreateContact</button> */}
                 </div>
                 )
             }
@@ -48,4 +47,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

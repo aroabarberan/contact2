@@ -1,26 +1,37 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
-import { fade } from '@material-ui/core/styles/colorManipulator'
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import AddIcon from '@material-ui/icons/Add'
-import MenuIcon from '@material-ui/icons/Menu'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import InboxIcon from '@material-ui/icons/Inbox'
-import SearchIcon from '@material-ui/icons/Search'
-import AccountCircle from '@material-ui/icons/AccountCircle'
-import MoreIcon from '@material-ui/icons/MoreVert'
-// import Avatars from "./avatarsComponets";
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import InboxIcon from '@material-ui/icons/Inbox';
+import SearchIcon from '@material-ui/icons/Search';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import Avatars from "../Components/AvatarsComponets";
 
 import {
-  AppBar, Toolbar, IconButton, Typography, Drawer, List, Paper,
-  Tooltip, Button,
-  Divider, Input, Menu, MenuItem, withStyles
-} from '@material-ui/core'
+  AppBar, Toolbar, IconButton, Typography, Drawer, Paper,
+  Tooltip, Divider, Input, Menu, MenuItem, withStyles
+} from '@material-ui/core';
 
+import ButtonAdd from "./ButtonAddComponet";
+import GetContact from "./GetContact";
 
 class MiniDrawer extends React.Component {
+
+  componentWillMount() {
+    this.setState({ profile: {} });
+    const { userProfile, getProfile } = this.props.auth;
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile });
+      });
+    } else {
+      this.setState({ profile: userProfile });
+    }
+  }
   state = {
     open: false,
     anchorEl: null,
@@ -52,7 +63,6 @@ class MiniDrawer extends React.Component {
   };
 
   render() {
-    console.log('PROPS', this.props )
     const { classes, theme } = this.props;
     const { anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
@@ -66,8 +76,8 @@ class MiniDrawer extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleClose}>My account</MenuItem>
+        <MenuItem onClick={this.handleClose}>Sing out</MenuItem>
+        {/* <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
       </Menu>
     );
 
@@ -80,10 +90,10 @@ class MiniDrawer extends React.Component {
         onClose={this.handleMobileMenuClose}
       >
         <MenuItem onClick={this.handleProfileMenuOpen}>
-          <IconButton color="inherit">
+          {/* <IconButton color="inherit">
             <AccountCircle />
-          </IconButton>
-          <p>Profile</p>
+          </IconButton> */}
+          <p>Sing out</p>
         </MenuItem>
       </Menu>
     );
@@ -127,8 +137,7 @@ class MiniDrawer extends React.Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
-              {/* <Avatars /> */}
-                <AccountCircle />
+              <Avatars image={this.state.profile.picture}/>
               </IconButton>
             </div>
 
@@ -163,16 +172,14 @@ class MiniDrawer extends React.Component {
           <div>
             <Paper className={classes.paper} elevation={1}>
               <Typography component="p">
-               The content
-               
+                  Contacts
               </Typography>
+              <GetContact  auth={this.props.auth} />
             </Paper>
           </div>
 
           <Tooltip title="FAB 'position: absolute;'">
-            <Button variant="fab" color="secondary" className={classes.absolute}>
-              <AddIcon />
-            </Button>
+            <ButtonAdd />
           </Tooltip>
 
         </main>
@@ -255,10 +262,10 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
+  // menuButton: {
+  //   marginLeft: -12,
+  //   marginRight: 20,
+  // },
   title: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {

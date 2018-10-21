@@ -7,9 +7,9 @@ export default class Auth {
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
     redirectUri: AUTH_CONFIG.callbackUrl,
-    responseType: 'token id_token',
-    audience: 'https://apibookcontacts',
-    scope: 'openid profile'
+    responseType: AUTH_CONFIG.responseType,
+    audience: AUTH_CONFIG.audience,
+    scope: AUTH_CONFIG.scope
   });
 
   userProfile;
@@ -41,14 +41,13 @@ export default class Auth {
   }
 
   setSession(authResult) {
-    // Set the time that the access token will expire at
     let expiresAt = JSON.stringify(
       authResult.expiresIn * 1000 + new Date().getTime()
     );
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
-    // navigate to the home route
+
     history.replace('/home');
   }
 
@@ -71,18 +70,14 @@ export default class Auth {
   }
 
   logout() {
-    // Clear access token and ID token from local storage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     this.userProfile = null;
-    // navigate to the home route
-    history.replace('/home');
+    history.replace('/logout');
   }
 
   isAuthenticated() {
-    // Check whether the current time is past the 
-    // access token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
   }
