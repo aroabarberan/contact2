@@ -1,13 +1,13 @@
 import React from 'react'
 import { Redirect, Route, Router } from 'react-router-dom'
 import history from './history'
-import Auth from './Components/Auth/Auth'
+import Auth from './Components/Auth/AuthComponet'
 import App from './/Components/App'
-import Home from './Components/Home'
-import Profile from './Components/Profile'
-import Callback from './Components/Callback/Callback'
-import GetContact from './Components/GetContact'
-import CreateContact from './Components/CreateContact'
+import Home from './Components/HomeComponet'
+import Profile from './Components/ProfileComponet'
+import Callback from './Components/Callback/CallbackComponet'
+import GetContact from './Components/GetContactComponet'
+import CreateContact from './Components/CreateContactComponet'
 
 
 const auth = new Auth()

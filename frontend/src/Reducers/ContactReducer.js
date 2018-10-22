@@ -1,8 +1,8 @@
 const initialState = {
     contacts: [
       {
-        name: 'Patatin',
-        phone: '092342134',
+        name: '',
+        phone: '',
       },
     ],
     form: {
