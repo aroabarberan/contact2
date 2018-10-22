@@ -122,7 +122,7 @@
 //   }
 // }
 
-// GetContact.propTypes = {
+// CreateContact.propTypes = {
 //   classes: PropTypes.object.isRequired,
 // };
 

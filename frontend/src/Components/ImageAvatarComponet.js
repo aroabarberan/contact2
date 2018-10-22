@@ -7,7 +7,7 @@ class ImageAvatars extends Component {
 
   render() {
     const { classes } = this.props;
-
+    console.log('puribum', this.props.profile)
     return (
       <div className={classes.row}>
         <Avatar alt="Remy Sharp"

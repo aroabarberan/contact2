@@ -9,27 +9,27 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/Inbox';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Avatars from "../Components/AvatarsComponets";
 
 import {
   AppBar, Toolbar, IconButton, Typography, Drawer, Paper,
   Tooltip, Divider, Input, Menu, MenuItem, withStyles
 } from '@material-ui/core';
 
+import ImageAvatar from "../Containers/ImageAvatarContainer";
 import ButtonAdd from "./ButtonAddComponet";
-import GetContact from "./GetContact";
+import GetContact from "./GetContactComponet";
+
 
 class MiniDrawer extends React.Component {
 
   componentWillMount() {
-    this.setState({ profile: {} });
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
-        this.setState({ profile });
+        this.props.saveProfile(profile)
       });
     } else {
-      this.setState({ profile: userProfile });
+      this.props.saveProfile(userProfile)
     }
   }
   state = {
@@ -137,7 +137,7 @@ class MiniDrawer extends React.Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
-              <Avatars image={this.state.profile.picture}/>
+              <ImageAvatar profile={this.props.auth.profile}/>
               </IconButton>
             </div>
 
@@ -262,10 +262,7 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
-  // menuButton: {
-  //   marginLeft: -12,
-  //   marginRight: 20,
-  // },
+
   title: {
     display: 'none',
     [theme.breakpoints.up('sm')]: {
@@ -329,6 +326,7 @@ const styles = theme => ({
     },
   },
 })
+
 
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,

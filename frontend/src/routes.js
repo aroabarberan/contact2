@@ -3,11 +3,11 @@ import { Redirect, Route, Router } from 'react-router-dom'
 import history from './history'
 import Auth from './Components/Auth/Auth'
 import App from './/Components/App'
-import Home from './Components/Home/Home'
-import Profile from './Components/Profile/Profile'
+import Home from './Components/Home'
+import Profile from './Components/Profile'
 import Callback from './Components/Callback/Callback'
-import GetContact from './Components/GetContact/GetContact'
-import CreateContact from './Components/CreateContact/CreateContact'
+import GetContact from './Components/GetContact'
+import CreateContact from './Components/CreateContact'
 
 
 const auth = new Auth()
