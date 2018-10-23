@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MiniDrawerContainer from '../Containers/MiniDrawerContainer';
+import MiniDrawer from "../Components/MiniDrawerComponet";
 
 class App extends Component {
 
@@ -29,7 +29,7 @@ class App extends Component {
             {isAuthenticated() &&
               (
                 <div>
-                  <MiniDrawerContainer auth={this.props.auth} />
+                  <MiniDrawer auth={this.props.auth} />
                   <button onClick={this.logout.bind(this)}>Log Out</button>
                   {/* <button onClick={this.goTo.bind(this, 'home')}>Home</button> */}
                   {/* <button onClick={this.goTo.bind(this, 'profile')}>Profile</button> */}

@@ -15,21 +15,25 @@ import {
   Tooltip, Divider, Input, Menu, MenuItem, withStyles
 } from '@material-ui/core';
 
-import ImageAvatar from "../Containers/ImageAvatarContainer";
-import ButtonAdd from "./ButtonAddComponet";
+// import ImageAvatar from "../Containers/ImageAvatarContainer";
+import ImageAvatar from "../Components/ImageAvatarComponet";
+// import ButtonAdd from "./ButtonAddComponet";
 import GetContact from "./GetContactComponet";
+import CreateContact from './CreateContactComponet';
 
 
 class MiniDrawer extends React.Component {
 
   componentWillMount() {
+    this.setState({ profile: {} });
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
-        this.props.saveProfile(profile)
+        this.setState({ profile });
       });
+
     } else {
-      this.props.saveProfile(userProfile)
+      this.setState({ profile: userProfile });
     }
   }
   state = {
@@ -137,7 +141,7 @@ class MiniDrawer extends React.Component {
                 onClick={this.handleProfileMenuOpen}
                 color="inherit"
               >
-              <ImageAvatar profile={this.props.auth.profile}/>
+                <ImageAvatar profile={this.state.profile} />
               </IconButton>
             </div>
 
@@ -172,14 +176,15 @@ class MiniDrawer extends React.Component {
           <div>
             <Paper className={classes.paper} elevation={1}>
               <Typography component="p">
-                  Contacts
+                Contacts
               </Typography>
-              <GetContact  auth={this.props.auth} />
+              <GetContact auth={this.props.auth} />
             </Paper>
           </div>
 
           <Tooltip title="FAB 'position: absolute;'">
-            <ButtonAdd />
+            {/* <ButtonAdd /> */}
+            <CreateContact />
           </Tooltip>
 
         </main>
