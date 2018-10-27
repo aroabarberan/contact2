@@ -55,7 +55,7 @@ class MiniDrawer extends React.Component {
   };
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
-    this.handleClose();
+    // this.handleClose();
   };
 
   handleMenuClose = () => {
@@ -102,7 +102,8 @@ class MiniDrawer extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        <MenuItem onClick={this.handleProfileMenuOpen}>
+        {/* <MenuItem onClick={this.handleProfileMenuOpen}> */}
+        <MenuItem onClick={this.handleClose}>
           {/* <IconButton color="inherit">
             <AccountCircle />
           </IconButton> */}
