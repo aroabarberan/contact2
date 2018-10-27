@@ -1,23 +1,23 @@
 import React, { Component } from 'react'
 import MiniDrawer from "../Components/MiniDrawerComponet";
+// import MiniDrawer from "../Containers/MiniDrawerContainer";
 
 class App extends Component {
 
   goTo(route) {
-    this.props.history.replace(`/${route}`)
+    this.props.history.replace(`/${route}`);
   }
 
   login() {
-    this.props.auth.login()
+    this.props.auth.login();
   }
 
   logout() {
-    this.props.auth.logout()
+    this.props.auth.logout();
   }
 
   render() {
     const { isAuthenticated } = this.props.auth
-
     return (
       <div>
         <div>

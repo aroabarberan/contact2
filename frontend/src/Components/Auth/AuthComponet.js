@@ -6,6 +6,7 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: AUTH_CONFIG.domain,
     clientID: AUTH_CONFIG.clientId,
+    clientSecret: AUTH_CONFIG.clientSecret,
     redirectUri: AUTH_CONFIG.callbackUrl,
     responseType: AUTH_CONFIG.responseType,
     audience: AUTH_CONFIG.audience,

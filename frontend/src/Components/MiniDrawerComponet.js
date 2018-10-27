@@ -18,14 +18,18 @@ import {
 // import ImageAvatar from "../Containers/ImageAvatarContainer";
 import ImageAvatar from "../Components/ImageAvatarComponet";
 // import ButtonAdd from "./ButtonAddComponet";
-import GetContact from "./GetContactComponet";
+// import GetContact from "./GetContactComponet";
 import CreateContact from './CreateContactComponet';
 
 
 class MiniDrawer extends React.Component {
-
+  constructor() {
+    super()
+    this.handleClose = this.handleClose.bind(this)
+  }
   componentWillMount() {
     this.setState({ profile: {} });
+
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
@@ -51,6 +55,7 @@ class MiniDrawer extends React.Component {
   };
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
+    this.handleClose();
   };
 
   handleMenuClose = () => {
@@ -64,6 +69,10 @@ class MiniDrawer extends React.Component {
 
   handleMobileMenuClose = () => {
     this.setState({ mobileMoreAnchorEl: null });
+  };
+
+  handleClose() {
+    this.props.auth.logout()
   };
 
   render() {
@@ -97,12 +106,12 @@ class MiniDrawer extends React.Component {
           {/* <IconButton color="inherit">
             <AccountCircle />
           </IconButton> */}
-          <p>Sing out</p>
+          Sing out
         </MenuItem>
       </Menu>
     );
-
     return (
+
       <div className={classes.root}>
         <AppBar
           position="fixed"
@@ -178,7 +187,7 @@ class MiniDrawer extends React.Component {
               <Typography component="p">
                 Contacts
               </Typography>
-              <GetContact auth={this.props.auth} />
+              {/* <GetContact auth={this.props.auth} /> */}
             </Paper>
           </div>
 

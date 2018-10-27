@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class Home extends Component {
   login() {
@@ -13,8 +13,10 @@ class Home extends Component {
         {/* {isAuthenticated() && 
           (<h4>You are logged in<Link to="profile">profile area</Link></h4>)
         } */}
-        {!isAuthenticated() && 
-          (<h4>You are not logged in! <button onClick={this.login.bind(this)}>Log In</button></h4>)
+        {!isAuthenticated() &&
+          (<h4>You are not logged in! 
+            <button onClick={this.login.bind(this)}>Log In</button>
+          </h4>)
         }
       </div>
     );
