@@ -1,26 +1,35 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Typography, Paper, withStyles } from '@material-ui/core';
+import Contact from "../Containers/CrudContactContainer";
+
 
 class Home extends Component {
-  login() {
-    this.props.auth.login();
-  }
-
   render() {
-    const { isAuthenticated } = this.props.auth;
+    const { classes } = this.props;
     return (
-      <div className="container">
-        {/* {isAuthenticated() && 
-          (<h4>You are logged in<Link to="profile">profile area</Link></h4>)
-        } */}
-        {!isAuthenticated() &&
-          (<h4>You are not logged in! 
-            <button onClick={this.login.bind(this)}>Log In</button>
-          </h4>)
-        }
+      <div>
+        <Typography>Contacts</Typography>
+        <Paper className={classes.paper} elevation={1}>
+          <Contact auth={this.props.auth} />
+        </Paper>
       </div>
     );
   }
 }
 
-export default Home
+const styles = theme => ({
+  paper: {
+    ...theme.mixins.gutters(),
+    paddingTop: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+  },
+})
+
+
+Home.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+}
+
+export default withStyles(styles, { withTheme: true })(Home)

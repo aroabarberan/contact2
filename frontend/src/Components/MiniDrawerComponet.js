@@ -9,23 +9,27 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/Inbox';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import {
-  AppBar, Toolbar, IconButton, Typography, Drawer, Paper,
-  Tooltip, Divider, Input, Menu, MenuItem, withStyles
+  AppBar, Toolbar, IconButton, Typography, Drawer,
+  Divider, Input, Menu, MenuItem, withStyles
 } from '@material-ui/core';
 
-// import ImageAvatar from "../Containers/ImageAvatarContainer";
+
 import ImageAvatar from "../Components/ImageAvatarComponet";
-// import ButtonAdd from "./ButtonAddComponet";
-// import GetContact from "./GetContactComponet";
-import CreateContact from './CreateContactComponet';
+import Home from './HomeComponet';
 
 
 class MiniDrawer extends React.Component {
   constructor() {
     super()
-    this.handleClose = this.handleClose.bind(this)
+    this.state = {
+      open: false,
+      anchorEl: null,
+      mobileMoreAnchorEl: null,
+    };
+    this.handleClose = this.handleClose.bind(this);
   }
   componentWillMount() {
     this.setState({ profile: {} });
@@ -40,11 +44,6 @@ class MiniDrawer extends React.Component {
       this.setState({ profile: userProfile });
     }
   }
-  state = {
-    open: false,
-    anchorEl: null,
-    mobileMoreAnchorEl: null,
-  };
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -53,9 +52,9 @@ class MiniDrawer extends React.Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
+
   handleProfileMenuOpen = event => {
     this.setState({ anchorEl: event.currentTarget });
-    // this.handleClose();
   };
 
   handleMenuClose = () => {
@@ -90,7 +89,6 @@ class MiniDrawer extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleClose}>Sing out</MenuItem>
-        {/* <MenuItem onClick={this.handleClose}>My account</MenuItem> */}
       </Menu>
     );
 
@@ -102,11 +100,10 @@ class MiniDrawer extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        {/* <MenuItem onClick={this.handleProfileMenuOpen}> */}
         <MenuItem onClick={this.handleClose}>
-          {/* <IconButton color="inherit">
+          <IconButton color="inherit">
             <AccountCircle />
-          </IconButton> */}
+          </IconButton>
           Sing out
         </MenuItem>
       </Menu>
@@ -137,10 +134,7 @@ class MiniDrawer extends React.Component {
               <Input
                 placeholder="Search…"
                 disableUnderline
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
+                classes={{ root: classes.inputRoot, input: classes.inputInput }}
               />
             </div>
             <div className={classes.grow} />
@@ -162,15 +156,21 @@ class MiniDrawer extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
+
+
+
+
         <Drawer variant="permanent"
           classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open && classes.drawerPaperClose),
+            paper: classNames(classes.drawerPaper, !this.state.open &&
+              classes.drawerPaperClose),
           }}
           open={this.state.open}
         >
           <div className={classes.toolbar}>
             <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> :
+                <ChevronLeftIcon />}
             </IconButton>
           </div>
           <InboxIcon />
@@ -179,24 +179,13 @@ class MiniDrawer extends React.Component {
           <InboxIcon />
           <InboxIcon />
         </Drawer>
+
         {renderMenu}
         {renderMobileMenu}
+
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <div>
-            <Paper className={classes.paper} elevation={1}>
-              <Typography component="p">
-                Contacts
-              </Typography>
-              {/* <GetContact auth={this.props.auth} /> */}
-            </Paper>
-          </div>
-
-          <Tooltip title="FAB 'position: absolute;'">
-            {/* <ButtonAdd /> */}
-            <CreateContact />
-          </Tooltip>
-
+          <Home auth={this.props.auth} />
         </main>
       </div>
     );
@@ -204,12 +193,11 @@ class MiniDrawer extends React.Component {
 }
 
 const drawerWidth = 240
-
 const styles = theme => ({
   root: {
     width: '100%',
     flexGrow: 1,
-    height: 440,
+    height: '100%',
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
@@ -266,6 +254,7 @@ const styles = theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
+
     padding: '0 8px',
     ...theme.mixins.toolbar,
   },
@@ -293,10 +282,9 @@ const styles = theme => ({
     },
     marginRight: theme.spacing.unit * 2,
     marginLeft: 0,
-    width: '100%',
+    width: '60%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing.unit * 3,
-      width: 'auto',
     },
   },
   searchIcon: {
@@ -340,8 +328,7 @@ const styles = theme => ({
       display: 'none',
     },
   },
-})
-
+});
 
 MiniDrawer.propTypes = {
   classes: PropTypes.object.isRequired,

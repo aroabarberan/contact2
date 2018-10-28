@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import Tooltip from '@material-ui/core/Tooltip';
 import MiniDrawer from "../Components/MiniDrawerComponet";
-// import MiniDrawer from "../Containers/MiniDrawerContainer";
+import CreateContact from "../Containers/CreateContactContainer";
 
 class App extends Component {
 
@@ -30,12 +31,15 @@ class App extends Component {
               (
                 <div>
                   <MiniDrawer auth={this.props.auth} />
-                  <button onClick={this.logout.bind(this)}>Log Out</button>
+                  {/* <button onClick={this.logout.bind(this)}>Log Out</button> */}
                   {/* <button onClick={this.goTo.bind(this, 'home')}>Home</button> */}
                   {/* <button onClick={this.goTo.bind(this, 'profile')}>Profile</button> */}
                   {/* <button onClick={this.goTo.bind(this, 'createContact')}>CreateContact</button> */}
+                  <Tooltip title="FAB 'position: absolute;'">
+                    <CreateContact auth={this.props.auth} />
+                  </Tooltip>
                 </div>
-                )
+              )
             }
           </div>
         </div>
