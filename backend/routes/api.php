@@ -14,25 +14,15 @@ use App\Contact;
 |
 */
 
-
-Route::get('/public', function (Request $request) {
-    return response()->json(["message" => "Hello from a public endpoint! You don't need to be authenticated to see this."]);
-});
-
-Route::post('/private', function (Request $request) {
+Route::post('/contacts', function (Request $request) {
     if ($request['sub'] !== null) {
         $results = DB::select('select * from contacts where user = :user', ['user' => $request['sub']]);
         return response()->json($results);
     }
 })->middleware('jwt');
 
-Route::get('/private-scoped', function (Request $request) {
-    return response()->json([
-        "message" => "Hello from a private endpoint! You need to have a valid access token and a scope of read:messages to see this."
-    ]);
-})->middleware('check.scope:read:messages');
 
-Route::post('/contacts', function(Request $request) {
+Route::post('/addContacts', function(Request $request) {
     $contact = new Contact;
     $contact->user = $request['sub'];
     $contact->name = $request['name'];
@@ -40,3 +30,16 @@ Route::post('/contacts', function(Request $request) {
     $contact->save();
     return "Contact created correctly";
 })->middleware('jwt');
+
+//TODO
+Route::put('/contacts/{id}', function(Request $request, $id) {
+    $contact = Contact::find($id);
+    $contact->update($request->all());
+    return "Contact updated correctly";
+});
+
+Route::delete('/contacts/{id}', function($id) {
+    Contact::find($id)->delete();
+    return "Contact delete correctly";
+});
+
