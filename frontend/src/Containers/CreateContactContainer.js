@@ -5,9 +5,9 @@ import { addContact, updateForm } from "../Actions/ContactAction";
 
 const mapStateToProps = state => ({
   contacts: state.contacts,
-  sub: state.contacts.form.create.sub,
-  name: state.contacts.form.create.name,
-  phone: state.contacts.form.create.phone
+  sub: state.contacts.sub,
+  name: state.contacts.name,
+  phone: state.contacts.phone
 })
 
 const mapDispatchToProps = dispatch => ({

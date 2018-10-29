@@ -1,18 +1,21 @@
 import { connect } from 'react-redux';
 import CrudContact from "../Components/CrudContactComponet";
-import { addContact, deleteContact, updateForm } from "../Actions/ContactAction";
+import { addContact, editContact, deleteContact, updateForm } from "../Actions/ContactAction";
 
 
 const mapStateToProps = state => ({
   contacts: state.contacts,
-  sub: state.contacts.form.create.sub,
-  name: state.contacts.form.create.name,
-  phone: state.contacts.form.create.phone
+  sub: state.contacts.sub,
+  name: state.contacts.name,
+  phone: state.contacts.phone
 })
 
 const mapDispatchToProps = dispatch => ({
   addContact: contact => {
     dispatch(addContact(contact))
+  },
+  editContact: (id, contact) => {
+    dispatch(editContact(id, contact))
   },
   deleteContact: id => {
     dispatch(deleteContact(id))

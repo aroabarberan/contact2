@@ -18,7 +18,6 @@ import BorderColor from '@material-ui/icons/BorderColor';
 
 
 const url_getContact = 'http://localhost:3010/api/contacts';
-const url_deleteContact = 'http://localhost:3010/api/contacts/';
 
 
 class Contact extends Component {
@@ -27,7 +26,6 @@ class Contact extends Component {
     this.state = {
       anchorEl: null,
     };
-    this.deleteContact = this.deleteContact.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
   componentWillMount() {
@@ -67,26 +65,18 @@ class Contact extends Component {
     this.setState({ anchorEl: null });
   };
 
-  deleteContact(id) {
-    return () => {
-      fetch(url_deleteContact + id, { method: "DELETE" })
-        .catch('Se ha cometido un errorcito');
-      this.props.deleteContact(id);
-    }
-  }
-
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
+    console.log('aqui aqui', this.props)
     return (
       <div>
         {this.props.contacts.contacts.map((contact, i) =>
           <div key={i}>
             <p>Name: {contact.name} Phone: {contact.phone}</p>
-            <BorderColor />
-            <DeleteIcon onClick={this.deleteContact(contact.id)} className={classes.icon} />
+            {/* <BorderColor onClick={this.props.editContact(contact.id)} className={classes.icon}/> */}
+            <DeleteIcon onClick={() => this.props.deleteContact(contact.id)} className={classes.icon} />
 
             <IconButton
               aria-label="More"
