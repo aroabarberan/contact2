@@ -1,9 +1,34 @@
 const initialState = {
   contacts: [
     {
-      sub: '',
-      name: '',
-      phone: '',
+      id: 0,
+      sub: 'google-contact|02948184719284712897012',
+      name: 'Patatin',
+      phone: '123123123124241',
+    },
+    {
+      id: 1,
+      sub: 'google-contact|02948184719284712897012',
+      name: 'Bublin',
+      phone: '3434543534',
+    },
+    {
+      id: 2,
+      sub: 'google-contact|02948184719284712897012',
+      name: 'Puribum',
+      phone: '988891231',
+    },
+    {
+      id: 3,
+      sub: 'google-contact|02948184719284712897012',
+      name: 'Cachipum',
+      phone: '6967867123123241',
+    },
+    {
+      id: 4,
+      sub: 'google-contact|02948184719284712897012',
+      name: 'Blablin',
+      phone: '000123239894241',
     },
   ],
   form: {
