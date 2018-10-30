@@ -7,18 +7,19 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/Inbox';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import {
   AppBar, Toolbar, IconButton, Typography, Drawer,
-  Divider, Input, Menu, MenuItem, withStyles
+  Divider, Menu, MenuItem, withStyles
 } from '@material-ui/core';
 
 
 import ImageAvatar from "../Components/ImageAvatarComponet";
 import Home from './HomeComponet';
+import Search from './SearchComponet';
 
 
 class MiniDrawer extends React.Component {
@@ -127,16 +128,22 @@ class MiniDrawer extends React.Component {
             <Typography variant="title" color="inherit" noWrap>
               Book Contact
             </Typography>
+
+
+
+
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <Input
+              <Search
+                classes={{ root: classes.inputRoot, input: classes.inputInput }} />
+              {/* <Input
                 placeholder="Search…"
                 disableUnderline
                 classes={{ root: classes.inputRoot, input: classes.inputInput }}
-              />
+              /> */}
             </div>
+
+
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
@@ -156,7 +163,6 @@ class MiniDrawer extends React.Component {
             </div>
           </Toolbar>
         </AppBar>
-
 
 
 
@@ -180,6 +186,7 @@ class MiniDrawer extends React.Component {
           <InboxIcon />
         </Drawer>
 
+
         {renderMenu}
         {renderMobileMenu}
 
@@ -193,6 +200,7 @@ class MiniDrawer extends React.Component {
 }
 
 const drawerWidth = 240
+
 const styles = theme => ({
   root: {
     width: '100%',
@@ -287,15 +295,7 @@ const styles = theme => ({
       marginLeft: theme.spacing.unit * 3,
     },
   },
-  searchIcon: {
-    width: theme.spacing.unit * 9,
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+
   inputRoot: {
     color: 'inherit',
     width: '100%',

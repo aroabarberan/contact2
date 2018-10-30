@@ -1,33 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { Divider, withStyles } from '@material-ui/core';
-
-import IconButton from '@material-ui/core/IconButton';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import BorderColor from '@material-ui/icons/BorderColor';
+import ListItemComposition from '../Containers/ListItemCompositionContainer';
 
 
 const url_getContact = 'http://localhost:3010/api/contacts';
 
 
 class Contact extends Component {
-  constructor() {
-    super()
-    this.state = {
-      anchorEl: null,
-    };
-    this.handleClose = this.handleClose.bind(this);
-  }
+
   componentWillMount() {
     this.setState({ profile: {} });
 
@@ -57,75 +36,14 @@ class Contact extends Component {
     }
   }
 
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
   render() {
-    const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
-    console.log('aqui aqui', this.props)
     return (
       <div>
         {this.props.contacts.contacts.map((contact, i) =>
           <div key={i}>
-            <p>Name: {contact.name} Phone: {contact.phone}</p>
-            {/* <BorderColor onClick={this.props.editContact(contact.id)} className={classes.icon}/> */}
-            <DeleteIcon onClick={() => this.props.deleteContact(contact.id)} className={classes.icon} />
-
-            <IconButton
-              aria-label="More"
-              aria-owns={open ? 'long-menu' : undefined}
-              aria-haspopup="true"
-              onClick={this.handleClick}
-            >
-              <MoreVertIcon />
-            </IconButton>
-            <Menu
-              id="long-menu"
-              anchorEl={anchorEl}
-              open={open}
-              onClose={this.handleClose}
-              PaperProps={{
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: 200,
-                },
-              }}
-            >
-              <Paper>
-                <MenuList>
-
-                  <MenuItem className={classes.menuItem}>
-                    <ListItemIcon className={classes.icon}>
-                      <SendIcon />
-                    </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Export" />
-                  </MenuItem>
-
-                  <MenuItem className={classes.menuItem}>
-                    <ListItemIcon className={classes.icon}>
-                      <DraftsIcon />
-                    </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
-                  </MenuItem>
-
-                  <MenuItem className={classes.menuItem}>
-                    <ListItemIcon className={classes.icon}>
-                      <DeleteIcon onClick={() => this.deleteContact(contact.id)} className={classes.icon} />
-                    </ListItemIcon>
-                    <ListItemText classes={{ primary: classes.primary }} inset primary="Grupos...TODO" />
-                  </MenuItem>
-
-                </MenuList>
-              </Paper>
-            </Menu>
-            <Divider />
+            <p>{contact.name} {contact.phone}</p>
+            <ListItemComposition idContact={contact.id}/>
+            
           </div>
         )}
       </div>
@@ -133,32 +51,4 @@ class Contact extends Component {
   }
 }
 
-const ITEM_HEIGHT = 48;
-
-const styles = theme => ({
-  root: {
-    margin: 10,
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-  },
-  icon: {
-    // margin: theme.spacing.unit,
-    // fontSize: 22,
-  },
-  menuItem: {
-    '&:focus': {
-      backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
-        color: theme.palette.common.white,
-      },
-    },
-  },
-  primary: {},
-});
-
-Contact.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Contact)
+export default Contact;
