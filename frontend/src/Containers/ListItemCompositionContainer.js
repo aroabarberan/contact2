@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ListItemComposition from "../../temp/Components/ListItemCompositionComponent";
+import ListItemComposition from "../Components/ListItemCompositionComponent";
 import { addContact, editContact, deleteContact, updateForm } from "../Actions/ContactAction";
 
 
