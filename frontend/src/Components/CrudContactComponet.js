@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Edit from '@material-ui/icons/Edit';
 import ListItemComposition from '../Containers/ListItemCompositionContainer';
 
 
@@ -37,13 +38,14 @@ class Contact extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div>
         {this.props.contacts.contacts.map((contact, i) =>
           <div key={i}>
             <p>{contact.name} {contact.phone}</p>
             <ListItemComposition idContact={contact.id}/>
-            
+            <Edit onClick={this.props.editContact} />
           </div>
         )}
       </div>

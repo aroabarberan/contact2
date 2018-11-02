@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Profile from "../Components/ProfileComponet";
+import Snackbar from "../Components/SnackbarComponent";
 import { saveProfile } from "../Actions/ProfileAction";
 
 const mapStateToProps = state => ({
@@ -12,4 +12,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile)
+export default connect(mapStateToProps, mapDispatchToProps)(Snackbar)

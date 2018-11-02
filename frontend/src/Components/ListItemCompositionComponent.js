@@ -63,7 +63,7 @@ class ListItemComposition extends React.Component {
               </MenuItem>
 
               <MenuItem onClick={() => this.props.deleteContact(this.props.idContact)} className={classes.menuItem}>
-                <ListItemIcon className={classes.icon}>
+                <ListItemIcon onClick={() => this.handleClose} className={classes.icon}>
                   <DeleteIcon className={classes.icon} />
                 </ListItemIcon>
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />

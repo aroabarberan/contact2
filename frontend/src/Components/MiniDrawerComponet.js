@@ -7,7 +7,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/Inbox';
-// import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
@@ -39,10 +38,11 @@ class MiniDrawer extends React.Component {
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile });
+        // this.props.saveProfile(profile)
       });
-
     } else {
       this.setState({ profile: userProfile });
+      // this.props.saveProfile(userProfile)
     }
   }
 
@@ -133,6 +133,7 @@ class MiniDrawer extends React.Component {
 
 
             <div className={classes.search}>
+              {/* <Search auth={this.props.auth} */}
               <Search
                 classes={{ root: classes.inputRoot, input: classes.inputInput }} />
               {/* <Input

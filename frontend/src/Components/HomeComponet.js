@@ -9,7 +9,7 @@ class Home extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Typography>Contacts</Typography>
+        <Typography className={classes.title}>Contacts</Typography>
         <Paper className={classes.paper} elevation={1}>
           <Contact auth={this.props.auth} />
         </Paper>
@@ -24,6 +24,9 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
   },
+  title: {
+    
+  }
 })
 
 

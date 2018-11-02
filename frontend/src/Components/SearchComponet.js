@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import {  } from "../Containers/ProfileContactContainer";
 
 
 const suggestions = [
@@ -148,6 +149,20 @@ class IntegrationAutosuggest extends React.Component {
     popper: '',
     suggestions: [],
   };
+
+  componentWillMount() {
+    console.log(this.props)
+    // this.setState({ profile: {} });
+    // const { userProfile, getProfile } = this.props.auth;
+    // if (!userProfile) {
+    //   getProfile((err, profile) => {
+    //     this.setState({ profile });
+    //   });
+
+    // } else {
+    //   this.setState({ profile: userProfile });
+    // }
+  }
 
   handleSuggestionsFetchRequested = ({ value }) => {
     this.setState({
