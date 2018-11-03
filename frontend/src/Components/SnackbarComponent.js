@@ -21,7 +21,7 @@ const variantIcon = {
   info: InfoIcon,
 };
 
-function MySnackbarContent(props) {
+export function MySnackbarContent(props) {
   const { classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 
@@ -58,7 +58,7 @@ MySnackbarContent.propTypes = {
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
-const stylesSnackbarContentWrapper = theme => ({
+const styles1 = theme => ({
   success: {
     backgroundColor: green[600],
   },
@@ -84,7 +84,7 @@ const stylesSnackbarContentWrapper = theme => ({
   },
 });
 
-const MySnackbarContentWrapper = withStyles(stylesSnackbarContentWrapper)(MySnackbarContent);
+export const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
 
 
@@ -123,13 +123,13 @@ class CustomizedSnackbars extends React.Component {
           autoHideDuration={6000}
           onClose={this.handleClose}
         >
-          <MySnackbarContentWrapper
+         <MySnackbarContentWrapper
             onClose={this.handleClose}
             variant="success"
             message="This is a success message!"
           />
         </Snackbar>
-        <MySnackbarContentWrapper
+         <MySnackbarContentWrapper
           variant="error"
           className={classes.margin}
           message="This is an error message!"
@@ -154,7 +154,7 @@ class CustomizedSnackbars extends React.Component {
   }
 }
 
-const stylesCustomizedSnackbars = theme => ({
+const styles2 = theme => ({
   margin: {
     margin: theme.spacing.unit,
   },
@@ -164,4 +164,4 @@ CustomizedSnackbars.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(stylesCustomizedSnackbars)(CustomizedSnackbars);
+export default withStyles(styles2)(CustomizedSnackbars);

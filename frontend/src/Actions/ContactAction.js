@@ -8,7 +8,7 @@ export const editContact = (id, contact) => ({
   payload: id,
 });
 
-export const deleteContact = (id) => ({
+export const deleteContact = id => ({
   type: 'DELETE_CONTACT',
   payload: id,
 });
