@@ -4,6 +4,7 @@ import { addContact, editContact, deleteContact, updateForm } from "../Actions/C
 
 
 const mapStateToProps = state => ({
+  profile: state.profile,
   contacts: state.contacts,
   sub: state.contacts.sub,
   name: state.contacts.name,
