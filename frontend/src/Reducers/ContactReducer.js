@@ -6,35 +6,12 @@ const initialState = {
       name: 'Patatin',
       phone: '123123123124241',
     },
-    // {
-    //   id: 1,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Bublin',
-    //   phone: '3434543534',
-    // },
-    // {
-    //   id: 2,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Puribum',
-    //   phone: '988891231',
-    // },
-    // {
-    //   id: 3,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Cachipum',
-    //   phone: '6967867123123241',
-    // },
-    // {
-    //   id: 4,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Blablin',
-    //   phone: '000123239894241',
-    // },
   ],
   form: {
-    sub: '',
-    name: '',
-    phone: '',
+    create: {
+      name: '',
+      phone: '',
+    }
   },
 }
 
@@ -56,8 +33,6 @@ export default (state = initialState, action) => {
       };
 
     case 'DELETE_CONTACT':
-      fetch('http://localhost:3010/api/contacts/' + action.payload, { method: "DELETE" })
-        .catch(console.log);
       return {
         contacts: state.contacts.filter((c => c.id !== action.payload))
       };
@@ -90,11 +65,16 @@ export default (state = initialState, action) => {
       };
 
     case 'UPDATE_FORM':
-      return {
-        ...state,
-        form: [...state.form, action.payload]
-      };
-
+    return {
+      ...state,
+      form: {
+        ...state.form,
+        create: {
+          ...state.form.create,
+          ...action.payload,
+        }
+      },
+    }
     default:
       return state
   };

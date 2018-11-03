@@ -41,5 +41,5 @@ Route::put('/contacts/{id}', function(Request $request, $id) {
 Route::delete('/contacts/{id}', function($id) {
     Contact::find($id)->delete();
     return "Contact delete correctly";
-});
+})->middleware('jwt');
 

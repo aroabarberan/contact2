@@ -5,7 +5,8 @@ const initialState = {
       nickname: '',
       name: '',
       picture: '',
-      updated_at: ''
+      updated_at: '',
+      token: '',
     },
   ],
 
