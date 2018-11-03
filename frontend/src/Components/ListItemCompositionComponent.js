@@ -9,6 +9,8 @@ import {
   ListItemIcon, ListItemText, withStyles,
 } from '@material-ui/core';
 
+const url_getContact = 'http://localhost:3010/api/contacts/';
+
 
 class ListItemComposition extends React.Component {
   constructor() {
@@ -16,6 +18,22 @@ class ListItemComposition extends React.Component {
     this.state = {
       anchorEl: null,
     };
+    this.delete = this.delete.bind(this);
+  }
+
+  delete() {
+    const token = this.props.auth.getAccessToken();
+    const id = this.props.idContact;
+
+    fetch(url_getContact + id, {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+    }).catch(console.log);
+    this.props.deleteContact(id)
   }
 
   handleClick = event => {
@@ -30,6 +48,7 @@ class ListItemComposition extends React.Component {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const { classes } = this.props;
+
     return (
       <div>
         <IconButton
@@ -62,13 +81,15 @@ class ListItemComposition extends React.Component {
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Export" />
               </MenuItem>
 
-              <MenuItem onClick={() => this.props.deleteContact(this.props.idContact)} className={classes.menuItem}>
+              <MenuItem
+                onClick={this.delete}
+                className={classes.menuItem}>
                 <ListItemIcon onClick={() => this.handleClose} className={classes.icon}>
                   <DeleteIcon className={classes.icon} />
                 </ListItemIcon>
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
               </MenuItem>
-              
+
               <Divider />
 
               <MenuItem className={classes.menuItem}>

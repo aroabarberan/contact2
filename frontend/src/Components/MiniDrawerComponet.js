@@ -17,7 +17,7 @@ import {
 
 
 import ImageAvatar from "../Components/ImageAvatarComponet";
-import Home from './HomeComponet';
+import Home from '../Containers/HomeContainer';
 import Search from './SearchComponet';
 
 
@@ -38,11 +38,9 @@ class MiniDrawer extends React.Component {
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile });
-        // this.props.saveProfile(profile)
       });
     } else {
       this.setState({ profile: userProfile });
-      // this.props.saveProfile(userProfile)
     }
   }
 

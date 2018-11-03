@@ -151,7 +151,7 @@ class IntegrationAutosuggest extends React.Component {
   };
 
   componentWillMount() {
-    console.log(this.props)
+    // console.log(this.props)
     // this.setState({ profile: {} });
     // const { userProfile, getProfile } = this.props.auth;
     // if (!userProfile) {

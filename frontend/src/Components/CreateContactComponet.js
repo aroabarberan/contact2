@@ -32,7 +32,7 @@
 //     this.handleChange = this.handleChange.bind(this)
 //     this.submit = this.submit.bind(this)
 //   }
-  
+
 //   componentWillMount() {
 //     this.setState({ profile: {} });
 //     const { userProfile, getProfile } = this.props.auth;
@@ -85,7 +85,7 @@
 //   }
 
 //   render() {
-    
+
 //     const { classes } = this.props;
 //     return (
 //       <div>
@@ -121,52 +121,19 @@
 //   }
 // }
 
-// const mapStateToProps = state => ({
-//   contacts: state.contacts,
-//   sub: state.contacts.form.create.sub,
-//   name: state.contacts.form.create.name,
-//   phone: state.contacts.form.create.phone
-// })
-
-// const styles = theme => ({
-//   paper: {
-//     position: 'absolute',
-//     width: theme.spacing.unit * 50,
-//     backgroundColor: theme.palette.background.paper,
-//     boxShadow: theme.shadows[5],
-//     padding: theme.spacing.unit * 4,
-//   },
-//   absolute: {
-//     position: 'absolute',
-//     // bottom: theme.spacing.unit * 2,
-//     bottom: theme.spacing.unit * 6,
-//     right: theme.spacing.unit * 1,
-//   },
-// });
-
-
-// CreateContact.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
-
-// export default withStyles(styles)(CreateContact);
-
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 
 class CreateContact extends Component {
   constructor() {
     super()
-    this.state = {
-      contacts: [{
-        user: '',
-        name: '',
-        phone: ''
-      }]
-    }
+
     this.handleChange = this.handleChange.bind(this)
     this.submit = this.submit.bind(this)
   }
   componentWillMount() {
+    
     this.setState({ profile: {} });
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
@@ -180,28 +147,32 @@ class CreateContact extends Component {
   }
 
   handleChange(evt) {
-    this.setState({ [evt.target.name]: evt.target.value })
+    this.props.updateForm({
+      name: this.props.name,
+      phone: this.props.phone,
+      [evt.target.name]: evt.target.value
+    })
   }
 
   submit(evt) {
     evt.preventDefault();
-    const { name, phone } = this.state
-    const sub = this.state.profile.sub
-    const { getAccessToken } = this.props.auth;
-    
+    const { name, phone } = this.props;
+    const sub = this.state.profile.sub;
+    const token = this.props.auth.getAccessToken();
+
     fetch('http://localhost:3010/api/addContacts', {
       method: "POST",
       headers: {
         'Accept': 'application/json',
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + getAccessToken(),
+        'Authorization': 'Bearer ' + token,
       },
       body: JSON.stringify({ sub, name, phone }),
     })
       .then(res => res.text())
-      .then(console.log)
+      .then(console.log);
 
-    this.setState(({ contacts }) => ({ contacts: [...contacts, { name, phone }] }));
+    this.props.addContact({ sub, name, phone })
   }
 
   render() {
@@ -223,4 +194,25 @@ class CreateContact extends Component {
   }
 }
 
-export default(CreateContact);
+const styles = theme => ({
+  paper: {
+    position: 'absolute',
+    width: theme.spacing.unit * 50,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+  },
+  absolute: {
+    position: 'absolute',
+    // bottom: theme.spacing.unit * 2,
+    bottom: theme.spacing.unit * 6,
+    right: theme.spacing.unit * 1,
+  },
+});
+
+
+CreateContact.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CreateContact);
