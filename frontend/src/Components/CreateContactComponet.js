@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
+import {
+  Divider, Button, TextField,
+  Dialog, DialogTitle, DialogActions, DialogContent, withStyles
+} from '@material-ui/core';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
 
 
 class CreateContact extends Component {
@@ -85,7 +71,6 @@ class CreateContact extends Component {
 
   }
 
-
   render() {
 
     const { classes } = this.props;
@@ -95,29 +80,24 @@ class CreateContact extends Component {
           className={classes.absolute} onClick={this.handleOpen}>
           <AddIcon />
         </Button>
-
-        <Modal
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+        <Dialog
           open={this.state.open}
           onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
         >
-          <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              <form onSubmit={this.submit}>
-                <div>
-                  <label>Name</label>
-                  <input type="text" name='name' onChange={this.handleChange} />
-                </div>
-                <div>
-                  <label>Phone</label>
-                  <input type="text" name='phone' onChange={this.handleChange} />
-                </div>
-                <button>Send</button>
-              </form>
-            </Typography>
-          </div>
-        </Modal>
+          <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
+          <Divider />
+          <DialogContent>
+            <TextField autoFocus margin="normal" name="name" label="Name" type="text" onChange={this.handleChange} />
+          </DialogContent>
+          <DialogContent>
+            <TextField margin="normal" name="phone" label="Phone" type="text" onChange={this.handleChange} />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">Cancel</Button>
+            <Button onClick={this.submit} color="primary">Send</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
