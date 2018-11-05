@@ -68,15 +68,13 @@ class CreateContact extends Component {
 
     this.props.addContact({ sub, name, phone });
     this.handleClose();
-
   }
 
   render() {
-
     const { classes } = this.props;
     return (
       <div>
-        <Button variant="fab" color="secondary" aria-label="Add"
+        <Button autoFocus variant="fab" color="secondary" aria-label="Add"
           className={classes.absolute} onClick={this.handleOpen}>
           <AddIcon />
         </Button>
@@ -88,10 +86,23 @@ class CreateContact extends Component {
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
           <DialogContent>
-            <TextField autoFocus margin="normal" name="name" label="Name" type="text" onChange={this.handleChange} />
+            <TextField
+              autoFocus
+              margin="normal"
+              name="name"
+              label="Name"
+              type="text"
+              onChange={this.handleChange}
+            />
           </DialogContent>
           <DialogContent>
-            <TextField margin="normal" name="phone" label="Phone" type="text" onChange={this.handleChange} />
+            <TextField
+              margin="normal"
+              name="phone"
+              label="Phone"
+              type="text"
+              onChange={this.handleChange}
+            />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">Cancel</Button>

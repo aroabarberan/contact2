@@ -6,6 +6,7 @@ export const addContact = (contact) => ({
 export const editContact = (id, contact) => ({
   type: 'EDIT_CONTACT',
   payload: id,
+  value: contact
 });
 
 export const deleteContact = id => ({

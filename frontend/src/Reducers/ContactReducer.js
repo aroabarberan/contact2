@@ -26,9 +26,9 @@ export default (state = initialState, action) => {
 
     case 'EDIT_CONTACT':
       return {
-        contacts: [...state.contacts.map((c => {
-          if (c.id === action.payload) c = action.value
-          return c
+        contacts: [...state.contacts.map((contact => {
+          if (contact.id === action.payload) contact = action.value;
+          return contact
         }))],
       };
 
