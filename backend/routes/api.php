@@ -27,6 +27,7 @@ Route::post('/addContacts', function(Request $request) {
     $contact->user = $request['sub'];
     $contact->name = $request['name'];
     $contact->phone = $request['phone'];
+    $contact->favourite = $request['favourite'];
     $contact->save();
     return "Contact created correctly";
 })->middleware('jwt');

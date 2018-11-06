@@ -15,6 +15,11 @@ import {
   Divider, Menu, MenuItem, withStyles
 } from '@material-ui/core';
 
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 
 import ImageAvatar from "../Components/ImageAvatarComponet";
 import Home from '../Containers/HomeContainer';
@@ -26,6 +31,7 @@ class MiniDrawer extends React.Component {
     super()
     this.state = {
       open: false,
+      expanded: null,
       anchorEl: null,
       mobileMoreAnchorEl: null,
     };
@@ -43,6 +49,11 @@ class MiniDrawer extends React.Component {
       this.setState({ profile: userProfile });
     }
   }
+  handleChange = panel => (event, expanded) => {
+    this.setState({
+      expanded: expanded ? panel : false,
+    });
+  };
 
   handleDrawerOpen = () => {
     this.setState({ open: true });
@@ -75,7 +86,7 @@ class MiniDrawer extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-    const { anchorEl, mobileMoreAnchorEl } = this.state;
+    const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -133,12 +144,8 @@ class MiniDrawer extends React.Component {
             <div className={classes.search}>
               {/* <Search auth={this.props.auth} */}
               <Search
-                classes={{ root: classes.inputRoot, input: classes.inputInput }} />
-              {/* <Input
-                placeholder="Search…"
-                disableUnderline
                 classes={{ root: classes.inputRoot, input: classes.inputInput }}
-              /> */}
+              />
             </div>
 
 
@@ -178,11 +185,23 @@ class MiniDrawer extends React.Component {
                 <ChevronLeftIcon />}
             </IconButton>
           </div>
-          <InboxIcon />
+          {/* <InboxIcon />
           <InboxIcon />
           <Divider />
           <InboxIcon />
+          <InboxIcon /> */}
+          <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           <InboxIcon />
+              <Typography className={classes.heading}>General settings</Typography>
+              <Typography className={classes.secondaryHeading}>BLIN</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Typography>
+                Bla
+            </Typography>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
         </Drawer>
 
 
@@ -326,6 +345,15 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    flexBasis: '33.33%',
+    flexShrink: 0,
+  },
+  secondaryHeading: {
+    fontSize: theme.typography.pxToRem(15),
+    color: theme.palette.text.secondary,
   },
 });
 

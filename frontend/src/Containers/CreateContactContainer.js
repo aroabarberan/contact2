@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   sub: state.contacts.sub,
   name: state.contacts.name,
   phone: state.contacts.phone,
+  favourite: state.contacts.favourite,
 })
 
 const mapDispatchToProps = dispatch => ({

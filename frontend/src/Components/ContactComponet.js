@@ -1,23 +1,36 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
+import Starfilled from "@material-ui/icons/Grade";
+import StarBorder from "@material-ui/icons/StarBorder";
 import ListItemComposition from '../Containers/ListItemCompositionContainer';
 import {
   Paper, Divider, Button, TextField,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
 
-
-
 class Contact extends Component {
   constructor() {
     super()
     this.state = {
       open: false,
-      contact: []
+      favourite: false,
+      contact: [],
+
+      starFilled: <Starfilled color="primary" onClick={this.handleFavouriteClick} />,
+      StarBorder: <StarBorder onClick={this.handleFavouriteClick} />,
     }
+    this.handleFavouriteClick = this.handleFavouriteClick.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.submit = this.submit.bind(this)
+  }
+  handleFavouriteClick() {
+    // if (this.) {
+    //   this.setState({ favourite: false });
+
+    // } else {
+    //   this.setState({ favourite: true });
+    // }
   }
 
   handleOpen = (contact) => {
@@ -29,18 +42,21 @@ class Contact extends Component {
   }
 
   handleChange(evt) {
-    // this.props.updateForm({
-    //   name: this.props.form.create.name,
-    //   phone: this.props.form.create.phone,
-    //   [evt.target.name]: evt.target.value
-    // });
+    this.setState({ contact: { [evt.target.name]: evt.target.value } })
+    this.props.updateForm({
+      // name: this.state.contact.name,
+      // phone: this.state.contact.phone,
+      // favourite: this.state.contact.favourite,
+      [evt.target.name]: evt.target.value
+    });
+    console.log(this.state)
   }
 
   submit(evt) {
     evt.preventDefault();
-    console.log(this.state)
+    console.log(this.props)
     // const sub = this.state.profile.sub;
-    const token = this.props.auth.getAccessToken();
+    // const token = this.props.auth.getAccessToken();
     // api/contacts/{id}
     // const token = this.props.auth.getAccessToken();
     // const id = this.props.idContact;
@@ -60,18 +76,24 @@ class Contact extends Component {
 
     // this.props.editContact(id, contact);
     this.handleClose();
-
   }
   render() {
     const { classes } = this.props;
+    const { contacts } = this.props.contacts;
+
+    // let contacts = [...this.props.contacts.contacts]
+    // contacts.sort((a, b) => (a.favourite - b.favourite) ? 1 : 0)
+
     return (
       <div>
         <Paper className={classes.paper} elevation={1}>
-          {this.props.contacts.contacts.map((contact, i) =>
+          {contacts.map((contact, i) =>
             <div key={i}>
               <p>{contact.name} {contact.phone}</p>
               <ListItemComposition auth={this.props.auth} idContact={contact.id} />
-              <Edit variant="fab" aria-label="Add"
+              {/* {contact.favourite === 1 ? <Starfilled color="primary" onClick={this.handleFavouriteClick} /> : <StarBorder onClick={this.handleFavouriteClick} />} */}
+              {contact.favourite === 1 ? this.state.starFilled : this.state.StarBorder}
+              <Edit variant="fab" aria-label="Edit"
                 className={classes.absolute} onClick={() => this.handleOpen(contact)} />
               <Divider />
             </div>
@@ -83,7 +105,6 @@ class Contact extends Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          {console.log(this.state)}
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
           <DialogContent>

@@ -23,8 +23,8 @@ export const unSelectContact = () => ({
   type: 'UNSELECT_CONTACT',
 })
 
-export const sortContactsByName = () => ({
-  type: 'SORT_CONTACTS_BY_NAME',
+export const sortContactsByFavourite = () => ({
+  type: 'SORT_CONTACTS_BY_FAVOURITE',
 });
 
 export const listAllContacts = () => ({

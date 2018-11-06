@@ -5,12 +5,42 @@ const initialState = {
       sub: 'google-contact|02948184719284712897012',
       name: 'Patatin',
       phone: '123123123124241',
+      favourite: "true",
     },
+    // {
+    //   id: 1,
+    //   sub: 'google-contact|02948184719284712897012',
+    //   name: 'Blablin',
+    //   phone: '398472398',
+    //   favourite: 1,
+    // },
+    // {
+    //   id: 2,
+    //   sub: 'google-contact|02948184719284712897012',
+    //   name: 'Zaaam',
+    //   phone: '9123893423423',
+    //   favourite: 0,
+    // },
+    // {
+    //   id: 3,
+    //   sub: 'google-contact|02948184719284712897012',
+    //   name: 'Puribum',
+    //   phone: '896332',
+    //   favourite: 1,
+    // },
+    // {
+    //   id: 4,
+    //   sub: 'google-contact|02948184719284712897012',
+    //   name: 'Pepito',
+    //   phone: '3453423',
+    //   favourite: 1,
+    // },
   ],
   form: {
     create: {
       name: '',
       phone: '',
+      favourite: '',
     }
   },
 }
@@ -48,10 +78,10 @@ export default (state = initialState, action) => {
         contacts: [...state.contacts],
       };
 
-    case 'SORT_CONTACT_BY_NAME':
+    case 'SORT_CONTACTS_BY_FAVOURITE':
       let contacts = [...state.contacts]
       return {
-        contacts: contacts.sort((a, b) => (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) ? 1 : 0),
+        contacts: contacts.sort((a, b) => (a.favourite.toLocaleLowerCase() > b.favourite.toLocaleLowerCase()) ? 1 : 0),
       };
 
     case 'LIST_ALL_CONTACTS':

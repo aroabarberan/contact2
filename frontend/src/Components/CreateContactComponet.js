@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
+import Checkbox from '@material-ui/core/Checkbox';
+// import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 import {
   Divider, Button, TextField,
-  Dialog, DialogTitle, DialogActions, DialogContent, withStyles
+  Dialog, DialogTitle, DialogActions, DialogContent, withStyles, DialogContentText
 } from '@material-ui/core';
-
 
 
 class CreateContact extends Component {
@@ -26,7 +26,6 @@ class CreateContact extends Component {
       getProfile((err, profile) => {
         this.setState({ profile });
       });
-
     } else {
       this.setState({ profile: userProfile });
     }
@@ -44,13 +43,14 @@ class CreateContact extends Component {
     this.props.updateForm({
       name: this.props.form.create.name,
       phone: this.props.form.create.phone,
+      favourite: false,
       [evt.target.name]: evt.target.value
     });
   }
 
   submit(evt) {
     evt.preventDefault();
-    const { name, phone } = this.props.form.create;
+    const { name, phone, favourite } = this.props.form.create;
     const sub = this.state.profile.sub;
     const token = this.props.auth.getAccessToken();
 
@@ -61,12 +61,12 @@ class CreateContact extends Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
-      body: JSON.stringify({ sub, name, phone }),
+      body: JSON.stringify({ sub, name, phone, favourite }),
     })
       .then(res => res.text())
-      .then();
+      .catch(console.log);
 
-    this.props.addContact({ sub, name, phone });
+    this.props.addContact({ sub, name, phone, favourite });
     this.handleClose();
   }
 
@@ -104,6 +104,7 @@ class CreateContact extends Component {
               onChange={this.handleChange}
             />
           </DialogContent>
+          <DialogContentText name="favourite" label="Favourite" type="text" onChange={this.handleChange} />
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">Cancel</Button>
             <Button onClick={this.submit} color="primary">Send</Button>

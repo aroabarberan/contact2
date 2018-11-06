@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import Cloud from "@material-ui/icons/Cloud";
+import CloudDownload from "@material-ui/icons/CloudDownload";
+import Archive from "@material-ui/icons/Archive";
 import {
   Menu, MenuList, MenuItem, Paper, IconButton, Divider,
   ListItemIcon, ListItemText, withStyles,
@@ -33,7 +34,8 @@ class ListItemComposition extends React.Component {
         'Authorization': 'Bearer ' + token,
       },
     }).catch(console.log);
-    this.props.deleteContact(id)
+    this.props.deleteContact(id);
+    this.handleClose();
   }
 
   handleClick = event => {
@@ -76,9 +78,16 @@ class ListItemComposition extends React.Component {
 
               <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
-                  <Cloud />
+                  <CloudDownload />
                 </ListItemIcon>
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Export" />
+              </MenuItem>
+
+              <MenuItem className={classes.menuItem}>
+                <ListItemIcon className={classes.icon}>
+                  <Archive />
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary="Hidden" />
               </MenuItem>
 
               <MenuItem
