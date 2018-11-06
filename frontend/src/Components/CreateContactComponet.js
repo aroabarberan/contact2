@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import Checkbox from '@material-ui/core/Checkbox';
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 import {
-  Divider, Button, TextField,
-  Dialog, DialogTitle, DialogActions, DialogContent, withStyles, DialogContentText
+  Divider, Button, TextField,Dialog, DialogTitle, 
+  DialogActions, DialogContent, withStyles, DialogContentText
 } from '@material-ui/core';
 
 
@@ -74,7 +73,7 @@ class CreateContact extends Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button autoFocus variant="fab" color="secondary" aria-label="Add"
+        <Button variant="fab" color="secondary" aria-label="Add"
           className={classes.absolute} onClick={this.handleOpen}>
           <AddIcon />
         </Button>

@@ -1,25 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/Inbox';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-
-import {
-  AppBar, Toolbar, IconButton, Typography, Drawer,
-  Divider, Menu, MenuItem, withStyles
-} from '@material-ui/core';
-
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import {
+  ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary,
+  AppBar, Toolbar, IconButton, Typography, Drawer,
+  Menu, MenuItem, withStyles
+} from '@material-ui/core';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import ImageAvatar from "../Components/ImageAvatarComponet";
 import Home from '../Containers/HomeContainer';
@@ -98,7 +94,12 @@ class MiniDrawer extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleClose}>Sing out</MenuItem>
+        <MenuItem onClick={this.handleClose}>
+          <IconButton color="inherit">
+            <PowerSettingsNew />
+          </IconButton>
+          Sing out
+        </MenuItem>
       </Menu>
     );
 
@@ -112,7 +113,7 @@ class MiniDrawer extends React.Component {
       >
         <MenuItem onClick={this.handleClose}>
           <IconButton color="inherit">
-            <AccountCircle />
+            <PowerSettingsNew />
           </IconButton>
           Sing out
         </MenuItem>
@@ -138,17 +139,11 @@ class MiniDrawer extends React.Component {
               Book Contact
             </Typography>
 
-
-
-
             <div className={classes.search}>
-              {/* <Search auth={this.props.auth} */}
               <Search
                 classes={{ root: classes.inputRoot, input: classes.inputInput }}
               />
             </div>
-
-
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
@@ -185,14 +180,9 @@ class MiniDrawer extends React.Component {
                 <ChevronLeftIcon />}
             </IconButton>
           </div>
-          {/* <InboxIcon />
-          <InboxIcon />
-          <Divider />
-          <InboxIcon />
-          <InboxIcon /> */}
           <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-          <InboxIcon />
+              <InboxIcon />
               <Typography className={classes.heading}>General settings</Typography>
               <Typography className={classes.secondaryHeading}>BLIN</Typography>
             </ExpansionPanelSummary>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Typography, withStyles } from '@material-ui/core';
-import Contact from "../Containers/ContactContainer";
-import Tooltip from '@material-ui/core/Tooltip';
-import CreateContact from "../Containers/CreateContactContainer";
+import Contact from "./ContactComponet";
+import { 
+  Paper, Typography, withStyles 
+} from '@material-ui/core';
 
 const url_getContact = 'http://localhost:3010/api/contacts/';
 
@@ -42,13 +42,18 @@ class Home extends Component {
   }
   render() {
     const { classes } = this.props;
+    const { contacts } = this.props.contacts;
+
     return (
       <div>
         <Typography className={classes.title}>Contacts</Typography>
-        <Contact auth={this.props.auth} />
-        <Tooltip title="FAB 'position: absolute;'">
-          <CreateContact auth={this.props.auth} />
-        </Tooltip>
+          <Paper className={classes.paper} elevation={1}>
+            {contacts.map((contact, i) =>
+              <div key={i}>
+                <Contact auth={this.props.auth} contact={contact} />
+              </div>
+            )}
+          </Paper>
       </div>
     );
   }
@@ -61,7 +66,9 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
   },
   title: {
-
+    paddingTop: theme.spacing.unit * 3,
+    paddingBottom: theme.spacing.unit * 3,
+    fontSize: 26,
   }
 })
 
