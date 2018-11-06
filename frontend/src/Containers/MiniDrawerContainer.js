@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import MiniDrawer from "../Components/MiniDrawerComponet";
+import MiniDrawer from "../Components/MiniDrawerComponent";
 import { saveProfile } from "../Actions/ProfileAction";
 
 const mapStateToProps = state => ({

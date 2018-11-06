@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Profile from "../Components/ProfileComponet";
+import Profile from "../Components/ProfileComponent";
 import { saveProfile } from "../Actions/ProfileAction";
 
 const mapStateToProps = state => ({

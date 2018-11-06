@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import CreateContact from "../Components/CreateContactComponet";
+import CreateContact from "../Components/CreateContactComponent";
 import { addContact, editContact, updateForm } from "../Actions/ContactAction";
 
 
@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
   name: state.contacts.name,
   phone: state.contacts.phone,
   favourite: state.contacts.favourite,
-})
+});
 
 const mapDispatchToProps = dispatch => ({
   addContact: contact => {

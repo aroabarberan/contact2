@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import ImageAvatars from "../Components/ImageAvatarComponet";
+import ImageAvatars from "../Components/ImageAvatarComponent";
 import { saveProfile } from "../Actions/ProfileAction";
 
 const mapStateToProps = state => ({

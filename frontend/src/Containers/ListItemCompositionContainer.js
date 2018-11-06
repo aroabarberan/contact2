@@ -1,7 +1,18 @@
 import { connect } from 'react-redux';
 import ListItemComposition from "../Components/ListItemCompositionComponent";
-import { addContact, editContact, deleteContact, updateForm } from "../Actions/ContactAction";
+import { 
+  addContact, editContact, deleteContact, updateForm 
+} from "../Actions/ContactAction";
 
+const mapStateToProps = state => ({
+  profile: state.profile,
+  contacts: state.contacts,
+  form : state.contacts.form,
+  sub: state.contacts.sub,
+  name: state.contacts.name,
+  phone: state.contacts.phone,
+  favourite: state.contacts.favourite,
+});
 
 const mapDispatchToProps = dispatch => ({
   addContact: contact => {
@@ -18,4 +29,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(ListItemComposition)
+export default connect(mapStateToProps, mapDispatchToProps)(ListItemComposition)

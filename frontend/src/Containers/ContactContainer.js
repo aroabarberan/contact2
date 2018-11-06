@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Contact from "../Components/ContactComponet";
+import Contact from "../Components/ContactComponent";
 import { 
   addContact, editContact, sortContactsByFavourite, updateForm 
 } from "../Actions/ContactAction";
