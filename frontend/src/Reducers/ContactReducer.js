@@ -1,31 +1,32 @@
 const initialState = {
   contacts: [
-    {
-      id: 0,
-      sub: 'google-contact|02948184719284712897012',
-      name: 'Patatin',
-      phone: '123123123124241',
-      favourite: "true",
-    },
+    // {
+    //   id: 0,
+    //   sub: 'google-contact|02948184719284712897012',
+    //   name: 'Puribum',
+    //   phone: '123123123124241',
+    //   favourite: 0,
+    // },
+
     // {
     //   id: 1,
     //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Blablin',
-    //   phone: '398472398',
+    //   name: 'Zaaam',
+    //   phone: '9123893423423',
     //   favourite: 1,
     // },
     // {
     //   id: 2,
     //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Zaaam',
-    //   phone: '9123893423423',
+    //   name: 'Patatin',
+    //   phone: '896332',
     //   favourite: 0,
     // },
     // {
     //   id: 3,
     //   sub: 'google-contact|02948184719284712897012',
-    //   name: 'Puribum',
-    //   phone: '896332',
+    //   name: 'Blablin',
+    //   phone: '398472398',
     //   favourite: 1,
     // },
     // {
@@ -64,6 +65,7 @@ export default (state = initialState, action) => {
 
     case 'DELETE_CONTACT':
       return {
+        ...state,
         contacts: state.contacts.filter((c => c.id !== action.payload))
       };
 
@@ -81,7 +83,7 @@ export default (state = initialState, action) => {
     case 'SORT_CONTACTS_BY_FAVOURITE':
       let contacts = [...state.contacts]
       return {
-        contacts: contacts.sort((a, b) => (a.favourite.toLocaleLowerCase() > b.favourite.toLocaleLowerCase()) ? 1 : 0),
+        contacts: contacts.sort((a, b) => (a.favourite > b.favourite) ? 1 : 0),
       };
 
     case 'LIST_ALL_CONTACTS':
