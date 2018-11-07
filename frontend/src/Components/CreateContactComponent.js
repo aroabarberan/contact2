@@ -14,8 +14,6 @@ class CreateContact extends Component {
     this.state = {
       open: false,
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.submit = this.submit.bind(this)
   }
 
   componentWillMount() {
@@ -38,16 +36,16 @@ class CreateContact extends Component {
     this.setState({ open: false });
   }
 
-  handleChange(evt) {
+  handleChange = (evt) => {
     this.props.updateForm({
       name: this.props.form.create.name,
       phone: this.props.form.create.phone,
-      favourite: false,
+      favourite: 0,
       [evt.target.name]: evt.target.value
     });
   }
 
-  submit(evt) {
+  submit = (evt) => {
     evt.preventDefault();
     const { name, phone, favourite } = this.props.form.create;
     const sub = this.state.profile.sub;

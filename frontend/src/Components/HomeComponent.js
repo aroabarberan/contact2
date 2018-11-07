@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Contact from "./ContactComponet";
+import Contact from "./ContactComponent";
 import { 
   Paper, Typography, withStyles 
 } from '@material-ui/core';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Tooltip } from '@material-ui/core';
-import MiniDrawer from "./MiniDrawerComponet";
+import MiniDrawer from "./MiniDrawerComponent";
 import CreateContact from "../Containers/CreateContactContainer";
 
 class App extends Component {

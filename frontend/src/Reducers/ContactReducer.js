@@ -57,6 +57,7 @@ export default (state = initialState, action) => {
 
     case 'EDIT_CONTACT':
       return {
+        ...state,
         contacts: [...state.contacts.map((contact => {
           if (contact.id === action.payload) contact = action.value;
           return contact

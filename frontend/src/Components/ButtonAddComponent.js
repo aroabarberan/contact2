@@ -4,13 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 
-const styles = theme => ({
-  absolute: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 3,
-  },
-});
 
 function ButtonAdd(props) {
   const { classes } = props;
@@ -25,6 +18,14 @@ function ButtonAdd(props) {
     </div>
   )
 };
+
+const styles = theme => ({
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
+  },
+});
 
 ButtonAdd.propTypes = {
   classes: PropTypes.object.isRequired,

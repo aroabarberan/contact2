@@ -17,9 +17,9 @@ import {
 } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 
-import ImageAvatar from "../Components/ImageAvatarComponet";
+import ImageAvatar from "./ImageAvatarComponent";
 import Home from '../Containers/HomeContainer';
-import Search from './SearchComponet';
+import Search from './SearchComponent';
 
 
 class MiniDrawer extends React.Component {
@@ -31,7 +31,6 @@ class MiniDrawer extends React.Component {
       anchorEl: null,
       mobileMoreAnchorEl: null,
     };
-    this.handleClose = this.handleClose.bind(this);
   }
   componentWillMount() {
     this.setState({ profile: {} });
@@ -76,7 +75,7 @@ class MiniDrawer extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
-  handleClose() {
+  handleClose = () => {
     this.props.auth.logout()
   };
 
@@ -140,8 +139,9 @@ class MiniDrawer extends React.Component {
             </Typography>
 
             <div className={classes.search}>
-              <Search
-                classes={{ root: classes.inputRoot, input: classes.inputInput }}
+              <Search 
+              // className={classNames(classes.menuButton, classes.inputRoot, classes.inputInput)} don't work
+              // classes={{ root: classes.inputRoot, input: classes.inputInput }}
               />
             </div>
 
