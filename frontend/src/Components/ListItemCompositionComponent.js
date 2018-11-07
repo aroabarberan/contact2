@@ -17,16 +17,15 @@ const url_getContact = 'http://localhost:3010/api/contacts/';
 
 
 class ListItemComposition extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       openEdit: false,
       favourite: 0,
-      contact: {},
       anchorEl: null,
+      contact: this.props.contact
     };
   }
-
   componentWillMount() {
     this.setState({ profile: {} });
     const { userProfile, getProfile } = this.props.auth;
@@ -39,9 +38,10 @@ class ListItemComposition extends React.Component {
     }
   }
 
-  handleOpenEdit = (contact) => {
-    this.setState({ openEdit: true, contact, favourite: contact.favourite });
+  handleOpenEdit = () => {
+    // this.setState({ openEdit: true, contact, favourite: contact.favourite });
     this.handleClose();
+    this.setState({ openEdit: true });
   }
 
   handleCloseEdit = () => {
@@ -56,16 +56,29 @@ class ListItemComposition extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  handleChange = (evt) => {
-    this.setState({ contact: { [evt.target.name]: evt.target.value } })
+  // handleChange = (evt) => {
+  //   this.setState({ contact: { [evt.target.name]: evt.target.value } })
 
+  //   this.props.updateForm({
+  //     name: this.state.contact.name,
+  //     phone: this.state.contact.phone,
+  //     favourite: this.state.favourite,
+  //     [evt.target.name]: evt.target.value
+  //   });
+  // }
+
+  handleChange = name => evt => {
+    this.setState({
+      [name]: evt.target.value,
+    });
     this.props.updateForm({
-      name: this.props.form.create.name,
-      phone: this.props.form.create.phone,
+      name: this.state.contact.name,
+      phone: this.state.contact.phone,
       favourite: this.state.favourite,
       [evt.target.name]: evt.target.value
     });
-  }
+  };
+
 
   delete = () => {
     const token = this.props.auth.getAccessToken();
@@ -89,7 +102,6 @@ class ListItemComposition extends React.Component {
     const sub = this.state.profile.sub;
     const token = this.props.auth.getAccessToken();
     const id = this.props.contact.id;
-    console.log(id, name, phone)
 
 
     fetch('http://localhost:3010/api/contacts/' + id, {
@@ -149,7 +161,7 @@ class ListItemComposition extends React.Component {
               </MenuItem>
 
               <MenuItem
-                onClick={() => this.handleOpenEdit(contact)}
+                onClick={this.handleOpenEdit}
                 className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
                   <Edit variant="fab" aria-label="Edit" className={classes.icon} />
@@ -194,8 +206,8 @@ class ListItemComposition extends React.Component {
               name="name"
               label="Name"
               type="text"
-              value={this.state.contact.name}
-              onChange={this.handleChange}
+              defaultValue={this.state.contact.name}
+              onChange={this.handleChange('name')}
             />
           </DialogContent>
           <DialogContent>
@@ -204,8 +216,8 @@ class ListItemComposition extends React.Component {
               name="phone"
               label="Phone"
               type="text"
-              value={this.state.contact.phone}
-              onChange={this.handleChange}
+              defaultValue={this.state.contact.phone}
+              onChange={this.handleChange('phone')}
             />
           </DialogContent>
           <DialogActions>
@@ -246,9 +258,9 @@ const styles = theme => ({
     fontSize: 13,
     fontFamily: "Roboto, Arial, sans-serif"
   }
-// Roboto,Arial,sans-serifbody
-// Roboto, RobotoDraft, Helvetica, Arial, sans-serifbody
-// Roboto,RobotoDraft,Helvetica,Arial,sans-serifbody
+  // Roboto,Arial,sans-serifbody
+  // Roboto, RobotoDraft, Helvetica, Arial, sans-serifbody
+  // Roboto,RobotoDraft,Helvetica,Arial,sans-serifbody
 });
 
 ListItemComposition.propTypes = {
