@@ -32,11 +32,9 @@ Route::post('/addContacts', function(Request $request) {
     return "Contact created correctly";
 })->middleware('jwt');
 
-//TODO
 Route::put('/contacts/{id}', function(Request $request, $id) {
     $contact = Contact::find($id);
     $contact->update($request->all());
-    return "Contact updated correctly";
 });
 
 Route::delete('/contacts/{id}', function($id) {
