@@ -21,15 +21,53 @@ class ListItemComposition extends React.Component {
     super()
     this.state = {
       openEdit: false,
-      contact: [],
+      favourite: 0,
+      contact: {},
       anchorEl: null,
     };
-    this.delete = this.delete.bind(this);
-    this.submit = this.submit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  delete() {
+  componentWillMount() {
+    this.setState({ profile: {} });
+    const { userProfile, getProfile } = this.props.auth;
+    if (!userProfile) {
+      getProfile((err, profile) => {
+        this.setState({ profile });
+      });
+    } else {
+      this.setState({ profile: userProfile });
+    }
+  }
+
+  handleOpenEdit = (contact) => {
+    this.setState({ openEdit: true, contact, favourite: contact.favourite });
+    this.handleClose();
+  }
+
+  handleCloseEdit = () => {
+    this.setState({ openEdit: false });
+  }
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleClose = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleChange = (evt) => {
+    this.setState({ contact: { [evt.target.name]: evt.target.value } })
+
+    this.props.updateForm({
+      name: this.props.form.create.name,
+      phone: this.props.form.create.phone,
+      favourite: this.state.favourite,
+      [evt.target.name]: evt.target.value
+    });
+  }
+
+  delete = () => {
     const token = this.props.auth.getAccessToken();
     const { contact } = this.props;
 
@@ -45,57 +83,29 @@ class ListItemComposition extends React.Component {
     this.handleClose();
   }
 
-  handleOpenEdit = (contact) => {
-    this.setState({ openEdit: true, contact });
-  }
-
-  handleCloseEdit = () => {
-    this.setState({ openEdit: false });
-  }
-
-  handleClick = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
-  handleChange(evt) {
-    this.setState({ contact: { [evt.target.name]: evt.target.value } })
-    this.props.updateForm({
-      // name: this.state.contact.name,
-      // phone: this.state.contact.phone,
-      // favourite: this.state.contact.favourite,
-      [evt.target.name]: evt.target.value
-    });
-    console.log(this.state)
-  }
-
-  submit(evt) {
+  submit = evt => {
     evt.preventDefault();
-    // console.log(this.props)
-    // const sub = this.state.profile.sub;
-    // const token = this.props.auth.getAccessToken();
-    // api/contacts/{id}
-    // const token = this.props.auth.getAccessToken();
-    // const id = this.props.idContact;
+    const { name, phone, favourite } = this.props.form.create;
+    const sub = this.state.profile.sub;
+    const token = this.props.auth.getAccessToken();
+    const id = this.props.contact.id;
+    console.log(id, name, phone)
 
 
-    // fetch('http://localhost:3010/api/contacts/' + id, {
-    //   method: "PUT",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-type': 'application/json',
-    //     'Authorization': 'Bearer ' + token,
-    //   },
-    //   // body: JSON.stringify({ sub, name, phone }),
-    // })
-    //   .then(res => res.text())
-    //   .catch(console.log);
+    fetch('http://localhost:3010/api/contacts/' + id, {
+      method: "PUT",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+      body: JSON.stringify({ id, sub, name, phone, favourite }, id),
+    })
+      .then(res => res.text())
+      .then(console.log)
+      .catch(console.log);
 
-    // this.props.editContact(id, contact);
-    this.handleClose();
+    this.props.editContact(id, { id, sub, name, phone, favourite });
     this.handleCloseEdit();
   }
 
@@ -106,12 +116,8 @@ class ListItemComposition extends React.Component {
 
     return (
       <div>
-        <IconButton
-          aria-label="More"
-          aria-owns={open ? 'long-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-        >
+        <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
+          aria-haspopup="true" onClick={this.handleClick} >
           <MoreVertIcon />
         </IconButton>
         <Menu
@@ -168,11 +174,8 @@ class ListItemComposition extends React.Component {
                 <ListItemIcon>
                   <Label />
                 </ListItemIcon>
-                <ListItemText >
-                  Patata
-                </ListItemText>
+                <ListItemText primary="Patata" />
               </MenuItem>
-
             </MenuList>
           </Paper>
         </Menu>
@@ -206,7 +209,7 @@ class ListItemComposition extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">Cancel</Button>
+            <Button onClick={this.handleCloseEdit} color="primary">Cancel</Button>
             <Button onClick={this.submit} color="primary">Send</Button>
           </DialogActions>
         </Dialog>
@@ -224,6 +227,7 @@ const styles = theme => ({
     paddingBottom: theme.spacing.unit * 2,
   },
   icon: {
+    color: '#757575',
     // margin: theme.spacing.unit,
     // fontSize: 22,
   },
@@ -237,8 +241,14 @@ const styles = theme => ({
   },
   primary: {},
   title: {
-    fontSize: 12,
+    margin: '10px 20px',
+    color: '#757575;',
+    fontSize: 13,
+    fontFamily: "Roboto, Arial, sans-serif"
   }
+// Roboto,Arial,sans-serifbody
+// Roboto, RobotoDraft, Helvetica, Arial, sans-serifbody
+// Roboto,RobotoDraft,Helvetica,Arial,sans-serifbody
 });
 
 ListItemComposition.propTypes = {
