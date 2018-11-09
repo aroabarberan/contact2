@@ -24,7 +24,7 @@ const styles = {
     justifyContent: 'center',
   },
   avatar: {
-    margin: 10,
+    margin: 0,
   },
 }
 

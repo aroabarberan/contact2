@@ -138,12 +138,12 @@ class MiniDrawer extends React.Component {
               Book Contact
             </Typography>
 
-            <div className={classes.search}>
+            {/* <div className={classes.search}>
               <Search 
               // className={classNames(classes.menuButton, classes.inputRoot, classes.inputInput)} don't work
               // classes={{ root: classes.inputRoot, input: classes.inputInput }}
               />
-            </div>
+            </div> */}
 
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>

@@ -26,20 +26,8 @@ class ListItemComposition extends React.Component {
       contact: this.props.contact
     };
   }
-  componentWillMount() {
-    this.setState({ profile: {} });
-    const { userProfile, getProfile } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
-      });
-    } else {
-      this.setState({ profile: userProfile });
-    }
-  }
 
   handleOpenEdit = () => {
-    // this.setState({ openEdit: true, contact, favourite: contact.favourite });
     this.handleClose();
     this.setState({ openEdit: true });
   }
@@ -55,17 +43,6 @@ class ListItemComposition extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
-  // handleChange = (evt) => {
-  //   this.setState({ contact: { [evt.target.name]: evt.target.value } })
-
-  //   this.props.updateForm({
-  //     name: this.state.contact.name,
-  //     phone: this.state.contact.phone,
-  //     favourite: this.state.favourite,
-  //     [evt.target.name]: evt.target.value
-  //   });
-  // }
 
   handleChange = name => evt => {
     this.setState({
@@ -99,7 +76,7 @@ class ListItemComposition extends React.Component {
   submit = evt => {
     evt.preventDefault();
     const { name, phone, favourite } = this.props.form.create;
-    const sub = this.state.profile.sub;
+    const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
     const id = this.props.contact.id;
 
@@ -146,7 +123,7 @@ class ListItemComposition extends React.Component {
         >
           <Paper>
             <MenuList>
-              <MenuItem className={classes.menuItem}>
+              {/* <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
                   <CloudDownload />
                 </ListItemIcon>
@@ -158,7 +135,7 @@ class ListItemComposition extends React.Component {
                   <Archive />
                 </ListItemIcon>
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Hidden" />
-              </MenuItem>
+              </MenuItem> */}
 
               <MenuItem
                 onClick={this.handleOpenEdit}
