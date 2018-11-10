@@ -30,6 +30,10 @@ Route::post('/addContacts', function(Request $request) {
     $contact->phone = $request['phone'];
     $contact->favourite = $request['favourite'];
     $contact->save();
+    return response()->json([
+        'status' => 'The contact is created successfully',
+        'contact' => DB::select('select * from contacts')->order_by('created_at', 'desc')->first()
+    ], 201);
 })->middleware('jwt');
 
 Route::put('/contacts/{id}', function(Request $request, $id) {
@@ -39,6 +43,5 @@ Route::put('/contacts/{id}', function(Request $request, $id) {
 
 Route::delete('/contacts/{id}', function($id) {
     Contact::find($id)->delete();
-    return "Contact delete correctly";
 })->middleware('jwt');
 
