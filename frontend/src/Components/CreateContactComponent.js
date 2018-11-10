@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
+
 import {
-  Divider, Button, TextField,Dialog, DialogTitle, 
+  Divider, Button, TextField, Dialog, DialogTitle,
   DialogActions, DialogContent, withStyles, DialogContentText
 } from '@material-ui/core';
 
+const url_addContact = 'http://localhost:3010/api/addContacts';
 
 class CreateContact extends Component {
   constructor() {
@@ -35,12 +37,14 @@ class CreateContact extends Component {
 
   submit = (evt) => {
     evt.preventDefault();
+    const id = null;
     const { name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
     const avatar = "";
 
-    fetch('http://localhost:3010/api/addContacts', {
+
+    fetch(url_addContact, {
       method: "POST",
       headers: {
         'Accept': 'application/json',

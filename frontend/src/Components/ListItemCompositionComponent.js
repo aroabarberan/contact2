@@ -50,6 +50,7 @@ class ListItemComposition extends React.Component {
     });
     this.props.updateForm({
       name: this.state.contact.name,
+      avatar: "",
       phone: this.state.contact.phone,
       favourite: this.state.favourite,
       [evt.target.name]: evt.target.value
@@ -79,6 +80,7 @@ class ListItemComposition extends React.Component {
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
     const id = this.props.contact.id;
+    const avatar = '';
 
 
     fetch('http://localhost:3010/api/contacts/' + id, {
@@ -88,21 +90,20 @@ class ListItemComposition extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
-      body: JSON.stringify({ id, sub, name, phone, favourite }, id),
+      body: JSON.stringify({ id, sub, avatar, name, phone, favourite }, id),
     })
       .then(res => res.text())
       .then(console.log)
       .catch(console.log);
 
-    this.props.editContact(id, { id, sub, name, phone, favourite });
+    this.props.editContact(id, { id, sub, avatar, name, phone, favourite });
     this.handleCloseEdit();
   }
 
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes } = this.props;
-
+    const { classes, contact } = this.props;
     return (
       <div>
         <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}

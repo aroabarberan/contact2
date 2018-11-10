@@ -9,6 +9,7 @@ const mapStateToProps = state => ({
   contacts: state.contacts,
   form : state.contacts.form,
   sub: state.contacts.sub,
+  avatar: state.contacts.avatar,
   name: state.contacts.name,
   phone: state.contacts.phone,
   favourite: state.contacts.favourite,
