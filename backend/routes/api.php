@@ -26,11 +26,10 @@ Route::post('/addContacts', function(Request $request) {
     $contact = new Contact;
     $contact->user = $request['sub'];
     $contact->name = $request['name'];
-    $contact->filename = $request['filename'];
+    $contact->avatar = $request['avatar'];
     $contact->phone = $request['phone'];
     $contact->favourite = $request['favourite'];
     $contact->save();
-    // return response()->json($request);
 })->middleware('jwt');
 
 Route::put('/contacts/{id}', function(Request $request, $id) {
