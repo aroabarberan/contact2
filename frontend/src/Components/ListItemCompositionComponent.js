@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import CloudDownload from "@material-ui/icons/CloudDownload";
-import Archive from "@material-ui/icons/Archive";
+// import CloudDownload from "@material-ui/icons/CloudDownload";
+// import Archive from "@material-ui/icons/Archive";
 import Label from "@material-ui/icons/Label";
 import Edit from '@material-ui/icons/Edit';
 import {
@@ -101,7 +101,7 @@ class ListItemComposition extends React.Component {
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, contact } = this.props;
+    const { classes } = this.props;
 
     return (
       <div>

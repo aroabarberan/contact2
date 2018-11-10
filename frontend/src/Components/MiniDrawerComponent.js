@@ -19,7 +19,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import ImageAvatar from "./ImageAvatarComponent";
 import Home from '../Containers/HomeContainer';
-import Search from './SearchComponent';
+// import Search from './SearchComponent';
 
 
 class MiniDrawer extends React.Component {
@@ -183,14 +183,15 @@ class MiniDrawer extends React.Component {
           <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <InboxIcon />
-              <Typography className={classes.heading}>General settings</Typography>
-              <Typography className={classes.secondaryHeading}>BLIN</Typography>
+
+              {/* <Typography className={classes.heading}>Contacts</Typography> */}
+              {/* <Typography className={classes.secondaryHeading}>BLIN</Typography> */}
             </ExpansionPanelSummary>
-            <ExpansionPanelDetails>
+            {/* <ExpansionPanelDetails>
               <Typography>
                 Bla
             </Typography>
-            </ExpansionPanelDetails>
+            </ExpansionPanelDetails> */}
           </ExpansionPanel>
         </Drawer>
 

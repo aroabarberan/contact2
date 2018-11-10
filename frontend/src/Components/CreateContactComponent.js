@@ -38,7 +38,7 @@ class CreateContact extends Component {
     const { name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
-    const filename = "";
+    const avatar = "";
 
     fetch('http://localhost:3010/api/addContacts', {
       method: "POST",
@@ -47,13 +47,13 @@ class CreateContact extends Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
-      body: JSON.stringify({ sub, filename, name, phone, favourite }),
+      body: JSON.stringify({ sub, avatar, name, phone, favourite }),
     })
       .then(res => res.text())
       .then(console.log)
       .catch(console.log);
 
-    this.props.addContact({ sub, filename, name, phone, favourite });
+    this.props.addContact({ sub, avatar, name, phone, favourite });
     this.handleClose();
   }
 
