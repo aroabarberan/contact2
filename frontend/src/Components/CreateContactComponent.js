@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+
 import {
   Divider, Button, TextField, Dialog, DialogTitle,
   DialogActions, DialogContent, withStyles, DialogContentText
@@ -37,7 +49,6 @@ class CreateContact extends Component {
 
   submit = (evt) => {
     evt.preventDefault();
-    const id = null;
     const { name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
@@ -53,11 +64,10 @@ class CreateContact extends Component {
       },
       body: JSON.stringify({ sub, avatar, name, phone, favourite }),
     })
-      .then(res => res.text())
-      .then(console.log)
+      .then(res => res.json())
+      .then(data => this.props.addContact(data.contact))
       .catch(console.log);
 
-    this.props.addContact({ sub, avatar, name, phone, favourite });
     this.handleClose();
   }
 

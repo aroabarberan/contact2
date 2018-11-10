@@ -43,7 +43,7 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     const { contacts } = this.props.contacts;
-
+    console.log(contacts)
     return (
       <div>
         <Typography className={classes.title}>Contacts</Typography>

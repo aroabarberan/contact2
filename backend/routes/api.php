@@ -30,9 +30,11 @@ Route::post('/addContacts', function(Request $request) {
     $contact->phone = $request['phone'];
     $contact->favourite = $request['favourite'];
     $contact->save();
+
     return response()->json([
+        'code' => 201,
         'status' => 'The contact is created successfully',
-        'contact' => DB::select('select * from contacts')->order_by('created_at', 'desc')->first()
+        'contact' => DB::select('select * from contacts order by created_at desc')[0],
     ], 201);
 })->middleware('jwt');
 
