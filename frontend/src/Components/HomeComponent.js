@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Contact from "./ContactComponent";
-import { 
-  Paper, Typography, withStyles 
+import {
+  Grid, Paper, Typography, withStyles
 } from '@material-ui/core';
 
 const url_getContact = 'http://localhost:3010/api/contacts/';
@@ -31,10 +31,6 @@ class Home extends Component {
           .then(res => res.json())
           .then(contacts => contacts.map(contact => this.props.addContact(contact)))
           .catch(console.log)
-
-        const token = getAccessToken();
-        const { sub, nickname, name, picture, updated_at } = profile;
-        this.props.saveProfile({ sub, nickname, name, picture, updated_at, token })
       });
     } else {
       this.setState({ profile: userProfile });
@@ -43,17 +39,23 @@ class Home extends Component {
   render() {
     const { classes } = this.props;
     const { contacts } = this.props.contacts;
-    console.log(contacts)
     return (
       <div>
         <Typography className={classes.title}>Contacts</Typography>
-          <Paper className={classes.paper} elevation={1}>
-            {contacts.map((contact, i) =>
-              <div key={i}>
-                <Contact auth={this.props.auth} contact={contact} />
-              </div>
-            )}
-          </Paper>
+        <Paper className={classes.paper} elevation={1}>
+          <Grid container direction="row" justify="space-between"
+            alignItems="center" spacing={24}>
+            <Grid item>Name</Grid>
+            <Grid item>Phone</Grid>
+            <Grid item>Setting</Grid>
+          </Grid>
+          {contacts.map((contact, i) =>
+            <div key={i}>
+              <Contact auth={this.props.auth} contact={contact} />
+            </div>
+          )}
+
+        </Paper>
       </div>
     );
   }

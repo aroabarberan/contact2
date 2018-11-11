@@ -3,17 +3,6 @@ import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import {
   Divider, Button, TextField, Dialog, DialogTitle,
@@ -38,8 +27,26 @@ class CreateContact extends Component {
     this.setState({ open: false });
   }
 
+  changeAvatar = evt => {
+    let files = evt.target.files || evt.dataTransfer.files;
+    if (!files.length)
+      return;
+    this.createImage(files[0]);
+  }
+
+  createImage = file => {
+    let reader = new FileReader();
+    reader.onload = (evt) => {
+      this.props.updateForm({
+        avatar: evt.target.result
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
   handleChange = (evt) => {
     this.props.updateForm({
+      avatar: this.props.form.create.avatar,
       name: this.props.form.create.name,
       phone: this.props.form.create.phone,
       favourite: 0,
@@ -49,11 +56,9 @@ class CreateContact extends Component {
 
   submit = (evt) => {
     evt.preventDefault();
-    const { name, phone, favourite } = this.props.form.create;
+    const { avatar, name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
-    const avatar = "";
-
 
     fetch(url_addContact, {
       method: "POST",
@@ -67,7 +72,6 @@ class CreateContact extends Component {
       .then(res => res.json())
       .then(data => this.props.addContact(data.contact))
       .catch(console.log);
-
     this.handleClose();
   }
 
@@ -86,6 +90,17 @@ class CreateContact extends Component {
         >
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
+
+
+          <DialogContent>
+            <TextField
+              margin="normal"
+              name="avatar"
+              label="Avatar"
+              type="file"
+              onChange={this.changeAvatar}
+            />
+          </DialogContent>
           <DialogContent>
             <TextField
               autoFocus
@@ -108,7 +123,7 @@ class CreateContact extends Component {
           <DialogContentText name="favourite" label="Favourite" type="text" onChange={this.handleChange} />
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">Cancel</Button>
-            <Button onClick={this.submit} color="primary">Send</Button>
+            <Button onClick={this.submit} color="primary">Save</Button>
           </DialogActions>
         </Dialog>
       </div>

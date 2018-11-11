@@ -39,6 +39,7 @@ const initialState = {
   ],
   form: {
     create: {
+      avatar: '',
       name: '',
       phone: '',
       favourite: '',

@@ -1,21 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import InboxIcon from '@material-ui/icons/Inbox';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import MailIcon from '@material-ui/icons/Mail';
 
 import {
-  ExpansionPanel, ExpansionPanelDetails, ExpansionPanelSummary,
+  ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
   Menu, MenuItem, withStyles
 } from '@material-ui/core';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 
 import ImageAvatar from "./ImageAvatarComponent";
 import Home from '../Containers/HomeContainer';
@@ -80,7 +80,7 @@ class MiniDrawer extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes } = this.props;
     const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -121,23 +121,14 @@ class MiniDrawer extends React.Component {
     return (
 
       <div className={classes.root}>
-        <AppBar
-          position="fixed"
-          className={classNames(classes.appBar, this.state.open && classes.appBarShift)}
-        >
-          <Toolbar disableGutters={!this.state.open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(classes.menuButton, this.state.open && classes.hide)}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
+        <CssBaseline />
+        <AppBar position="fixed" className={classes.appBar} >
+          <Toolbar>
+            <Typography variant="h6" color="inherit" noWrap>
               Book Contact
-            </Typography>
+          </Typography>
 
+            {/* SEARCH!!! */}
             {/* <div className={classes.search}>
               <Search 
               // className={classNames(classes.menuButton, classes.inputRoot, classes.inputInput)} don't work
@@ -165,37 +156,53 @@ class MiniDrawer extends React.Component {
           </Toolbar>
         </AppBar>
 
-
-
-        <Drawer variant="permanent"
-          classes={{
-            paper: classNames(classes.drawerPaper, !this.state.open &&
-              classes.drawerPaperClose),
-          }}
-          open={this.state.open}
+        <Drawer
+          className={classes.drawer}
+          variant="permanent"
+          classes={{ paper: classes.drawerPaper }}
         >
-          <div className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerClose}>
-              {theme.direction === 'rtl' ? <ChevronRightIcon /> :
-                <ChevronLeftIcon />}
-            </IconButton>
-          </div>
-          <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+          <div className={classes.toolbar} />
+          <List>
+            <ListItem>
               <InboxIcon />
+              <ListItemText>Inbox</ListItemText>
+            </ListItem>
 
-              {/* <Typography className={classes.heading}>Contacts</Typography> */}
-              {/* <Typography className={classes.secondaryHeading}>BLIN</Typography> */}
-            </ExpansionPanelSummary>
-            {/* <ExpansionPanelDetails>
-              <Typography>
-                Bla
-            </Typography>
-            </ExpansionPanelDetails> */}
-          </ExpansionPanel>
+            <ListItem>
+              <InboxIcon />
+              <ListItemText>Inbox</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <InboxIcon />
+              <ListItemText>Inbox</ListItemText>
+            </ListItem>
+
+            <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <MailIcon />
+                <ListItemText>Mail</ListItemText>
+              </ExpansionPanelSummary>
+              <List>
+                <ListItem>
+                  <InboxIcon />
+                  <ListItemText>Mail</ListItemText>
+                </ListItem>
+              </List>
+            </ExpansionPanel>
+
+            <ListItem>
+              <InboxIcon />
+              <ListItemText>Inbox</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <InboxIcon />
+              <ListItemText>Inbox</ListItemText>
+            </ListItem>
+
+          </List>
         </Drawer>
-
-
         {renderMenu}
         {renderMobileMenu}
 
@@ -212,69 +219,23 @@ const drawerWidth = 240
 
 const styles = theme => ({
   root: {
-    width: '100%',
-    flexGrow: 1,
-    height: '100%',
-    zIndex: 1,
-    overflow: 'hidden',
-    position: 'relative',
     display: 'flex',
   },
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginLeft: 12,
-    marginRight: 36,
   },
   hide: {
     display: 'none',
   },
   drawerPaper: {
-    position: 'relative',
-    whiteSpace: 'nowrap',
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing.unit * 7,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+  toolbar: theme.mixins.toolbar,
 
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
@@ -283,43 +244,8 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
+  toolbar: theme.mixins.toolbar,
 
-  title: {
-    display: 'none',
-    [theme.breakpoints.up('sm')]: {
-      display: 'block',
-    },
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing.unit * 2,
-    marginLeft: 0,
-    width: '60%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing.unit * 3,
-    },
-  },
-
-  inputRoot: {
-    color: 'inherit',
-    width: '100%',
-  },
-  inputInput: {
-    paddingTop: theme.spacing.unit,
-    paddingRight: theme.spacing.unit,
-    paddingBottom: theme.spacing.unit,
-    paddingLeft: theme.spacing.unit * 10,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 200,
-    },
-  },
   absolute: {
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
@@ -337,15 +263,7 @@ const styles = theme => ({
       display: 'none',
     },
   },
-  heading: {
-    fontSize: theme.typography.pxToRem(15),
-    flexBasis: '33.33%',
-    flexShrink: 0,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-  },
+
 });
 
 MiniDrawer.propTypes = {

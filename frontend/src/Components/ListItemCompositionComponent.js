@@ -11,6 +11,7 @@ import {
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 
 
 const url_getContact = 'http://localhost:3010/api/contacts/';
@@ -20,6 +21,7 @@ class ListItemComposition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      avatar: '',
       openEdit: false,
       favourite: 0,
       anchorEl: null,
@@ -44,14 +46,34 @@ class ListItemComposition extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  changeAvatar = evt => {
+    let files = evt.target.files || evt.dataTransfer.files;
+    if (!files.length)
+      return;
+    this.createImage(files[0]);
+  }
+
+  createImage = file => {
+    let reader = new FileReader();
+    reader.onload = (evt) => {
+      this.setState({
+        avatar: evt.target.result
+      })
+      this.props.updateForm({
+        avatar: evt.target.result
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
   handleChange = name => evt => {
     this.setState({
       [name]: evt.target.value,
     });
     this.props.updateForm({
-      name: this.state.contact.name,
-      avatar: "",
-      phone: this.state.contact.phone,
+      name: this.props.contact.name,
+      avatar: this.props.contact.avatar,
+      phone: this.props.contact.phone,
       favourite: this.state.favourite,
       [evt.target.name]: evt.target.value
     });
@@ -76,11 +98,10 @@ class ListItemComposition extends React.Component {
 
   submit = evt => {
     evt.preventDefault();
-    const { name, phone, favourite } = this.props.form.create;
+    const { avatar, name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
     const id = this.props.contact.id;
-    const avatar = '';
 
 
     fetch('http://localhost:3010/api/contacts/' + id, {
@@ -92,8 +113,8 @@ class ListItemComposition extends React.Component {
       },
       body: JSON.stringify({ id, sub, avatar, name, phone, favourite }, id),
     })
-      .then(res => res.text())
-      .then(console.log)
+      .then(res => res.json())
+      // .then(data => this.props.editContact(data.contact.id, data.contact))
       .catch(console.log);
 
     this.props.editContact(id, { id, sub, avatar, name, phone, favourite });
@@ -103,7 +124,7 @@ class ListItemComposition extends React.Component {
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, contact } = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
@@ -115,12 +136,7 @@ class ListItemComposition extends React.Component {
           anchorEl={anchorEl}
           open={open}
           onClose={this.handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: 256,
-            },
-          }}
+          PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 256, }, }}
         >
           <Paper>
             <MenuList>
@@ -179,12 +195,21 @@ class ListItemComposition extends React.Component {
           <Divider />
           <DialogContent>
             <TextField
-              autoFocus
+              margin="normal"
+              name="avatar"
+              label="Avatar"
+              type="file"
+              // defaultValue={this.state.contact.avatar} TO FIX
+              onChange={this.changeAvatar}
+            />
+          </DialogContent>
+          <DialogContent>
+            <TextField
               margin="normal"
               name="name"
               label="Name"
               type="text"
-              defaultValue={this.state.contact.name}
+              defaultValue={this.props.contact.name}
               onChange={this.handleChange('name')}
             />
           </DialogContent>
@@ -194,7 +219,7 @@ class ListItemComposition extends React.Component {
               name="phone"
               label="Phone"
               type="text"
-              defaultValue={this.state.contact.phone}
+              defaultValue={this.props.contact.phone}
               onChange={this.handleChange('phone')}
             />
           </DialogContent>
