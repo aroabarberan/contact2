@@ -23,17 +23,18 @@ Route::post('/contacts', function (Request $request) {
 
 
 Route::post('/addContacts', function(Request $request) {
-    if($request['avatar'])
-    {
-       $image = $request['avatar'];
-       $position = strpos($image, ';');
-       $name = time().'.' . explode('/', explode(':', substr($image, 0, $position))[1])[1];
-       \Image::make($request['avatar'])->save(public_path('images/').$name);
-     }
+    // if($request['avatar'])
+    // {
+    //    $image = $request['avatar'];
+    //    $position = strpos($image, ';');
+    //    $name = time().'.' . explode('/', explode(':', substr($image, 0, $position))[1])[1];
+    //    \Image::make($request['avatar'])->save(public_path('images/').$name);
+    //  }
     $contact = new Contact;
     $contact->user = $request['sub'];
     $contact->name = $request['name'];
-    $contact->avatar = $name;
+    // $contact->avatar = $name;
+    $contact->avatar = $request['avatar'];
     $contact->phone = $request['phone'];
     $contact->favourite = $request['favourite'];
     $contact->save();
@@ -51,7 +52,7 @@ Route::put('/contacts/{id}', function(Request $request, $id) {
     return response()->json([
         'code' => 204,
         'status' => 'The contact is update successfully',
-        // 'contact' => DB::select('select * from contacts order by created_at desc')[0],
+        'contact' => DB::select('select * from contacts order by created_at desc')[0],
     ], 201);
 });
 
