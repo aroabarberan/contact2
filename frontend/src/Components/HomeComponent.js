@@ -41,14 +41,7 @@ class Home extends Component {
     const { contacts } = this.props.contacts;
     return (
       <div>
-        <Typography className={classes.title}>Contacts</Typography>
         <Paper className={classes.paper} elevation={1}>
-          <Grid container direction="row" justify="space-between"
-            alignItems="center" spacing={24}>
-            <Grid item>Name</Grid>
-            <Grid item>Phone</Grid>
-            <Grid item>Setting</Grid>
-          </Grid>
           {contacts.map((contact, i) =>
             <div key={i}>
               <Contact auth={this.props.auth} contact={contact} />
@@ -67,11 +60,6 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
   },
-  title: {
-    paddingTop: theme.spacing.unit * 3,
-    paddingBottom: theme.spacing.unit * 3,
-    fontSize: 26,
-  }
 })
 
 Home.propTypes = {

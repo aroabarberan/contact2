@@ -40,9 +40,7 @@ class Contact extends Component {
 
   render() {
     const { classes, contact } = this.props;
-    console.log(this.props.contact)
-    const path = '/home/aroa/Documents/contact2/backend/public/images/'
-
+    // const path = '/home/aroa/Documents/contact2/backend/public/images/'
     return (
       <div>
         <Grid container direction="row" justify="space-between" 
@@ -50,10 +48,10 @@ class Contact extends Component {
         >
 
           <Grid item className={classes.row}>
-          <Grid item container direction="row" alignItems="center">{this.isFavourite(contact.favourite)}</Grid>
+          {/* <Grid item container direction="row" alignItems="center">{this.isFavourite(contact.favourite)}</Grid> */}
           {/* <Avatar className={classes.avatar} src={contact.avatar}></Avatar> */}
-          <Avatar className={classes.avatar}>{contact.avatar}</Avatar>
-          <Grid item container direction="row" justify="space-between"  alignItems="center">{contact.name} </Grid>
+          {/* <Avatar className={classes.avatar}>{contact.avatar}</Avatar> */}
+          <Grid item>{contact.name} </Grid>
           </Grid>
           <Grid item>{contact.phone}</Grid>
           <Grid item>

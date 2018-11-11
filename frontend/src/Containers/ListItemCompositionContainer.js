@@ -20,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addContact(contact))
   },
   editContact: (id, contact) => {
+
+    console.log(id, contact)
     dispatch(editContact(id, contact))
   },
   deleteContact: id => {

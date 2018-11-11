@@ -25,7 +25,9 @@ class ListItemComposition extends React.Component {
       openEdit: false,
       favourite: 0,
       anchorEl: null,
-      contact: this.props.contact
+      contact: {},
+      name: this.props.contact.name,
+      phone: this.props.contact.phone,
     };
   }
 
@@ -67,13 +69,14 @@ class ListItemComposition extends React.Component {
   }
 
   handleChange = name => evt => {
+    console.log('state', this.state)
     this.setState({
       [name]: evt.target.value,
     });
     this.props.updateForm({
-      name: this.props.contact.name,
-      avatar: this.props.contact.avatar,
-      phone: this.props.contact.phone,
+      name: this.state.name,
+      avatar: this.state.avatar,
+      phone: this.state.phone,
       favourite: this.state.favourite,
       [evt.target.name]: evt.target.value
     });
@@ -98,11 +101,11 @@ class ListItemComposition extends React.Component {
 
   submit = evt => {
     evt.preventDefault();
-    const { avatar, name, phone, favourite } = this.props.form.create;
+    const { name, phone, favourite } = this.state;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
     const id = this.props.contact.id;
-
+    const avatar = '';
 
     fetch('http://localhost:3010/api/contacts/' + id, {
       method: "PUT",
@@ -114,9 +117,8 @@ class ListItemComposition extends React.Component {
       body: JSON.stringify({ id, sub, avatar, name, phone, favourite }, id),
     })
       .then(res => res.json())
-      // .then(data => this.props.editContact(data.contact.id, data.contact))
+      .then(console.log)
       .catch(console.log);
-
     this.props.editContact(id, { id, sub, avatar, name, phone, favourite });
     this.handleCloseEdit();
   }
@@ -172,17 +174,17 @@ class ListItemComposition extends React.Component {
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
               </MenuItem>
 
-              <Divider />
+              {/* <Divider />
 
               <p className={classes.title}>Change Label</p>
               {/* Meter grupos a los que pertenece */}
-              <MenuItem className={classes.menuItem}>
+              {/* <MenuItem className={classes.menuItem}>
                 <ListItemIcon>
                   <Label />
                 </ListItemIcon>
                 <ListItemText primary="Patata" />
-              </MenuItem>
-            </MenuList>
+              </MenuItem>*/}
+            </MenuList> 
           </Paper>
         </Menu>
 
@@ -194,14 +196,14 @@ class ListItemComposition extends React.Component {
           <DialogTitle id="form-dialog-title">Edit contact</DialogTitle>
           <Divider />
           <DialogContent>
-            <TextField
+            {/* <TextField
               margin="normal"
               name="avatar"
               label="Avatar"
               type="file"
               // defaultValue={this.state.contact.avatar} TO FIX
               onChange={this.changeAvatar}
-            />
+            /> */}
           </DialogContent>
           <DialogContent>
             <TextField
