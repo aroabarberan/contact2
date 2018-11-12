@@ -23,26 +23,22 @@ Route::post('/contacts', function (Request $request) {
 
 
 Route::post('/addContacts', function(Request $request) {
-    // if($request['avatar'])
-    // {
-    //    $image = $request['avatar'];
-    //    $position = strpos($image, ';');
-    //    $name = time().'.' . explode('/', explode(':', substr($image, 0, $position))[1])[1];
-    //    \Image::make($request['avatar'])->save(public_path('images/').$name);
-    //  }
+
+    $path = $request->file('avatar')->store('images');
+
     $contact = new Contact;
     $contact->user = $request['sub'];
     $contact->name = $request['name'];
-    // $contact->avatar = $name;
-    $contact->avatar = $request['avatar'];
+    $contact->avatar = $path;
     $contact->phone = $request['phone'];
     $contact->favourite = $request['favourite'];
     $contact->save();
-
+// Comprobar si se ha guardado y devolver el estado segun
     return response()->json([
         'code' => 201,
         'status' => 'The contact is created successfully',
-        'contact' => DB::select('select * from contacts order by created_at desc')[0],
+        // 'contact' => DB::select('select * from contacts order by created_at desc')[0],
+        'contact' => $contact,
     ], 201);
 })->middleware('jwt');
 
@@ -60,3 +56,7 @@ Route::delete('/contacts/{id}', function($id) {
     Contact::find($id)->delete();
 })->middleware('jwt');
 
+Route::post('/images/{avatar}', function ($avatar) {
+        $avatar = DB::select('select avatar from contacts where avatar = :avatar', ['avatar' => $avatar]);
+        return response()->json($avatar);
+})->middleware('jwt');
