@@ -4,13 +4,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import CloudDownload from "@material-ui/icons/CloudDownload";
 // import Archive from "@material-ui/icons/Archive";
-// import Label from "@material-ui/icons/Label";
+import Label from "@material-ui/icons/Label";
 import Edit from '@material-ui/icons/Edit';
 import {
   Paper, Divider, Button, TextField, IconButton,
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
 
 
 const url_getContact = 'http://localhost:3010/api/contacts/';
@@ -20,14 +21,13 @@ class ListItemComposition extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      avatar: '',
       openEdit: false,
+      favourite: 0,
       anchorEl: null,
       contact: {},
-      id: this.props.contact.id,
-      avatar: this.props.contact.avatar,
       name: this.props.contact.name,
       phone: this.props.contact.phone,
-      favourite: 0,
     };
   }
 
@@ -69,6 +69,7 @@ class ListItemComposition extends React.Component {
   }
 
   handleChange = name => evt => {
+    console.log('state', this.state)
     this.setState({
       [name]: evt.target.value,
     });
@@ -84,26 +85,27 @@ class ListItemComposition extends React.Component {
 
   delete = () => {
     const token = this.props.auth.getAccessToken();
-    const { id } = this.state;
+    const { contact } = this.props;
 
-    fetch(url_getContact + id, {
+    fetch(url_getContact + contact.id, {
       method: "DELETE",
       headers: {
         'Accept': 'application/json',
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
-    }).then(console.log).catch(console.log);
-    this.props.deleteContact(id);
+    }).catch(console.log);
+    this.props.deleteContact(contact.id);
     this.handleClose();
   }
 
   submit = evt => {
     evt.preventDefault();
-    const { avatar, name, phone, favourite } = this.state;
+    const { name, phone, favourite } = this.state;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
-    const id = this.state.id;
+    const id = this.props.contact.id;
+    const avatar = '';
 
     fetch('http://localhost:3010/api/contacts/' + id, {
       method: "PUT",
@@ -182,7 +184,7 @@ class ListItemComposition extends React.Component {
                 </ListItemIcon>
                 <ListItemText primary="Patata" />
               </MenuItem>*/}
-            </MenuList>
+            </MenuList> 
           </Paper>
         </Menu>
 
@@ -199,7 +201,7 @@ class ListItemComposition extends React.Component {
               name="avatar"
               label="Avatar"
               type="file"
-              defaultValue={this.props.contact.avatar}
+              // defaultValue={this.state.contact.avatar} TO FIX
               onChange={this.changeAvatar}
             /> */}
           </DialogContent>
@@ -225,7 +227,7 @@ class ListItemComposition extends React.Component {
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleCloseEdit} color="primary">Cancel</Button>
-            <Button onClick={this.submit} color="primary">Save</Button>
+            <Button onClick={this.submit} color="primary">Send</Button>
           </DialogActions>
         </Dialog>
       </div>

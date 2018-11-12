@@ -46,7 +46,7 @@ class CreateContact extends Component {
 
   handleChange = (evt) => {
     this.props.updateForm({
-      avatar: this.props.form.create.avatar,
+      avatar: "",
       name: this.props.form.create.name,
       phone: this.props.form.create.phone,
       favourite: 0,
@@ -56,22 +56,21 @@ class CreateContact extends Component {
 
   submit = (evt) => {
     evt.preventDefault();
-    const { avatar, name, phone, favourite } = this.props.form.create;
+    const { name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
+    const avatar = '';
 
     fetch(url_addContact, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
-        'Content-type': 'multipart/form-data',
-        'type': 'formData',
+        'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
       body: JSON.stringify({ sub, avatar, name, phone, favourite }),
     })
       .then(res => res.json())
-      .then(console.log)
       .then(data => this.props.addContact(data.contact))
       .catch(console.log);
     this.handleClose();
@@ -94,7 +93,7 @@ class CreateContact extends Component {
           <Divider />
 
 
-          <DialogContent>
+          {/* <DialogContent>
             <TextField
               margin="normal"
               name="avatar"
@@ -102,7 +101,7 @@ class CreateContact extends Component {
               type="file"
               onChange={this.changeAvatar}
             />
-          </DialogContent>
+          </DialogContent> */}
           <DialogContent>
             <TextField
               autoFocus
