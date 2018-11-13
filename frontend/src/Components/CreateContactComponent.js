@@ -59,13 +59,13 @@ class CreateContact extends Component {
     const { avatar, name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
-
+    
+ 
     fetch(url_addContact, {
       method: "POST",
       headers: {
-        'Accept': 'application/json',
+        'Accept': 'multipart/form-data',
         'Content-type': 'multipart/form-data',
-        'type': 'formData',
         'Authorization': 'Bearer ' + token,
       },
       body: JSON.stringify({ sub, avatar, name, phone, favourite }),
