@@ -3,6 +3,7 @@ const initialState = {
     // {
     //   id: 0,
     //   sub: 'google-contact|02948184719284712897012',
+    //   avatar: '',
     //   name: 'Puribum',
     //   phone: '123123123124241',
     //   favourite: 0,
@@ -11,6 +12,7 @@ const initialState = {
     // {
     //   id: 1,
     //   sub: 'google-contact|02948184719284712897012',
+    //   avatar: '',
     //   name: 'Zaaam',
     //   phone: '9123893423423',
     //   favourite: 1,
@@ -18,6 +20,7 @@ const initialState = {
     // {
     //   id: 2,
     //   sub: 'google-contact|02948184719284712897012',
+    //   avatar: '',
     //   name: 'Patatin',
     //   phone: '896332',
     //   favourite: 0,
@@ -25,6 +28,7 @@ const initialState = {
     // {
     //   id: 3,
     //   sub: 'google-contact|02948184719284712897012',
+    //   avatar: '',
     //   name: 'Blablin',
     //   phone: '398472398',
     //   favourite: 1,
@@ -32,6 +36,7 @@ const initialState = {
     // {
     //   id: 4,
     //   sub: 'google-contact|02948184719284712897012',
+    //   avatar: '',
     //   name: 'Pepito',
     //   phone: '3453423',
     //   favourite: 1,

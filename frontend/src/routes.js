@@ -3,6 +3,7 @@ import { Route, Router } from 'react-router-dom';
 import history from './history';
 import Auth from './Components/Auth/AuthComponent';
 import App from "./Components/App";
+// import Contact from "./Containers/ContactContainer";
 import Callback from './Components/Callback/CallbackComponent';
 
 
@@ -19,7 +20,10 @@ export const makeMainRoutes = () => {
     <Router history={history}>
       <div>
         <Route path="/" render={(props) => <App auth={auth} {...props} />} />
-
+        {/* <Route path="/contacts" render={(props) => {
+          handleAuthentication(props)
+          return <Contact  auth={auth} {...props} />
+        }} /> */}
         <Route path="/callback" render={(props) => {
           handleAuthentication(props)
           return <Callback {...props} />
