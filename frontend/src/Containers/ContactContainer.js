@@ -1,27 +1,17 @@
 import { connect } from 'react-redux';
 import Contact from "../Components/ContactComponent";
-import { 
-  addContact, editContact, sortContactsByFavourite, updateForm 
-} from "../Actions/ContactAction";
-
+import { addContact } from "../Actions/ContactAction";
 
 const mapStateToProps = state => ({
   contacts: state.contacts,
   form : state.contacts.form,
+  favourite: state.contacts.favourite,
+
 })
 
 const mapDispatchToProps = dispatch => ({
   addContact: contact => {
     dispatch(addContact(contact))
-  },
-  editContact: (id, contact) => {
-    dispatch(editContact(id, contact))
-  },
-  sortContactsByFavourite: () => {
-    dispatch(sortContactsByFavourite())
-  },
-  updateForm: contact => {
-    dispatch(updateForm(contact))
   },
 })
 

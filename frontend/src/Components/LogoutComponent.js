@@ -1,2 +1,17 @@
-console.log('redirigiendo a logout');
-<h1>Adios!!!</h1>
+import React from 'react';
+
+class Logout extends React.Component {
+
+
+  render() {
+    
+
+    return (
+      <div>
+
+      </div>
+    );
+  }
+}
+
+export default Logout

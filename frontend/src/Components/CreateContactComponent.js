@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
+import { QUERY } from "../querys";
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 
 
@@ -9,9 +10,8 @@ import {
   DialogActions, DialogContent, withStyles, DialogContentText
 } from '@material-ui/core';
 
-const url_addContact = 'http://localhost:3010/api/addContacts';
 
-class CreateContact extends Component {
+class CreateContact extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -59,16 +59,19 @@ class CreateContact extends Component {
     const { avatar, name, phone, favourite } = this.props.form.create;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
-    
+
+    // var formData = new FormData();
+    // formData.append("avatar",avatar);
  
-    fetch(url_addContact, {
+    fetch(QUERY.contact, {
       method: "POST",
       headers: {
-        'Accept': 'multipart/form-data',
+        'Accept': 'application/json',
         'Content-type': 'multipart/form-data',
         'Authorization': 'Bearer ' + token,
       },
       body: JSON.stringify({ sub, avatar, name, phone, favourite }),
+      // body: formData,
     })
       .then(res => res.json())
       .then(console.log)

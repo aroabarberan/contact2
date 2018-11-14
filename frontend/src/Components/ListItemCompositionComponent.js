@@ -5,15 +5,13 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import CloudDownload from "@material-ui/icons/CloudDownload";
 // import Archive from "@material-ui/icons/Archive";
 // import Label from "@material-ui/icons/Label";
+import { QUERY } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import {
   Paper, Divider, Button, TextField, IconButton,
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
-
-
-const url_getContact = 'http://localhost:3010/api/contacts/';
 
 
 class ListItemComposition extends React.Component {
@@ -85,8 +83,7 @@ class ListItemComposition extends React.Component {
   delete = () => {
     const token = this.props.auth.getAccessToken();
     const { id } = this.state;
-
-    fetch(url_getContact + id, {
+    fetch(QUERY.contact + id, {
       method: "DELETE",
       headers: {
         'Accept': 'application/json',
@@ -100,12 +97,11 @@ class ListItemComposition extends React.Component {
 
   submit = evt => {
     evt.preventDefault();
-    const { avatar, name, phone, favourite } = this.state;
+    const { id, avatar, name, phone, favourite } = this.state;
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
-    const id = this.state.id;
 
-    fetch('http://localhost:3010/api/contacts/' + id, {
+    fetch(QUERY.contact + id, {
       method: "PUT",
       headers: {
         'Accept': 'application/json',
@@ -138,9 +134,8 @@ class ListItemComposition extends React.Component {
           onClose={this.handleClose}
           PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 256, }, }}
         >
-          <Paper>
-            <MenuList>
-              {/* <MenuItem className={classes.menuItem}>
+          <MenuList>
+            {/* <MenuItem className={classes.menuItem}>
                 <ListItemIcon className={classes.icon}>
                   <CloudDownload />
                 </ListItemIcon>
@@ -154,36 +149,35 @@ class ListItemComposition extends React.Component {
                 <ListItemText classes={{ primary: classes.primary }} inset primary="Hidden" />
               </MenuItem> */}
 
-              <MenuItem
-                onClick={this.handleOpenEdit}
-                className={classes.menuItem}>
-                <ListItemIcon className={classes.icon}>
-                  <Edit variant="fab" aria-label="Edit" className={classes.icon} />
-                </ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
-              </MenuItem>
+            <MenuItem
+              onClick={this.handleOpenEdit}
+              className={classes.menuItem}>
+              <ListItemIcon className={classes.icon}>
+                <Edit variant="fab" aria-label="Edit" className={classes.icon} />
+              </ListItemIcon>
+              <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
+            </MenuItem>
 
-              <MenuItem
-                onClick={this.delete}
-                className={classes.menuItem}>
-                <ListItemIcon onClick={() => this.handleClose} className={classes.icon}>
-                  <DeleteIcon className={classes.icon} />
-                </ListItemIcon>
-                <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
-              </MenuItem>
+            <MenuItem
+              onClick={this.delete}
+              className={classes.menuItem}>
+              <ListItemIcon onClick={() => this.handleClose} className={classes.icon}>
+                <DeleteIcon className={classes.icon} />
+              </ListItemIcon>
+              <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
+            </MenuItem>
 
-              {/* <Divider />
+            {/* <Divider />
 
               <p className={classes.title}>Change Label</p>
               {/* Meter grupos a los que pertenece */}
-              {/* <MenuItem className={classes.menuItem}>
+            {/* <MenuItem className={classes.menuItem}>
                 <ListItemIcon>
                   <Label />
                 </ListItemIcon>
                 <ListItemText primary="Patata" />
               </MenuItem>*/}
-            </MenuList>
-          </Paper>
+          </MenuList>
         </Menu>
 
         <Dialog
@@ -257,13 +251,10 @@ const styles = theme => ({
   primary: {},
   title: {
     margin: '10px 20px',
-    color: '#757575;',
+    color: '#666;',
     fontSize: 13,
     fontFamily: "Roboto, Arial, sans-serif"
   }
-  // Roboto,Arial,sans-serifbody
-  // Roboto, RobotoDraft, Helvetica, Arial, sans-serifbody
-  // Roboto,RobotoDraft,Helvetica,Arial,sans-serifbody
 });
 
 ListItemComposition.propTypes = {

@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 
-class ImageAvatars extends Component {
+class ImageAvatars extends React.Component {
   render() {
     const { classes } = this.props;
     const { picture } = this.props.profile

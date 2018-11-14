@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import loading from './loading.svg';
 
-class Callback extends Component {
+class Callback extends React.Component {
   render() {
     const style = {
       position: 'absolute',

@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import {  } from "../Containers/ProfileContactContainer";
 
 
 const suggestions = [
