@@ -33,7 +33,7 @@ class ContactController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
         $path = $request->file('avatar')->store('images');
 
 //     $contact = new Contact;

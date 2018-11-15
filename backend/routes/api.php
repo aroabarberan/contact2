@@ -25,12 +25,16 @@ Route::get('/contacts/{sub}', function (Request $request) {
 
 Route::post('/contacts', function(Request $request) {
 
+    \Storage::makeDirectory('blablablabla');
     $path = $request->file('avatar')->store('images');
+
+    return response($path);
 
     // $contact = new Contact;
     // $contact->user = $request['sub'];
     // $contact->name = $request['name'];
-    // $contact->avatar = $path;
+    // // $contact->avatar = $path;
+    // $contact->avatar = '';
     // $contact->phone = $request['phone'];
     // $contact->favourite = $request['favourite'];
     // $contact->save();
@@ -41,7 +45,9 @@ Route::post('/contacts', function(Request $request) {
     //     'status' => 'The contact is created successfully',
     //     'contact' => $contact,
     // ], 201);
-    return response()->json();
+    
+    return response('<pre>' . print_r($request->file('avatar'), true) . '</pre>');
+    // return response()->json($request->file('avatar'));
 });
 
 Route::put('/contacts/{id}', function(Request $request, $id) {
