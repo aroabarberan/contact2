@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import { QUERY } from "../querys";
+import { QUERIES } from "../querys";
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 
 
@@ -63,7 +63,7 @@ class CreateContact extends React.Component {
     // var formData = new FormData();
     // formData.append("avatar",avatar);
  
-    fetch(QUERY.contact, {
+    fetch(QUERIES.contact, {
       method: "POST",
       headers: {
         'Accept': 'application/json',

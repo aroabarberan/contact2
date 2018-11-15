@@ -52,6 +52,7 @@ const initialState = {
   },
 }
 
+// this is not a class, but an object, it's name should be start with lowercase
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -91,16 +92,6 @@ export default (state = initialState, action) => {
       let contacts = [...state.contacts]
       return {
         contacts: contacts.sort((a, b) => (a.favourite > b.favourite) ? 1 : 0),
-      };
-
-    case 'LIST_ALL_CONTACTS':
-      return {
-        contacts: [...state.contacts],
-      };
-
-    case 'LIST_ALL_NAME_CONTACTS':
-      return {
-        contacts: state.contacts.map(e => e.name),
       };
 
     case 'UPDATE_FORM':

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
-import axios from 'axios';
-import { QUERY } from "../querys";
+import { QUERIES } from "../querys";
 
 const handleSubmit = (props) => (values, actions) => {
   console.log('values', JSON.stringify(values))
@@ -12,7 +11,7 @@ const handleSubmit = (props) => (values, actions) => {
   const formData = new FormData();
   formData.append('avatar', values.avatar)
 
-  fetch(QUERY.contact, {
+  fetch(QUERIES.contact, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
@@ -21,7 +20,6 @@ const handleSubmit = (props) => (values, actions) => {
     body: formData,
   })
     // .then(res => res.json())
-    .then(res => res.text())
     .then(console.log)
     .catch(console.log);
 }

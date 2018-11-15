@@ -5,7 +5,7 @@ import StarBorder from "@material-ui/icons/StarBorder";
 import Avatar from '@material-ui/core/Avatar';
 import ListItemComposition from '../Containers/ListItemCompositionContainer';
 import deepOrange from '@material-ui/core/colors/deepOrange';
-import { QUERY } from "../querys";
+import { QUERIES } from "../querys";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, withStyles
@@ -31,7 +31,8 @@ class Contact extends React.Component {
       if (!userProfile) {
         getProfile((err, profile) => {
           this.setState({ profile });
-          fetch(QUERY.contact+ this.state.profile.sub,
+     
+          fetch(QUERIES.contact+ this.state.profile.sub,
             {
               method: "GET",
               headers: {
@@ -39,7 +40,6 @@ class Contact extends React.Component {
                 'Content-type': 'application/json',
                 'Authorization': 'Bearer ' + getAccessToken(),
               },
-              // body: JSON.stringify({ sub: this.state.profile.sub }),
             })
             .then(res => res.json())
             .then(contacts => contacts.map(contact => this.props.addContact(contact)))

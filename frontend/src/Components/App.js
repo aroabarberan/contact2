@@ -21,6 +21,7 @@ class App extends React.Component {
   render() {
     const { isAuthenticated } = this.props.auth
     
+    // too much space one more time
 
     return (
       <div>

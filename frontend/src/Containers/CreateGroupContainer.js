@@ -20,4 +20,5 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
+// this is not a class, but an object, it's name should be start with lowercase
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup)

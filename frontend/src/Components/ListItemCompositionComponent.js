@@ -5,7 +5,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import CloudDownload from "@material-ui/icons/CloudDownload";
 // import Archive from "@material-ui/icons/Archive";
 // import Label from "@material-ui/icons/Label";
-import { QUERY } from "../querys";
+import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import {
   Paper, Divider, Button, TextField, IconButton,
@@ -83,7 +83,7 @@ class ListItemComposition extends React.Component {
   delete = () => {
     const token = this.props.auth.getAccessToken();
     const { id } = this.state;
-    fetch(QUERY.contact + id, {
+    fetch(QUERIES.contact + id, {
       method: "DELETE",
       headers: {
         'Accept': 'application/json',
@@ -101,7 +101,7 @@ class ListItemComposition extends React.Component {
     const sub = this.props.auth.userProfile.sub;
     const token = this.props.auth.getAccessToken();
 
-    fetch(QUERY.contact + id, {
+    fetch(QUERIES.contact + id, {
       method: "PUT",
       headers: {
         'Accept': 'application/json',

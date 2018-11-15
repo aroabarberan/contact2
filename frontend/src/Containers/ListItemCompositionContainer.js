@@ -4,15 +4,11 @@ import {
   addContact, editContact, deleteContact, updateForm 
 } from "../Actions/ContactAction";
 
+
 const mapStateToProps = state => ({
   profile: state.profile,
   contacts: state.contacts,
   form : state.contacts.form,
-  sub: state.contacts.sub,
-  avatar: state.contacts.avatar,
-  name: state.contacts.name,
-  phone: state.contacts.phone,
-  favourite: state.contacts.favourite,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -20,8 +16,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addContact(contact))
   },
   editContact: (id, contact) => {
-
-    console.log(id, contact)
     dispatch(editContact(id, contact))
   },
   deleteContact: id => {
@@ -32,4 +26,5 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
+// this is not a class, but an object, it's name should be start with lowercase
 export default connect(mapStateToProps, mapDispatchToProps)(ListItemComposition)

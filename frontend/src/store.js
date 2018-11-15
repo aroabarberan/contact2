@@ -7,7 +7,6 @@ import contacts from './Reducers/ContactReducer';
 import groups from './Reducers/GroupReducer';
 
 
-
 export default createStore(
   combineReducers({ 
     profile,
