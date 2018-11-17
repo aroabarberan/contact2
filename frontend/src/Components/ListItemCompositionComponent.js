@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Archive from "@material-ui/icons/Archive";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import {
-  Divider, Button, TextField,
+  Divider, Button, IconButton, TextField,
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
 import Group from "../Containers/Group/GroupContainer";
-import ButtonSetting from './ButtonSettingComponent';
 
 
 class ListItemComposition extends React.Component {
@@ -38,9 +39,9 @@ class ListItemComposition extends React.Component {
     this.setState({ openEdit: false });
   }
 
-  // handleClick = event => {
-  //   this.setState({ anchorEl: event.currentTarget });
-  // };
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
@@ -123,12 +124,12 @@ class ListItemComposition extends React.Component {
     const { classes, auth } = this.props;
     return (
       <div>
-        {/* <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
+        <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true" onClick={this.handleClick} >
           <MoreVertIcon />
-        </IconButton> */}
-        <ButtonSetting auth={auth} />
-        {/* <Menu
+        </IconButton>
+       
+        <Menu
           id="long-menu"
           anchorEl={anchorEl}
           open={open}
@@ -175,7 +176,7 @@ class ListItemComposition extends React.Component {
               <Group auth={this.props.auth} />
             </MenuItem>
           </MenuList>
-        </Menu> */}
+        </Menu>
 
         <Dialog
           open={openEdit}

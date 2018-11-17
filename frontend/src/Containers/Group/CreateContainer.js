@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import CreateGroup from "../Components/CreateGroupComponent";
+import CreateGroup from "../../Components/Group/CreateComponent";
 import { addGroup, editGroup, deleteGroup, updateForm } from "../../Actions/GroupAction";
 
 

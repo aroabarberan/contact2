@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ButtonAdd from './ButtonAddComponent';
+import AddIcon from '@material-ui/icons/Add';
 import { QUERIES } from "../../querys";
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 import {
@@ -60,7 +60,7 @@ class CreateContact extends React.Component {
 
     // var formData = new FormData();
     // formData.append("avatar",avatar);
- 
+
     fetch(QUERIES.contact, {
       method: "POST",
       headers: {
@@ -79,9 +79,13 @@ class CreateContact extends React.Component {
   }
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <ButtonAdd />
+        <Button variant="fab" color="secondary" aria-label="Add"
+          className={classes.buttonAdd} onClick={this.handleOpen}>
+          <AddIcon />
+        </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -135,6 +139,11 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
+  },
+  buttonAdd: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
   },
 });
 

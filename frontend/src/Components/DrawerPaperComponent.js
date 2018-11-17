@@ -19,6 +19,7 @@ import {
 import ImageAvatar from "./ImageAvatarComponent";
 import Contact from "../Containers/Contact/ContactContainer";
 import Group from '../Containers/Group/GroupContainer';
+import CreateGroup from "../Containers/Group/CreateContainer";
 
 class DrawerPaper extends React.Component {
   constructor() {
@@ -111,7 +112,7 @@ class DrawerPaper extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        <MenuItem onClick={this.handleClose}>
+        <MenuItem onClick={this.handleClose} >
           <IconButton color="inherit">
             <PowerSettingsNew />
           </IconButton>
@@ -155,7 +156,7 @@ class DrawerPaper extends React.Component {
         >
           <div className={classes.toolbar} />
           <List>
-            <ListItem>
+            <ListItem >
               <Contacts /><ListItemText>Contacts</ListItemText>
             </ListItem>
             <ListItem>
@@ -173,7 +174,8 @@ class DrawerPaper extends React.Component {
               <Group auth={this.props.auth} />
               <ListItem>
                 <Add />
-                <ListItemText>Create Group</ListItemText>
+                <ListItemText onClick={()=> <CreateGroup />}>Create Group</ListItemText>
+
               </ListItem>
             </ExpansionPanel>
 
@@ -223,6 +225,14 @@ const styles = theme => ({
   appBar: {
     position: "fixed",
     zIndex: theme.zIndex.drawer + 1,
+  },
+  menuItem: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& $primary, & $icon': {
+        color: theme.palette.common.white,
+      },
+    },
   },
   content: {
     flexGrow: 1,

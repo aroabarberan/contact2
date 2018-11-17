@@ -41,7 +41,7 @@ class Group extends React.Component {
             <List key={i}>
               <ListItem>
                 <Label />
-                <ListItemText>{group.tag}</ListItemText>
+                <ListItemText>{group.name}</ListItemText>
               </ListItem>
             </List>
           );

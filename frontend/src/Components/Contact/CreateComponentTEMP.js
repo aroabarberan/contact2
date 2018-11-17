@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 import { Formik, Form, Field } from 'formik';
-import { QUERIES } from "../querys";
+import { QUERIES } from "../../querys";
 import {
-  Divider, Button, TextField, Dialog, DialogTitle,
+  Divider, Button, Dialog, DialogTitle,
   DialogActions, DialogContent, withStyles, DialogContentText
 } from '@material-ui/core';
 
 
 
 const handleSubmit = (props) => (values, actions) => {
-  console.log(props)
+  console.log(values)
 
   const sub = props.auth.userProfile.sub;
   const token = props.auth.getAccessToken();
@@ -77,22 +77,14 @@ class CreateContact extends React.Component {
               >
                 <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
                 <Divider />
-                <DialogContent>
                   <input type='file' name='avatar' onChange={this.handleFile(setFieldValue)} />
-                </DialogContent>
 
-                <DialogContent>
                   <Field type="text" name="name" value={values.name} />
-                </DialogContent>
 
-                <DialogContent>
                   <Field type="text" name="phone" value={values.phone} />
-                </DialogContent>
 
-                <DialogActions>
                   <button onClick={this.handleClose} color="primary">Cancel</button>
                   <button onClick={this.handleSubmit} color="primary" type="submit">Save</button>
-                </DialogActions>
               </Dialog>
             </Form>
           )}
