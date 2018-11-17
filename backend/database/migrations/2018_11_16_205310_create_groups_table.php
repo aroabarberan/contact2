@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupTagsTable extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class CreateGroupTagsTable extends Migration
      */
     public function up()
     {
+        
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('tag');
+            $table->string('user');
+            $table->string('name');
         });
     }
 

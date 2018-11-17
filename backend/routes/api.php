@@ -16,4 +16,4 @@ use App\Http\Controllers\API\GroupController;
 */
 
 Route::resource('contacts', 'ContactController')->middleware('jwt');
-Route::resource('groups', 'GroupsController')->middleware('jwt');
+Route::resource('groups', 'GroupController')->middleware('jwt');

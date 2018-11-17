@@ -11,10 +11,11 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
+        $path =  $request->file('avatar')->store('images');
         $contact = new Contact;
         $contact->user = $request['sub'];
         $contact->name = $request['name'];
-        $contact->avatar = $request->file('avatar')->store('images');
+        $contact->avatar = $path;
         $contact->phone = $request['phone'];
         $contact->favourite = $request['favourite'];
         $contact->save();

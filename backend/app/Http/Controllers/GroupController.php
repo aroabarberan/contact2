@@ -15,7 +15,6 @@ class GroupController extends Controller
         $group = new Group;
         $group->user = $request['sub'];
         $group->name = $request['name'];
-        $group->tag = $request['tag'];
         $group->save();
         // Check if save
         return response()->json([
