@@ -12,7 +12,7 @@ const initialState = {
     // {
     //   id: 1,
     //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
+    //   avatar: '',
     //   name: 'Zaaam',
     //   phone: '9123893423423',
     //   favourite: 1,
@@ -20,7 +20,7 @@ const initialState = {
     // {
     //   id: 2,
     //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
+    //   avatar: '',
     //   name: 'Patatin',
     //   phone: '896332',
     //   favourite: 0,
@@ -28,7 +28,7 @@ const initialState = {
     // {
     //   id: 3,
     //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
+    //   avatar: '',
     //   name: 'Blablin',
     //   phone: '398472398',
     //   favourite: 1,
@@ -36,7 +36,7 @@ const initialState = {
     // {
     //   id: 4,
     //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
+    //   avatar: '',
     //   name: 'Pepito',
     //   phone: '3453423',
     //   favourite: 1,

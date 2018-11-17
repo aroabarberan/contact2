@@ -3,8 +3,10 @@ import { Formik, Form, Field } from 'formik';
 import { QUERIES } from "../querys";
 
 const handleSubmit = (props) => (values, actions) => {
+  console.log('values', JSON.stringify(values))
+  console.log('actions', JSON.stringify(actions))
 
-  // const sub = props.auth.userProfile.sub;
+  const sub = props.auth.userProfile.sub;
   const token = props.auth.getAccessToken();
   const formData = new FormData();
   formData.append('avatar', values.avatar)
@@ -34,6 +36,7 @@ class FromFormik extends React.Component {
           onSubmit={handleSubmit(this.props)}
           render={({ values, setFieldValue }) => (
             <Form>
+              {console.log(values)}
               <input type='file' name='avatar' onChange={this.handleFile(setFieldValue)} />
               <Field type="text" name="name" value={values.name} />
               <Field type="text" name="phone" value={values.phone} />

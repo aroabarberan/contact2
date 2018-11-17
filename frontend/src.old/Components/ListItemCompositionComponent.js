@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CloudDownload from "@material-ui/icons/CloudDownload";
-import Archive from "@material-ui/icons/Archive";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+// import CloudDownload from "@material-ui/icons/CloudDownload";
+// import Archive from "@material-ui/icons/Archive";
+// import Label from "@material-ui/icons/Label";
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import {
-  Divider, Button, TextField,
+  Paper, Divider, Button, TextField, IconButton,
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
-import Group from "../Containers/Group/GroupContainer";
-import ButtonSetting from './ButtonSettingComponent';
 
 
 class ListItemComposition extends React.Component {
@@ -38,9 +38,9 @@ class ListItemComposition extends React.Component {
     this.setState({ openEdit: false });
   }
 
-  // handleClick = event => {
-  //   this.setState({ anchorEl: event.currentTarget });
-  // };
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
   handleClose = () => {
     this.setState({ anchorEl: null });
@@ -120,15 +120,14 @@ class ListItemComposition extends React.Component {
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, auth } = this.props;
+    const { classes } = this.props;
     return (
       <div>
-        {/* <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
+        <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
           aria-haspopup="true" onClick={this.handleClick} >
           <MoreVertIcon />
-        </IconButton> */}
-        <ButtonSetting auth={auth} />
-        {/* <Menu
+        </IconButton>
+        <Menu
           id="long-menu"
           anchorEl={anchorEl}
           open={open}
@@ -136,24 +135,24 @@ class ListItemComposition extends React.Component {
           PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 256, }, }}
         >
           <MenuList>
-            <MenuItem className={classes.menuItem}>
-              <ListItemIcon>
-                <CloudDownload />
-              </ListItemIcon>
-              <ListItemText classes={{ primary: classes.primary }} inset primary="Export" />
-            </MenuItem>
+            {/* <MenuItem className={classes.menuItem}>
+                <ListItemIcon className={classes.icon}>
+                  <CloudDownload />
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary="Export" />
+              </MenuItem>
 
-            <MenuItem className={classes.menuItem}>
-              <ListItemIcon>
-                <Archive />
-              </ListItemIcon>
-              <ListItemText classes={{ primary: classes.primary }} inset primary="Hidden" />
-            </MenuItem>
+              <MenuItem className={classes.menuItem}>
+                <ListItemIcon className={classes.icon}>
+                  <Archive />
+                </ListItemIcon>
+                <ListItemText classes={{ primary: classes.primary }} inset primary="Hidden" />
+              </MenuItem> */}
 
             <MenuItem
               onClick={this.handleOpenEdit}
               className={classes.menuItem}>
-              <ListItemIcon>
+              <ListItemIcon className={classes.icon}>
                 <Edit variant="fab" aria-label="Edit" className={classes.icon} />
               </ListItemIcon>
               <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
@@ -162,20 +161,24 @@ class ListItemComposition extends React.Component {
             <MenuItem
               onClick={this.delete}
               className={classes.menuItem}>
-              <ListItemIcon onClick={() => this.handleClose}>
-                <DeleteIcon />
+              <ListItemIcon onClick={() => this.handleClose} className={classes.icon}>
+                <DeleteIcon className={classes.icon} />
               </ListItemIcon>
               <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
             </MenuItem>
 
-            <Divider />
+            {/* <Divider />
 
-            <p className={classes.title}>Change Label</p>
-            <MenuItem className={classes.menuItem}>
-              <Group auth={this.props.auth} />
-            </MenuItem>
+              <p className={classes.title}>Change Label</p>
+              {/* Meter grupos a los que pertenece */}
+            {/* <MenuItem className={classes.menuItem}>
+                <ListItemIcon>
+                  <Label />
+                </ListItemIcon>
+                <ListItemText primary="Patata" />
+              </MenuItem>*/}
           </MenuList>
-        </Menu> */}
+        </Menu>
 
         <Dialog
           open={openEdit}
@@ -185,14 +188,14 @@ class ListItemComposition extends React.Component {
           <DialogTitle id="form-dialog-title">Edit contact</DialogTitle>
           <Divider />
           <DialogContent>
-            <TextField
+            {/* <TextField
               margin="normal"
               name="avatar"
               label="Avatar"
               type="file"
               defaultValue={this.props.contact.avatar}
               onChange={this.changeAvatar}
-            />
+            /> */}
           </DialogContent>
           <DialogContent>
             <TextField
@@ -231,6 +234,11 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
+  },
+  icon: {
+    color: '#757575',
+    // margin: theme.spacing.unit,
+    // fontSize: 22,
   },
   menuItem: {
     '&:focus': {

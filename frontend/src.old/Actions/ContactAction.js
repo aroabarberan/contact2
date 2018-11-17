@@ -28,17 +28,15 @@ export const sortContactsByFavourite = () => ({
   type: 'SORT_CONTACTS_BY_FAVOURITE',
 });
 
+export const listAllContacts = () => ({
+  type: 'LIST_ALL_CONTACTS',
+});
+
+export const listAllNameOfContacts = () => ({
+  type: 'LIST_ALL_NAME_CONTACTS',
+});
+
 export const updateForm = contact => ({
   type: 'UPDATE_FORM',
   payload: contact,
 });
-
-// export const CONTACT = {
-//   add: addContact,
-//   edit: editContact,
-//   delete: deleteContact,
-//   select: selectContact,
-//   unSelec: unSelectContact,
-//   sortByFavourite: sortContactsByFavourite,
-//   updateForm: updateForm,
-// }

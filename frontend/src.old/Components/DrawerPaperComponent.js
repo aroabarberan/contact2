@@ -1,30 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import InboxIcon from '@material-ui/icons/Inbox';
+import MoreIcon from '@material-ui/icons/MoreVert';
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Label from "@material-ui/icons/Label";
 import Add from "@material-ui/icons/Add";
 import Archive from "@material-ui/icons/Archive";
-import Contacts from '@material-ui/icons/Contacts';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import FileCopy from '@material-ui/icons/FileCopy';
-import CloudUpload from "@material-ui/icons/CloudUpload";
 import CloudDownload from "@material-ui/icons/CloudDownload";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
+import CloudUpload from "@material-ui/icons/CloudUpload";
+
+
 import {
   ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
-  List, ListItem, ListItemText,
-  Menu, MenuItem, CssBaseline, withStyles
+  Menu, MenuItem, withStyles
 } from '@material-ui/core';
 
 import ImageAvatar from "./ImageAvatarComponent";
-import Contact from "../Containers/Contact/ContactContainer";
-import Group from '../Containers/Group/GroupContainer';
+import Contact from "../Containers/ContactContainer";
 
 class DrawerPaper extends React.Component {
   constructor() {
     super()
     this.state = {
-      profile: {},
       open: false,
       expanded: null,
       anchorEl: null,
@@ -32,6 +36,8 @@ class DrawerPaper extends React.Component {
     };
   }
   componentWillMount() {
+    this.setState({ profile: {} });
+
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
@@ -76,8 +82,17 @@ class DrawerPaper extends React.Component {
     this.props.auth.logout()
   };
 
+
   goTo(route) {
     this.props.history.replace(`/${route}`);
+  }
+
+  login() {
+    this.props.auth.login();
+  }
+
+  logout() {
+    this.props.auth.logout();
   }
 
   render() {
@@ -123,11 +138,19 @@ class DrawerPaper extends React.Component {
 
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar className={classes.appBar} >
+        <AppBar position="fixed" className={classes.appBar} >
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
               Book Contact
           </Typography>
+
+            {/* <div className={classes.search}>
+              <Search 
+              // className={classNames(classes.menuButton, classes.inputRoot, classes.inputInput)}
+              // classes={{ root: classes.inputRoot, input: classes.inputInput }}
+              />
+            </div> */}
+
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
@@ -156,13 +179,18 @@ class DrawerPaper extends React.Component {
           <div className={classes.toolbar} />
           <List>
             <ListItem>
-              <Contacts /><ListItemText>Contacts</ListItemText>
+              <InboxIcon />
+              <ListItemText>Contacts</ListItemText>
             </ListItem>
+
             <ListItem>
-              <FileCopy /><ListItemText>Duplicates</ListItemText>
+              <InboxIcon />
+              <ListItemText>Duplicates</ListItemText>
             </ListItem>
+
             <ListItem>
-              <Archive /><ListItemText>Other contacts</ListItemText>
+              <Archive />
+              <ListItemText>Other contacts</ListItemText>
             </ListItem>
 
             <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
@@ -170,7 +198,22 @@ class DrawerPaper extends React.Component {
                 <ListItemText>Goups</ListItemText>
               </ExpansionPanelSummary>
 
-              <Group auth={this.props.auth} />
+              //STAR GROUPS.MAP
+              <List>
+                <ListItem>
+                  <Label />
+                  <ListItemText>Family</ListItemText>
+                </ListItem>
+                <ListItem>
+                  <Label />
+                  <ListItemText>Work</ListItemText>
+                </ListItem>
+                <ListItem>
+                  <Label />
+                  <ListItemText>Gym</ListItemText>
+                </ListItem>
+              </List>
+              //END GROUPS.MAP
               <ListItem>
                 <Add />
                 <ListItemText>Create Group</ListItemText>
@@ -221,13 +264,18 @@ const styles = theme => ({
     flexShrink: 0,
   },
   appBar: {
-    position: "fixed",
     zIndex: theme.zIndex.drawer + 1,
   },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
+  },
+  icon: {
+    color: '#666',
+  },
+  hide: {
+    display: 'none',
   },
   drawerPaper: {
     width: drawerWidth,
@@ -236,7 +284,11 @@ const styles = theme => ({
     flexGrow: 1,
   },
   toolbar: theme.mixins.toolbar,
-
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
+  },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {
@@ -249,6 +301,45 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  // search: {
+  //   position: 'relative',
+  //   borderRadius: theme.shape.borderRadius,
+  //   backgroundColor: fade(theme.palette.common.white, 0.15),
+  //   '&:hover': {
+  //     backgroundColor: fade(theme.palette.common.white, 0.25),
+  //   },
+  //   marginRight: theme.spacing.unit * 2,
+  //   marginLeft: 0,
+  //   width: '100%',
+  //   [theme.breakpoints.up('sm')]: {
+  //     marginLeft: theme.spacing.unit * 3,
+  //     width: 'auto',
+  //   },
+  // },
+  // searchIcon: {
+  //   width: theme.spacing.unit * 9,
+  //   height: '100%',
+  //   position: 'absolute',
+  //   pointerEvents: 'none',
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
+  // inputRoot: {
+  //   color: 'inherit',
+  //   width: '100%',
+  // },
+  // inputInput: {
+  //   paddingTop: theme.spacing.unit,
+  //   paddingRight: theme.spacing.unit,
+  //   paddingBottom: theme.spacing.unit,
+  //   paddingLeft: theme.spacing.unit * 10,
+  //   transition: theme.transitions.create('width'),
+  //   width: '100%',
+  //   [theme.breakpoints.up('md')]: {
+  //     width: 200,
+  //   },
+  // }
 });
 
 DrawerPaper.propTypes = {
