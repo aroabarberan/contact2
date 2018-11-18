@@ -4,7 +4,7 @@ import { QUERIES } from "../querys";
 
 const handleSubmit = (props) => (values, actions) => {
 
-  // const sub = props.auth.userProfile.sub;
+  const sub = props.auth.userProfile.sub;
   const token = props.auth.getAccessToken();
   const formData = new FormData();
   formData.append('avatar', values.avatar)

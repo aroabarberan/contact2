@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import { QUERIES } from "../querys";
+import { QUERIES } from "../../querys";
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
-
-
 import {
   Divider, Button, TextField, Dialog, DialogTitle,
   DialogActions, DialogContent, withStyles, DialogContentText
@@ -62,7 +60,7 @@ class CreateContact extends React.Component {
 
     // var formData = new FormData();
     // formData.append("avatar",avatar);
- 
+
     fetch(QUERIES.contact, {
       method: "POST",
       headers: {
@@ -85,7 +83,7 @@ class CreateContact extends React.Component {
     return (
       <div>
         <Button variant="fab" color="secondary" aria-label="Add"
-          className={classes.absolute} onClick={this.handleOpen}>
+          className={classes.buttonAdd} onClick={this.handleOpen}>
           <AddIcon />
         </Button>
         <Dialog
@@ -95,7 +93,6 @@ class CreateContact extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
-
 
           <DialogContent>
             <TextField
@@ -143,11 +140,10 @@ const styles = theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4,
   },
-  absolute: {
+  buttonAdd: {
     position: 'absolute',
-    // bottom: theme.spacing.unit * 2,
-    bottom: theme.spacing.unit * 6,
-    right: theme.spacing.unit * 1,
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 3,
   },
 });
 

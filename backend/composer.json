@@ -9,6 +9,7 @@
         "auth0/auth0-php": "^5.3",
         "auth0/login": "~5.0",
         "barryvdh/laravel-cors": "^0.11.2",
+        "barryvdh/laravel-ide-helper": "^2.5",
         "bramus/router": "dev-master",
         "doctrine/dbal": "^2.8",
         "fideloper/proxy": "^4.0",

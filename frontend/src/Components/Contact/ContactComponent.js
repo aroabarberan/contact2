@@ -30,8 +30,8 @@ class Contact extends React.Component {
       if (!userProfile) {
         getProfile((err, profile) => {
           this.setState({ profile });
-     
-          fetch(QUERIES.contact + this.state.profile.sub,
+
+          fetch(QUERIES.contact,
             {
               method: "GET",
               headers: {
@@ -41,8 +41,9 @@ class Contact extends React.Component {
               },
             })
             .then(res => res.json())
-            .then(contacts => contacts.map(contact => this.props.addContact(contact)))
-            .catch(console.log)
+            .then(console.log)
+            // .then(contacts => contacts.map(contact => this.props.addContact(contact)))
+            // .catch(console.log)
         });
       } else {
         this.setState({ profile: userProfile });

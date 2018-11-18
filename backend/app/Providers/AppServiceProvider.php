@@ -27,6 +27,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+
+        // New implementation (ivan)
+        $this->app->bind(
+            \Auth0\Login\Contract\Auth0UserRepository::class,
+            \Auth0\Login\Repository\Auth0UserRepository::class
+        );
+
         // Set 10 seconds leeway to avoid Exception 'Cannot handle token prior to [timestamp]'
         // If you still get this Exception don't set a higher leeway,
         // consider synchronize your server with NTP instead.

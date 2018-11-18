@@ -95,16 +95,16 @@ export default (state = initialState, action) => {
       };
 
     case 'UPDATE_FORM':
-    return {
-      ...state,
-      form: {
-        ...state.form,
-        create: {
-          ...state.form.create,
-          ...action.payload,
-        }
-      },
-    }
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          create: {
+            ...state.form.create,
+            ...action.payload,
+          }
+        },
+      }
     default:
       return state
   };

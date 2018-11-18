@@ -21,11 +21,13 @@ const theme = createMuiTheme({
       main: brown[700],
       contrastText: '#fff',
     },
-    typography: {
-      useNextVariants: true,
-    },
+  },
+  typography: {
+    useNextVariants: true,
   },
 })
+
+if (process.env.NODE_ENV === 'development') console.log(theme)
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>

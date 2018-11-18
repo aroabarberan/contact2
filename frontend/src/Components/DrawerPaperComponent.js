@@ -128,7 +128,7 @@ class DrawerPaper extends React.Component {
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>
               Book Contact
-          </Typography>
+            </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
@@ -229,9 +229,6 @@ const styles = theme => ({
   menuItem: {
     '&:focus': {
       backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
-        color: theme.palette.common.white,
-      },
     },
   },
   content: {
