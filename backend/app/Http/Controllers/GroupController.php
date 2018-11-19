@@ -34,7 +34,7 @@ class GroupController extends Controller
 
     public function update(Request $request, $id)
     {
-        $group = group::find($id);
+        $group = Group::find($id);
         $group->update($request->all());
         // check
         return response()->json([
