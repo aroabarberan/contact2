@@ -1,2 +1,0 @@
-import Create from '../Create';
-

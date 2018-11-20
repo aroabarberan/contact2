@@ -8,39 +8,6 @@ const initialState = {
     //   phone: '123123123124241',
     //   favourite: 0,
     // },
-
-    // {
-    //   id: 1,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
-    //   name: 'Zaaam',
-    //   phone: '9123893423423',
-    //   favourite: 1,
-    // },
-    // {
-    //   id: 2,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
-    //   name: 'Patatin',
-    //   phone: '896332',
-    //   favourite: 0,
-    // },
-    // {
-    //   id: 3,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
-    //   name: 'Blablin',
-    //   phone: '398472398',
-    //   favourite: 1,
-    // },
-    // {
-    //   id: 4,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '8TqMuMSoZOgyMY0yNXojRaa46QcbSqQImH5Hu268.png',
-    //   name: 'Pepito',
-    //   phone: '3453423',
-    //   favourite: 1,
-    // },
   ],
   form: {
     create: {
@@ -51,8 +18,6 @@ const initialState = {
     }
   },
 }
-
-// this is not a class, but an object, it's name should be start with lowercase
 
 export default (state = initialState, action) => {
   switch (action.type) {

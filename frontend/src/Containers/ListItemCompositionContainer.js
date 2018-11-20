@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import ListItemComposition from "../Components/ListItemCompositionComponent";
+import ListItemCompositionComponent from "../Components/ListItemCompositionComponent";
 import { 
   addContact, editContact, deleteContact, updateForm 
-} from "../Actions/ContactAction";
+} from "../Actions/contactAction";
 
 
 const mapStateToProps = state => ({
@@ -26,5 +26,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-// this is not a class, but an object, it's name should be start with lowercase
-export default connect(mapStateToProps, mapDispatchToProps)(ListItemComposition)
+export default connect(mapStateToProps, mapDispatchToProps)(ListItemCompositionComponent)

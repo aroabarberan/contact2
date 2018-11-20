@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import CreateGroup from "../../Components/Group/CreateComponent";
-import { addGroup, editGroup, deleteGroup, updateForm } from "../../Actions/GroupAction";
+import CreateGroupComponent from "../../Components/Group/CreateGroupComponent";
+import { addGroup, editGroup, deleteGroup, updateForm } from "../../Actions/groupAction";
 
 
 const mapStateToProps = state => ({
@@ -23,5 +23,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-// this is not a class, but an object, it's name should be start with lowercase
-export default connect(mapStateToProps, mapDispatchToProps)(CreateGroup)
+export default connect(mapStateToProps, mapDispatchToProps)(CreateGroupComponent)

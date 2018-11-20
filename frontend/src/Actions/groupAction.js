@@ -1,4 +1,3 @@
-// this is not a class, but an object, it's name should start with lowercase
 export const addGroup = group => ({
   type: 'ADD_GROUP',
   payload: group,

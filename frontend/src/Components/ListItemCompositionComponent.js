@@ -12,7 +12,7 @@ import {
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
-import Group from "../Containers/Group/GroupContainer";
+import GroupContainer from "../Containers/Group/groupContainer";
 
 
 class ListItemComposition extends React.Component {
@@ -121,7 +121,7 @@ class ListItemComposition extends React.Component {
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, auth } = this.props;
+    const { classes } = this.props;
     return (
       <div>
         <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
@@ -173,7 +173,7 @@ class ListItemComposition extends React.Component {
 
             <p className={classes.title}>Change Label</p>
             <MenuItem className={classes.menuItem}>
-              <Group auth={this.props.auth} />
+              <GroupContainer auth={this.props.auth} />
             </MenuItem>
           </MenuList>
         </Menu>

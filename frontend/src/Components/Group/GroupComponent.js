@@ -7,28 +7,20 @@ import { List, ListItem, ListItemText } from '@material-ui/core';
 class Group extends React.Component {
 
   componentWillMount() {
-    this.setState({ profile: {} });
-    const { userProfile, getProfile, getAccessToken } = this.props.auth;
-    if (!userProfile) {
-      getProfile((err, profile) => {
-        this.setState({ profile });
+    const { getAccessToken } = this.props.auth;
 
-        fetch(QUERIES.group + this.state.profile.sub,
-          {
-            method: "GET",
-            headers: {
-              'Accept': 'application/json',
-              'Content-type': 'application/json',
-              'Authorization': 'Bearer ' + getAccessToken(),
-            },
-          })
-          .then(res => res.json())
-          .then(groups => groups.map(group => this.props.addGroup(group)))
-          .catch(console.log)
-      });
-    } else {
-      this.setState({ profile: userProfile });
-    }
+    fetch(QUERIES.group,
+      {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ' + getAccessToken(),
+        },
+      })
+      .then(res => res.json())
+      .then(groups => groups.map(group => this.props.addGroup(group)))
+      .catch(console.log)
   }
 
   render() {

@@ -1,17 +1,5 @@
 const initialState = {
   groups: [
-    // {
-    //   tag: 'Family'
-    // },
-    // {
-    //   tag: 'Friends'
-    // },
-    // {
-    //   tag: 'Gym'
-    // },
-    // {
-    //   tag: 'Work'
-    // },
   ],
   form: {
     create: {

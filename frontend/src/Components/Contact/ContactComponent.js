@@ -2,22 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
-import Avatar from '@material-ui/core/Avatar';
-import ListItemComposition from '../../Containers/ListItemCompositionContainer';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import { QUERIES } from "../../querys";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, withStyles
+  Paper, Avatar, withStyles
 } from '@material-ui/core';
+import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
 
-class Contact extends React.Component {
+class ContactComponent extends React.Component {
 
   constructor() {
     super()
     this.state = {
-      profile: {},
       favourite: false,
       starFilled: <Starfilled color="primary" onClick={this.handleFavouriteClick} />,
       StarBorder: <StarBorder onClick={this.handleFavouriteClick} />,
@@ -25,32 +23,22 @@ class Contact extends React.Component {
   }
 
   componentWillMount() {
-    const { isAuthenticated, userProfile, getProfile, getAccessToken } = this.props.auth;
-    if (isAuthenticated()) {
-      if (!userProfile) {
-        getProfile((err, profile) => {
-          this.setState({ profile });
+    const { getAccessToken } = this.props.auth;
 
-          fetch(QUERIES.contact,
-            {
-              method: "GET",
-              headers: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json',
-                'Authorization': 'Bearer ' + getAccessToken(),
-              },
-            })
-            .then(res => res.json())
-            .then(console.log)
-            // .then(contacts => contacts.map(contact => this.props.addContact(contact)))
-            // .catch(console.log)
-        });
-      } else {
-        this.setState({ profile: userProfile });
-      }
-    } else {
-      this.props.history.replace('logout');
-    }
+    fetch(QUERIES.contact,
+      {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ' + getAccessToken(),
+        },
+      })
+      .then(res => res.json())
+      // .then(console.log)
+      .then(contacts => contacts.map(contact => this.props.addContact(contact)))
+      .catch(console.log)
+
   }
 
   handleFavouriteClick = () => {
@@ -75,7 +63,7 @@ class Contact extends React.Component {
     const { classes, history } = this.props;
     const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
-
+    console.log('contacts', contacts)
     return (
       <div className={classes.root}>
         {!isAuthenticated() && (history.replace('logout'))}
@@ -96,12 +84,12 @@ class Contact extends React.Component {
                   return (
                     <TableRow key={i}>
                       <TableCell component="th" scope="row">
-                        {/* { this.isFavourite(contact.favourite)} */}
-                        <Avatar src={'sdds/' + contact.avatar} />
+                        { this.isFavourite(contact.favourite)}
+                        <Avatar src={contact.avatar} />
                       </TableCell>
                       <TableCell>{contact.name}</TableCell>
                       <TableCell>{contact.phone}</TableCell>
-                      <TableCell><ListItemComposition auth={this.props.auth} contact={contact} /></TableCell>
+                      <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
                     </TableRow>
                   );
                 })}
@@ -139,9 +127,9 @@ const styles = theme => ({
   },
 })
 
-Contact.propTypes = {
+ContactComponent.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(Contact)
+export default withStyles(styles, { withTheme: true })(ContactComponent)

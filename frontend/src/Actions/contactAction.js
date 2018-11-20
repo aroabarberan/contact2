@@ -1,4 +1,3 @@
-// this is not a class, but an object, it's name should start with lowercase
 export const addContact = contact => ({
   type: 'ADD_CONTACT',
   payload: contact,
@@ -32,13 +31,3 @@ export const updateForm = contact => ({
   type: 'UPDATE_FORM',
   payload: contact,
 });
-
-// export const CONTACT = {
-//   add: addContact,
-//   edit: editContact,
-//   delete: deleteContact,
-//   select: selectContact,
-//   unSelec: unSelectContact,
-//   sortByFavourite: sortContactsByFavourite,
-//   updateForm: updateForm,
-// }

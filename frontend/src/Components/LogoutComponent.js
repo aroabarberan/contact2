@@ -1,12 +1,12 @@
 import React from 'react';
 
-class Logout extends React.Component {
+class LogoutComponent extends React.Component {
 
   goTo = (route) => {
     this.props.history.replace(`/${route}`);
   }
 
-  login() {
+  login = () => {
     this.props.auth.login();
   }
 
@@ -14,11 +14,11 @@ class Logout extends React.Component {
     const { isAuthenticated } = this.props.auth;
     return (
       <div>
-          {isAuthenticated() && (this.goTo('contacts'))}
-        <button onClick={this.login.bind(this)}>Log In</button>
+          {isAuthenticated() && (this.goTo(this, '/'))}
+        <button onClick={this.login}>Log In</button>
       </div>
     );
   }
 }
 
-export default Logout
+export default LogoutComponent
