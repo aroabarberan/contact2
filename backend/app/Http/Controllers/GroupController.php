@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Group;
+use App\JwtUser;
 Use \DB;
 
 
 class GroupController extends Controller
 {
+    public function index() {
+        $groups = JwtUser::get()->groups;
+        return response()->json($groups);
+    }
 
     public function store(Request $request)
     {
@@ -24,19 +29,22 @@ class GroupController extends Controller
         ], 201);
     }
 
-    public function show($sub)
+    public function show($id)
     {
-        if ($sub !== null) {
-            $results = DB::select('select * from groups where user = :user', ['user' => $sub]);
-            return response()->json($results);
-        }
+        $group = Group::find($id);
+        if ($group == '') return response('Error. group not found', 404);
+        return response()->json([
+            'status' => 200,
+            'message' => 'group found',
+            'group' => $group
+            ]);
     }
 
     public function update(Request $request, $id)
     {
         $group = Group::find($id);
+        if ($group == '') return response('Error. group not found', 404);
         $group->update($request->all());
-        // check
         return response()->json([
             'code' => 204,
             'status' => 'The group is update successfully',
@@ -46,6 +54,13 @@ class GroupController extends Controller
 
     public function destroy($id)
     {
-        Group::find($id)->delete();
+        $group = Group::find($id);
+        if ($group == '') return response('Error. Group not found', 404);
+        $group->delete();
+        return response()->json([
+            'code' => 200,
+            'status' => 'The Group is update successfully',
+            'group' => $group
+        ], 201);
     }
 }

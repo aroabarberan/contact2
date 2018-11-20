@@ -4,24 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
-use App\Group;
 use App\JwtUser;
-Use \DB;
 
 class ContactController extends Controller
 {
 
-    // public function index()
-    // {
-    //     $user = \Auth0::jwtUser();
-    //     $groups = Group::where('user', $user->sub)->get();
-    //     return response()->json($groups);
-    // }
-
     public function index()
     {
-        $groups = JwtUser::get()->groups;
-        return response()->json($groups);
+        $contacts = JwtUser::get()->contacts;
+        return response()->json($contacts);
     }
 
     public function store(Request $request)
@@ -44,18 +35,20 @@ class ContactController extends Controller
 
     public function show($id)
     {
-        if ($sub !== null) {
-            Contact::
-            $results = DB::select('select * from contacts where user = :user', ['user' => $sub]);
-            return response()->json($results);
-        }
+        $contact = contact::find($id);
+        if ($contact == '') return response('Error. Contact not found', 404);
+        return response()->json([
+            'status' => 200,
+            'message' => 'contact found',
+            'contact' => $contact
+            ]);
     }
 
     public function update(Request $request, $id)
     {
         $contact = Contact::find($id);
+        if ($contact == '') return response('Error. Contact not found', 404);
         $contact->update($request->all());
-        // check update
         return response()->json([
             'code' => 204,
             'status' => 'The contact is update successfully',
@@ -65,6 +58,13 @@ class ContactController extends Controller
 
     public function destroy($id)
     {
-        Contact::find($id)->delete();
+        $contact = contact::find($id);
+        if ($contact == '') return response('Error. Contact not found', 404);
+        $contact->delete();
+        return response()->json([
+            'code' => 200,
+            'status' => 'The contact is update successfully',
+            'contact' => $contact
+        ], 201);
     }
 }

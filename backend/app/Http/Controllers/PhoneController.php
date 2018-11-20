@@ -12,7 +12,8 @@ class PhoneController extends Controller
     public function index()
     {    
         // $user = \Auth0::jwtUser();
-        return response()->json(Group::all());
+        // return response()->json($user->sub);
+        // return response()->json(phone::all());
     }
 
     public function store(Request $request)
@@ -33,9 +34,15 @@ class PhoneController extends Controller
 
     public function update(Request $request, $id)
     {
-      
+        $phone = Phone::find($id);
+        if ($phone == '') return response('Error. Phone not found', 404);
+        $phone->update($request->all());
+        return response()->json([
+            'code' => 204,
+            'status' => 'The phone is update successfully',
+            'phone' => $phone
+        ], 201);
     }
-
     public function destroy($id)
     {
         $phone = Phone::find($id);

@@ -25,6 +25,16 @@ class JwtUser
 
     public function __get($key)
     {
+        if ($key == 'contacts') {
+            try {
+                if ($this->properties->contacts == null) {
+                    $this->properties->contacts = $this->where('App\Contact');
+                }
+            } catch (\Exception $ex) {
+                $this->properties->contacts = Contact::where('user', $this->user->sub)->get();
+            }
+        }
+
         if ($key == 'groups') {
             try {
                 if ($this->properties->groups == null) {
