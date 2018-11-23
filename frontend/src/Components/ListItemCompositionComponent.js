@@ -4,7 +4,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Archive from "@material-ui/icons/Archive";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import {
@@ -160,9 +159,8 @@ class ListItemComposition extends React.Component {
               <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
             </MenuItem>
 
-            <MenuItem
-              onClick={this.delete}
-              className={classes.menuItem}>
+            <MenuItem className={classes.menuItem}
+              onClick={this.delete} >
               <ListItemIcon onClick={() => this.handleClose}>
                 <DeleteIcon />
               </ListItemIcon>
@@ -235,17 +233,15 @@ const styles = theme => ({
   },
   menuItem: {
     '&:focus': {
+      color: '#fff',
       backgroundColor: theme.palette.primary.main,
-      '& $primary, & $icon': {
-        color: theme.palette.common.white,
-      },
     },
   },
   primary: {},
   title: {
-    margin: '10px 20px',
     color: '#666;',
     fontSize: 13,
+    margin: '10px 20px',
     fontFamily: "Roboto, Arial, sans-serif"
   }
 });

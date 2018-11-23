@@ -3,12 +3,11 @@ const initialState = {
   ],
   form: {
     create: {
-      tag: '',
+      name: '',
     }
   },
 }
 
-// this is not a class, but an object, it's name should be start with lowercase
 
 export default (state = initialState, action) => {
   switch (action.type) {

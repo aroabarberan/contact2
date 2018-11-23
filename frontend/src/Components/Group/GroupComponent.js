@@ -1,46 +1,53 @@
 import React from 'react';
-import { QUERIES } from "../../querys";
+import Edit from '@material-ui/icons/Edit';
 import Label from "@material-ui/icons/Label";
-import { List, ListItem, ListItemText } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { QUERIES } from "../../querys";
+import { List, MenuItem, ListItemText } from '@material-ui/core';
 
 
-class Group extends React.Component {
-
+class GroupComponent extends React.Component {
   componentWillMount() {
-    const { getAccessToken } = this.props.auth;
-
-    fetch(QUERIES.group,
-      {
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json',
-          'Authorization': 'Bearer ' + getAccessToken(),
-        },
-      })
-      .then(res => res.json())
-      .then(groups => groups.map(group => this.props.addGroup(group)))
-      .catch(console.log)
+    const token = this.props.auth.getAccessToken();
+    if (this.props.groups.groups.length === 0) {
+      fetch(QUERIES.group,
+        {
+          method: "GET",
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'Authorization': 'Bearer ' + token,
+          },
+        })
+        .then(res => res.json())
+        .then(groups => groups.map(group => this.props.addGroup(group)))
+        .catch(console.log)
+    }
   }
-
   render() {
     const { groups } = this.props.groups;
 
     return (
-      <div>
+      <div >
         {groups.map((group, i) => {
           return (
             <List key={i}>
-              <ListItem>
+              {/* <MenuItem onClick={this.handleOpenEdit}> */}
+              <MenuItem>
                 <Label />
                 <ListItemText>{group.name}</ListItemText>
-              </ListItem>
+                {/* <ListItemIcon> */}
+                <Edit />
+                <DeleteIcon />
+                {/* </ListItemIcon > */}
+              </MenuItem>
             </List>
           );
         })}
       </div>
+
     );
   }
 }
 
-export default Group
+export default GroupComponent

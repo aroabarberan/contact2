@@ -3,7 +3,7 @@ const initialState = {
     // {
     //   id: 0,
     //   sub: 'google-contact|02948184719284712897012',
-    //   avatar: '',
+    //   avatar: 'sfsd',
     //   name: 'Puribum',
     //   phone: '123123123124241',
     //   favourite: 0,

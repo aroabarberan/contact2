@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Add from "@material-ui/icons/Add";
 import Archive from "@material-ui/icons/Archive";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -12,12 +11,13 @@ import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import {
   ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
-  List, ListItem, ListItemText,
+  List, ListItemText,
   Menu, MenuItem, CssBaseline, withStyles
 } from '@material-ui/core';
-
+import { Link } from "react-router-dom";
 import ImageAvatarComponent from "./ImageAvatarComponent";
 import GroupContainer from '../Containers/Group/groupContainer';
+import CreateGroupContainer from "../Containers/Group/createGroupContainer";
 
 class DrawerPaper extends React.Component {
   constructor() {
@@ -75,19 +75,15 @@ class DrawerPaper extends React.Component {
     this.props.auth.logout()
   };
 
-  goTo = (route) => {
-    this.props.history.replace(`/${route}`);
-  }
-
   render() {
     const { classes } = this.props;
     const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const listItem = [
-      { icon: <Contacts />, text: 'Contacts' },
-      { icon: <FileCopy />, text: 'Duplicates' },
-      { icon: <Archive />, text: 'Other contacts' },
+      { icon: <Contacts />, redirect: <Link className={classes.menuLink} to="/contacts">Contacts</Link> },
+      { icon: <FileCopy />, redirect: <Link className={classes.menuLink} to="/merge">Duplicates</Link> },
+      { icon: <Archive />, redirect: <Link className={classes.menuLink} to="/other">Other contacts</Link> },
     ]
 
     const renderMenu = (
@@ -112,11 +108,12 @@ class DrawerPaper extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        <MenuItem  onClick={this.handleClose} >
+        <MenuItem onClick={this.handleClose} >
           <IconButton color="primary"><PowerSettingsNew /></IconButton>Sing out
         </MenuItem>
       </Menu>
     );
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -149,39 +146,35 @@ class DrawerPaper extends React.Component {
           classes={{ paper: classes.drawerPaper }}
         >
           <div className={classes.toolbar} />
-          <List>
+          <List open>
             {listItem.map((item, i) => (
-              <ListItem key={i} >
-                {item.icon}<ListItemText>{item.text}</ListItemText>
-              </ListItem>)
+              <MenuItem className={classes.menuItem} key={i} >
+                {item.icon} <ListItemText>{item.redirect}</ListItemText>
+              </MenuItem>)
             )}
 
-            <ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
+            <ExpansionPanel expanded={expanded === 'panel1'}
+              onChange={this.handleChange('panel1')}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <ListItemText>Groups</ListItemText>
               </ExpansionPanelSummary>
-
               <GroupContainer auth={this.props.auth} />
-              <ListItem>
-                <Add />
-                <ListItemText>Create Group</ListItemText>
-              </ListItem>
+              <CreateGroupContainer auth={this.props.auth} />
             </ExpansionPanel>
 
-            <ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
+            <ExpansionPanel expanded={expanded === 'panel2'}
+              onChange={this.handleChange('panel2')}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <ListItemText>More</ListItemText>
               </ExpansionPanelSummary>
-
-              <ListItem>
+              <MenuItem className={classes.menuItem}>
                 <CloudUpload />
                 <ListItemText>Import</ListItemText>
-              </ListItem>
-              <ListItem>
+              </MenuItem>
+              <MenuItem className={classes.menuItem}>
                 <CloudDownload />
                 <ListItemText>Export</ListItemText>
-              </ListItem>
-
+              </MenuItem>
             </ExpansionPanel>
           </List>
         </Drawer>
@@ -192,7 +185,7 @@ class DrawerPaper extends React.Component {
   }
 }
 
-const drawerWidth = 240
+const drawerWidth = 240;
 
 const styles = theme => ({
   root: {
@@ -207,7 +200,6 @@ const styles = theme => ({
     position: "fixed",
     zIndex: theme.zIndex.drawer + 1,
   },
-
   drawerPaper: {
     width: drawerWidth,
   },
@@ -215,7 +207,17 @@ const styles = theme => ({
     flexGrow: 1,
   },
   toolbar: theme.mixins.toolbar,
-
+  menuLink: {
+    color: '#666',
+    textDecoration: 'none',
+  },
+  menuItem: {
+    color: '#666',
+    '&:focus': {
+      color: '#fff',
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
   sectionDesktop: {
     display: 'none',
     [theme.breakpoints.up('md')]: {

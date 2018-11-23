@@ -1,37 +1,20 @@
 import React from 'react';
 import { QUERIES } from "../../querys";
-import { Formik, Form, Field } from "formik";
-
+import PropTypes from 'prop-types';
+import Add from "@material-ui/icons/Add";
 import {
-  Divider, Button, Dialog, DialogTitle,
-  DialogActions, DialogContent
+  Divider, Button, Dialog, DialogTitle, TextField,
+  ListItemText, DialogActions, DialogContent, MenuItem,
+  withStyles,
 } from '@material-ui/core';
 
-const handleSubmit = (props) => (values, actions) => {
 
-  // const sub = props.auth.userProfile.sub;
-  const token = props.auth.getAccessToken();
-  const formData = new FormData();
-  formData.append('avatar', values.avatar)
-
-  fetch(QUERIES.groups, {
-    method: "POST",
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + token,
-    },
-    body: formData,
-  })
-    // .then(res => res.json())
-    .then(console.log)
-    .catch(console.log);
-}
-
-class CreateGroup extends React.Component {
+class CreateGroupComponent extends React.Component {
   constructor() {
     super()
     this.state = {
       open: false,
+      anchorEl: null,
     }
   }
 
@@ -43,39 +26,80 @@ class CreateGroup extends React.Component {
     this.setState({ open: false });
   }
 
+  handleChange = (evt) => {
+    this.props.updateForm({
+      [evt.target.name]: evt.target.value
+    });
+  }
+
+  submit = (evt) => {
+    evt.preventDefault();
+    const { name } = this.props.form.create;
+
+    fetch(QUERIES.group, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'multipart/form-data',
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+      },
+      body: JSON.stringify({ name }),
+    })
+      .then(res => res.json())
+      .then(console.log)
+      .then(data => this.props.addGroup(data.group))
+      .catch(console.log);
+    this.handleClose();
+  }
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <Formik
-          initialValues={{ name: '' }}
-          onSubmit={handleSubmit(this.props)}
-          render={({ values }) => (
-            <Dialog
-              open={this.state.open}
-              onClose={this.handleClose}
-              aria-labelledby="form-dialog-title"
-            >
-              <DialogTitle id="form-dialog-title">Create new group</DialogTitle>
-              <Divider />
+        <MenuItem className={classes.menuItem} onClick={this.handleOpen}>
+          <Add /><ListItemText>Create Group</ListItemText>
+        </MenuItem>
 
-              <DialogContent>
-                <Form>
-                  <Field type="text" name="name" value={values.name} />
-                </Form>
-              </DialogContent>
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
+          <Divider />
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="normal"
+              name="name"
+              label="Name"
+              type="text"
+              onChange={this.handleChange}
+            />
 
-              <DialogActions>
-                <Button onClick={this.handleClose} color="primary">Cancel</Button>
-                <Button onClick={this.submit} color="primary">Save</Button>
-
-              </DialogActions>
-            </Dialog>
-
-          )}
-        />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">Cancel</Button>
+            <Button onClick={this.submit} color="primary">Save</Button>
+          </DialogActions>
+        </Dialog>
       </div>
     );
   }
 }
 
-export default CreateGroup
+const styles = theme => ({
+  menuItem: {
+    color: '#666',
+    '&:focus': {
+      color: '#fff',
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+});
+
+CreateGroupComponent.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(CreateGroupComponent);
+
