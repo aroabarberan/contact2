@@ -18,10 +18,10 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $group = new Group;
-        $group->user = $request['sub'];
+        $group->user =\Auth0::jwtUser()->sub;
         $group->name = $request['name'];
-        $group->save();
-        // Check if save
+       
+        if ($group->save()) return response('Error. Group not found', 404);
         return response()->json([
             'code' => 201,
             'status' => 'The group is created successfully',
@@ -32,7 +32,7 @@ class GroupController extends Controller
     public function show($id)
     {
         $group = Group::find($id);
-        if ($group == '') return response('Error. group not found', 404);
+        if ($group == '') return response('Error. Group not found', 404);
         return response()->json([
             'status' => 200,
             'message' => 'group found',
