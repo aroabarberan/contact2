@@ -20,8 +20,7 @@ class GroupController extends Controller
         $group = new Group;
         $group->user =\Auth0::jwtUser()->sub;
         $group->name = $request['name'];
-       
-        if ($group->save()) return response('Error. Group not found', 404);
+        if (!$group->save()) return response('Error. Group not save', 404);
         return response()->json([
             'code' => 201,
             'status' => 'The group is created successfully',
