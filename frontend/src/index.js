@@ -24,7 +24,7 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-  },
+  },  
 })
 
 // if (process.env.NODE_ENV === 'development') console.log(theme)

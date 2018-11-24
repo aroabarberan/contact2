@@ -111,6 +111,7 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   content: {
+    margin: '0 0 0 245px',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
@@ -126,6 +127,7 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
+    minWidth: '500px',
   },
 })
 

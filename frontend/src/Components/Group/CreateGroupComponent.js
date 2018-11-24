@@ -35,18 +35,16 @@ class CreateGroupComponent extends React.Component {
   submit = (evt) => {
     evt.preventDefault();
     const { name } = this.props.form.create;
-
     fetch(QUERIES.group, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
-        'Content-type': 'multipart/form-data',
+        'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
       body: JSON.stringify({ name }),
     })
       .then(res => res.json())
-      .then(console.log)
       .then(data => this.props.addGroup(data.group))
       .catch(console.log);
     this.handleClose();
