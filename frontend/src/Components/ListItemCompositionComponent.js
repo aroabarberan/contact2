@@ -90,7 +90,9 @@ class ListItemComposition extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
-    }).then(console.log).catch(console.log);
+    })
+    .then(console.log)
+    .catch(console.log);
     this.props.deleteContact(id);
     this.handleClose();
   }
@@ -165,13 +167,6 @@ class ListItemComposition extends React.Component {
                 <DeleteIcon />
               </ListItemIcon>
               <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
-            </MenuItem>
-
-            <Divider />
-
-            <p className={classes.title}>Change Label</p>
-            <MenuItem className={classes.menuItem}>
-              <GroupContainer auth={this.props.auth} />
             </MenuItem>
           </MenuList>
         </Menu>

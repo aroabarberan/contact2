@@ -32,10 +32,7 @@ class CreateContact extends React.Component {
 
   handleSubmit = (values, actions) => {
     console.log(values)
-  
-    const token = this.props.auth.getAccessToken();
     const formData = new FormData();
-  
     formData.append('avatar', values.avatar)
     formData.append('name', values.name)
     formData.append('phone', values.phone)
@@ -45,12 +42,13 @@ class CreateContact extends React.Component {
       method: "POST",
       headers: {
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
       body: formData,
     })
       .then(res => res.json())
-      .then(contact => this.props.addContact(contact))
+      .then(console.log)
+      // .then(contact => this.props.addContact(contact))
       .catch(console.log);
     this.handleClose();
   }

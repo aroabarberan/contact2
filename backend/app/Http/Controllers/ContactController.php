@@ -17,7 +17,7 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        $path =  $request->file('avatar')->store('images');
+        $path =  $request->file('avatar')->store('');
      
         $contact = new Contact;
         $contact->user = \Auth0::jwtUser()->sub;
@@ -25,8 +25,8 @@ class ContactController extends Controller
         $contact->avatar = $path;
         $contact->phone = $request['phone'];
         $contact->favourite = $request['favourite'];
-       
-        if ($contact->save()) return response('Error. Contact not found', 404);
+        $contact->save();
+        // if ($contact->save()) return response('Error. Contact not found', 404);
         return response()->json([
             'code' => 201,
             'status' => 'The contact is created successfully',

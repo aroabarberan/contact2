@@ -43,34 +43,29 @@ class GroupComponent extends React.Component {
   }
 
   handleOpenEdit = (group) => {
-    console.log('click edit', group);
     this.setState({ id: group.id });
     this.setState({ name: group.name });
     this.setState({ openEdit: true });
   }
 
   handleCloseEdit = () => {
-    console.log('click edit');
     this.setState({ openEdit: false });
   }
 
-  delete = () => {
-    console.log('click delete');
-    const token = this.props.auth.getAccessToken();
-    const { id } = this.state;
-
-    fetch(QUERIES.group + id, {
+  delete = (group) => {
+    fetch(QUERIES.group + group.id, {
       method: "DELETE",
       headers: {
         'Accept': 'application/json',
         'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + token,
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
     })
+      .then(res => res.json())
       .then(console.log)
       .catch(console.log);
-    this.props.deleteGroup(id);
-    this.handleClose();
+    this.props.deleteGroup(group.id);
+    this.handleCloseEdit();
   }
 
   handleChange = name => evt => {
@@ -97,9 +92,8 @@ class GroupComponent extends React.Component {
       body: JSON.stringify({ id, name, }, id),
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(data => this.props.editGroup(data.group.id, data.group))
       .catch(console.log);
-    this.props.editGroup(id, { id, name });
     this.handleCloseEdit();
   }
 
@@ -115,12 +109,11 @@ class GroupComponent extends React.Component {
             <div key={i}>
               <Divider />
               <List >
-                {/* <MenuItem onClick={this.handleOpenEdit}> */}
                 <MenuItem className={classes.menuItem}>
                   <Label />
                   <ListItemText onClick={() => this.handleOpen(group)}>{group.name}</ListItemText>
                   <Edit onClick={() => this.handleOpenEdit(group)} />
-                  <DeleteIcon onClick={this.delete} />
+                  <DeleteIcon onClick={() => this.delete(group)} />
                 </MenuItem>
               </List>
             </div>
@@ -158,8 +151,6 @@ const styles = theme => ({
   menuItem: {
     color: '#666',
   },
-  primary: {},
-
 });
 
 GroupComponent.propTypes = {
