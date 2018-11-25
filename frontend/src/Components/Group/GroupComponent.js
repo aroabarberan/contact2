@@ -6,7 +6,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { QUERIES } from "../../querys";
 import {
   Button, Divider, TextField,
-  Dialog, DialogTitle, DialogActions, DialogContent, 
+  Dialog, DialogTitle, DialogActions, DialogContent,
   List, MenuItem, ListItemText, withStyles
 } from '@material-ui/core';
 
@@ -15,7 +15,10 @@ class GroupComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      open: false,
+      // open: false,
+      openEdit: false,
+      id: null,
+      name: '',
     };
   }
   componentWillMount() {
@@ -35,10 +38,14 @@ class GroupComponent extends React.Component {
         .catch(console.log)
     }
   }
+  handleOpen = (group) => {
+    console.log('click name group', group);
+  }
 
-  handleOpenEdit = () => {
-    console.log('click edit');
-    this.handleCloseEdit();
+  handleOpenEdit = (group) => {
+    console.log('click edit', group);
+    this.setState({ id: group.id });
+    this.setState({ name: group.name });
     this.setState({ openEdit: true });
   }
 
@@ -59,49 +66,68 @@ class GroupComponent extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + token,
       },
-    }).then(console.log).catch(console.log);
-    this.props.deleteContact(id);
+    })
+      .then(console.log)
+      .catch(console.log);
+    this.props.deleteGroup(id);
     this.handleClose();
   }
 
   handleChange = name => evt => {
-    this.setState({
-      [name]: evt.target.value,
-    });
+    this.setState({ [name]: evt.target.value });
     this.props.updateForm({
+      id: this.state.id,
       name: this.state.name,
-      avatar: this.state.avatar,
-      phone: this.state.phone,
-      favourite: this.state.favourite,
       [evt.target.name]: evt.target.value
     });
   };
 
-  submit = () => {
-    console.log('on submit')
+  submit = evt => {
+    evt.preventDefault();
+    const { id, name } = this.state;
+    const token = this.props.auth.getAccessToken();
+
+    fetch(QUERIES.group + id, {
+      method: "PUT",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+      body: JSON.stringify({ id, name, }, id),
+    })
+      .then(res => res.json())
+      .then(console.log)
+      .catch(console.log);
+    this.props.editGroup(id, { id, name });
+    this.handleCloseEdit();
   }
 
   render() {
     const { classes } = this.props;
-    const open = Boolean(this.state.open);
+    // const open = Boolean(this.state.open);
+    const { openEdit } = this.state;
     const { groups } = this.props.groups;
     return (
       <div >
         {groups.map((group, i) => {
           return (
-            <List key={i}>
-              {/* <MenuItem onClick={this.handleOpenEdit}> */}
-              <MenuItem className={classes.menuItem}>
-                <Label />
-                <ListItemText onClick={this.handleOpenEdit}>{group.name}</ListItemText>
-                <Edit onClick={this.handleOpenEdit} />
-                <DeleteIcon onClick={this.delete} />
-              </MenuItem>
-            </List>
+            <div key={i}>
+              <Divider />
+              <List >
+                {/* <MenuItem onClick={this.handleOpenEdit}> */}
+                <MenuItem className={classes.menuItem}>
+                  <Label />
+                  <ListItemText onClick={() => this.handleOpen(group)}>{group.name}</ListItemText>
+                  <Edit onClick={() => this.handleOpenEdit(group)} />
+                  <DeleteIcon onClick={this.delete} />
+                </MenuItem>
+              </List>
+            </div>
           );
         })}
         <Dialog
-          open={open}
+          open={openEdit}
           onClose={this.handleCloseEdit}
           aria-labelledby="form-dialog-title"
         >
@@ -113,8 +139,8 @@ class GroupComponent extends React.Component {
               name="name"
               label="Name"
               type="text"
-              // defaultValue={this.props.contact.phone}
-              onChange={this.handleChange()}
+              defaultValue={this.state.name}
+              onChange={this.handleChange('name')}
             />
           </DialogContent>
           <DialogActions>
@@ -123,7 +149,6 @@ class GroupComponent extends React.Component {
           </DialogActions>
         </Dialog>
       </div>
-
     );
   }
 }

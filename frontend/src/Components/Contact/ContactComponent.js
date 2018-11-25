@@ -8,7 +8,6 @@ import {
   Paper, Avatar, withStyles
 } from '@material-ui/core';
 import LogoutComponent from "../LogoutComponent";
-import DrawerPaperComponent from "../DrawerPaperComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
 
@@ -23,8 +22,8 @@ class ContactComponent extends React.Component {
     }
   }
   componentWillMount() {
-      const token =  this.props.auth.getAccessToken();
-      if(this.props.contacts.contacts.length === 0) {
+    const token = this.props.auth.getAccessToken();
+    if (this.props.contacts.contacts.length === 0) {
       fetch(QUERIES.contact, {
         method: "GET",
         headers: {
@@ -63,11 +62,7 @@ class ContactComponent extends React.Component {
         )}
 
         {isAuthenticated() && (
-          // <div className={classes.root}>
           <div>
-            {/* <DrawerPaperComponent auth={this.props.auth} history={this.props.history} /> */}
-
-            {/* <div className={classes.toolbar} /> */}
             <main className={classes.content}>
               <Paper className={classes.paper}>
                 <Table>

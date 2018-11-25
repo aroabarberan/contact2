@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import GroupComponent from "../../Components/Group/GroupComponent";
-import { addGroup } from "../../Actions/groupAction";
+import { addGroup, editGroup, updateForm } from "../../Actions/groupAction";
 
 
 const mapStateToProps = state => ({
@@ -11,6 +11,12 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addGroup: group => {
     dispatch(addGroup(group))
+  },
+  editGroup: (id, group) => {
+    dispatch(editGroup(id, group))
+  },
+  updateForm: group => {
+    dispatch(updateForm(group))
   },
 })
 

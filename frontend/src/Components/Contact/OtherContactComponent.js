@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LogoutComponent from "../LogoutComponent";
-import DrawerPaper from "../DrawerPaperComponent";
 import { withStyles } from '@material-ui/core';
 
 
@@ -19,12 +18,9 @@ class OtherComponent extends React.Component {
         <div>
           {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
-            <div className={classes.root}>
-              <DrawerPaper auth={this.props.auth} history={this.props.history} />
-              <main className={classes.content}>
-                <h1>Contacts Hidden</h1>
-              </main>
-            </div>
+            <main className={classes.content}>
+              <h1>Contacts Hidden</h1>
+            </main>
           )}
         </div>
         {this.props.children}
@@ -39,6 +35,7 @@ const styles = theme => ({
     color: '#666',
   },
   content: {
+    margin: '0 0 0 245px',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
