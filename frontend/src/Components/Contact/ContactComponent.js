@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import deepOrange from '@material-ui/core/colors/deepOrange';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -79,8 +80,8 @@ class ContactComponent extends React.Component {
                       return (
                         <TableRow key={i}>
                           <TableCell component="th" scope="row">
-                            {this.isFavourite(contact.favourite)}
-                            <Avatar src={contact.avatar} />
+                            {/* {this.isFavourite(contact.favourite)} */}
+                            <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
                           </TableCell>
                           <TableCell>{contact.name}</TableCell>
                           <TableCell>{contact.phone}</TableCell>
@@ -123,6 +124,10 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     minWidth: '500px',
+  },
+  orangeAvatar: {
+    color: '#fff',
+    backgroundColor: deepOrange[500],
   },
 })
 

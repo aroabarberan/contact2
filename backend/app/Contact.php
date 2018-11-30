@@ -9,8 +9,8 @@ class Contact extends Model
     protected $fillable = ['user', 'avatar', 'name', 'favourite'];
 
 
-    public function phones() {
-        return $this->hasMany('App\Phone');
-    }
+    // public function phones() {
+    //     return $this->hasMany('App\Phone');
+    // }
 
 }

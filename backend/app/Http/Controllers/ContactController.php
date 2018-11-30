@@ -17,12 +17,12 @@ class ContactController extends Controller
 
     public function store(Request $request)
     {
-        $path =  $request->file('avatar')->store('');
+        // $path =  $request->file('avatar')->store('');
      
         $contact = new Contact;
         $contact->user = \Auth0::jwtUser()->sub;
         $contact->name = $request['name'];
-        $contact->avatar = $path;
+        $contact->avatar = "";
         $contact->phone = $request['phone'];
         $contact->favourite = $request['favourite'];
         $contact->save();

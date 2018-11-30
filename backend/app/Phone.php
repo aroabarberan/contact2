@@ -9,8 +9,8 @@ class Phone extends Model
     protected $fillable = ['phone'];
 
 
-    public function contact()
-    {
-        return $this->belongsTo('App\Contact');
-    }
+    // public function contact()
+    // {
+    //     return $this->belongsTo('App\Contact');
+    // }
 }

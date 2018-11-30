@@ -119,7 +119,7 @@ class DrawerPaper extends React.Component {
         <CssBaseline />
         <AppBar className={classes.appBar} >
           <Toolbar>
-            <Typography variant="h6" color="inherit" noWrap>Book Contact</Typography>
+            <Typography variant="h6" color="inherit" noWrap>Contactboard</Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton

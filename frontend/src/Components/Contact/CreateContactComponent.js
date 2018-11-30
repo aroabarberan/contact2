@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import { Formik, Form, Field } from 'formik';
 import { QUERIES } from "../../querys";
 import {
-  Divider, Button, Dialog, DialogTitle,
+  Divider, Button, Dialog, DialogTitle, TextField,
   DialogActions, DialogContent, withStyles,
 } from '@material-ui/core';
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
@@ -26,25 +25,30 @@ class CreateContact extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   }
+
   handleFile = (setFieldValue) => (evt) => {
     setFieldValue("avatar", evt.currentTarget.files[0]);
   }
 
-  handleSubmit = (values, actions) => {
-    console.log(values)
-    const formData = new FormData();
-    formData.append('avatar', values.avatar)
-    formData.append('name', values.name)
-    formData.append('phone', values.phone)
-    formData.append('favourite', values.favourite)
-  
+  handleChange = (evt) => {
+    this.props.updateForm({
+      [evt.target.name]: evt.target.value
+    });
+  }
+
+  submit = (evt) => {
+    evt.preventDefault();
+    const { name, phone } = this.props.form.create;
+    const favourite = 0;
+    console.log(name, phone)
     fetch(QUERIES.contact, {
       method: "POST",
       headers: {
         'Accept': 'application/json',
+        'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: formData,
+      body: JSON.stringify({ name, phone, favourite }),
     })
       .then(res => res.json())
       .then(console.log)
@@ -68,26 +72,31 @@ class CreateContact extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
-          <Formik
-            initialValues={{ name: '', avatar: null, favourite: 0 }}
-            onSubmit={this.handleSubmit}
-            render={({ values, setFieldValue }) => (
-              <Form>
-                <DialogContent>
-                <label>Avatar</label>
-                <input type='file' name='avatar' onChange={this.handleFile(setFieldValue)} />
-                </DialogContent>
-                <DialogContent>
-                <label>Name</label>
-                <Field type="text" name='name' value={values.name} />
-                </DialogContent>
-                <DialogActions>
-                <button onClick={this.handleClose} color="primary">Cancel</button>
-                <button type="submit" color="primary">Save</button>
-                </DialogActions>
-              </Form>
-            )}
-          />
+          <DialogContent>
+          </DialogContent>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="normal"
+              name="name"
+              label="Name"
+              type="text"
+              onChange={this.handleChange}
+            />
+          </DialogContent>
+          <DialogContent>
+            <TextField
+              margin="normal"
+              name="phone"
+              label="Phone"
+              type="text"
+              onChange={this.handleChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">Cancel</Button>
+            <Button onClick={this.submit} color="primary">Save</Button>
+          </DialogActions>
         </Dialog>
       </div>
     );

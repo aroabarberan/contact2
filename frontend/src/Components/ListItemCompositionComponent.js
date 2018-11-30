@@ -11,7 +11,6 @@ import {
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
-import GroupContainer from "../Containers/Group/groupContainer";
 
 
 class ListItemComposition extends React.Component {
