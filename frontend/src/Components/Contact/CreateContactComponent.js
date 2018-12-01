@@ -9,7 +9,6 @@ import {
 // import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
 
 
-
 class CreateContact extends React.Component {
   constructor() {
     super()
@@ -32,6 +31,8 @@ class CreateContact extends React.Component {
 
   handleChange = (evt) => {
     this.props.updateForm({
+      name: this.props.form.create.name,
+      phone: this.props.form.create.phone,
       [evt.target.name]: evt.target.value
     });
   }
@@ -40,7 +41,7 @@ class CreateContact extends React.Component {
     evt.preventDefault();
     const { name, phone } = this.props.form.create;
     const favourite = 0;
-    console.log(name, phone)
+
     fetch(QUERIES.contact, {
       method: "POST",
       headers: {
@@ -51,8 +52,7 @@ class CreateContact extends React.Component {
       body: JSON.stringify({ name, phone, favourite }),
     })
       .then(res => res.json())
-      .then(console.log)
-      // .then(contact => this.props.addContact(contact))
+      .then(data => this.props.addContact(data.contact))
       .catch(console.log);
     this.handleClose();
   }
