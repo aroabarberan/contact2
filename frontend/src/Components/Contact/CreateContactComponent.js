@@ -25,13 +25,10 @@ class CreateContact extends React.Component {
     this.setState({ open: false });
   }
 
-  handleFile = (setFieldValue) => (evt) => {
-    setFieldValue("avatar", evt.currentTarget.files[0]);
-  }
-
   handleChange = (evt) => {
     this.props.updateForm({
       name: this.props.form.create.name,
+      lastName: this.props.form.create.lastName,
       phone: this.props.form.create.phone,
       [evt.target.name]: evt.target.value
     });
@@ -39,7 +36,7 @@ class CreateContact extends React.Component {
 
   submit = (evt) => {
     evt.preventDefault();
-    const { name, phone } = this.props.form.create;
+    const { name, lastName, phone } = this.props.form.create;
     const favourite = 0;
 
     fetch(QUERIES.contact, {
@@ -49,7 +46,7 @@ class CreateContact extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify({ name, phone, favourite }),
+      body: JSON.stringify({ name, lastName, phone, favourite }),
     })
       .then(res => res.json())
       .then(data => this.props.addContact(data.contact))
@@ -80,6 +77,15 @@ class CreateContact extends React.Component {
               margin="normal"
               name="name"
               label="Name"
+              type="text"
+              onChange={this.handleChange}
+            />
+          </DialogContent>
+          <DialogContent>
+            <TextField
+              margin="normal"
+              name="lastName"
+              label="Last Name"
               type="text"
               onChange={this.handleChange}
             />

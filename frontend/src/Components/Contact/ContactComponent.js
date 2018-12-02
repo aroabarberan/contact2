@@ -56,44 +56,43 @@ class ContactComponent extends React.Component {
 
     return (
       <div>
-        {!isAuthenticated() && (
-          <LogoutComponent
-            auth={this.props.auth}
-            history={this.props.history} />
-        )}
+        {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}        {}
 
         {isAuthenticated() && (
-          <div>
-            <main className={classes.content}>
-              <Paper className={classes.paper}>
-                <Table>
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Avatar</TableCell>
-                      <TableCell>Name</TableCell>
-                      <TableCell>Phone</TableCell>
-                      <TableCell>Setting</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {contacts.map((contact, i) => {
-                      return (
-                        <TableRow key={i}>
-                          <TableCell component="th" scope="row">
-                            {/* {this.isFavourite(contact.favourite)} */}
-                            <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
-                          </TableCell>
-                          <TableCell>{contact.name}</TableCell>
-                          <TableCell>{contact.phone}</TableCell>
-                          <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </Paper>
-            </main>
-          </div>
+          <main className={classes.content}>
+            <Paper className={classes.paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Fav</TableCell>
+                    <TableCell>Avatar</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Last Name</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell>Setting</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {contacts.map((contact, i) => {
+                    return (
+                      <TableRow key={i}>
+                        <TableCell component="th" scope="row">
+                          {this.isFavourite(contact.favourite)}
+                        </TableCell>
+                        <TableCell>
+                          <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
+                        </TableCell>
+                        <TableCell>{contact.name}</TableCell>
+                        <TableCell>{contact.lastName}</TableCell>
+                        <TableCell>{contact.phone}</TableCell>
+                        <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
+          </main>
         )}
       </div>
     );
@@ -123,7 +122,7 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-    minWidth: '500px',
+    minWidth: '800px',
   },
   orangeAvatar: {
     color: '#fff',

@@ -213,10 +213,10 @@ const styles = theme => ({
   },
   menuItem: {
     color: '#666',
-    '&:focus': {
-      color: '#fff',
-      backgroundColor: theme.palette.primary.main,
-    },
+    // '&:focus': {
+    //   color: '#fff',
+    //   backgroundColor: theme.palette.primary.main,
+    // },
   },
   sectionDesktop: {
     display: 'none',

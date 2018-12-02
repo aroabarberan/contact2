@@ -21,8 +21,8 @@ class ContactController extends Controller
      
         $contact = new Contact;
         $contact->user = \Auth0::jwtUser()->sub;
+        $contact->lastName = $request['lastName'];
         $contact->name = $request['name'];
-        $contact->avatar = "";
         $contact->phone = $request['phone'];
         $contact->favourite = $request['favourite'];
         $contact->save();
@@ -68,4 +68,5 @@ class ContactController extends Controller
             'contact' => $contact
         ], 201);
     }
+
 }

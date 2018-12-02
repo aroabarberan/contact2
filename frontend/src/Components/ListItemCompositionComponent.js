@@ -44,7 +44,7 @@ class ListItemComposition extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
-
+ 
   changeAvatar = evt => {
     let files = evt.target.files || evt.dataTransfer.files;
     if (!files.length)
@@ -90,9 +90,10 @@ class ListItemComposition extends React.Component {
         'Authorization': 'Bearer ' + token,
       },
     })
-    .then(console.log)
+    .then(res => res.json())
+    .then(data => this.props.deleteContact(data.contact.id))
     .catch(console.log);
-    this.props.deleteContact(id);
+    // this.props.deleteContact(id);
     this.handleClose();
   }
 

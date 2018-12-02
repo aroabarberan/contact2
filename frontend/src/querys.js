@@ -1,4 +1,4 @@
 export const QUERIES = {
-  contact: 'http://localhost:3010/api/contacts/',
-  group: 'http://localhost:3010/api/groups/',
+  contact: 'http://api.contactboard.tk/api/contacts/',
+  group: 'http://api.contactboard.tk/api/groups/',
 }
