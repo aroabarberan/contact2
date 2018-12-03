@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CSVLink } from "react-csv";
+import CsvParse from '@vtex/react-csv-parse'
+import { Link } from "react-router-dom";
 import Archive from "@material-ui/icons/Archive";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -7,6 +10,7 @@ import FileCopy from '@material-ui/icons/FileCopy';
 import CloudUpload from "@material-ui/icons/CloudUpload";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Star from "@material-ui/icons/Star";
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import {
   ExpansionPanel, ExpansionPanelSummary,
@@ -14,10 +18,22 @@ import {
   List, ListItemText,
   Menu, MenuItem, CssBaseline, withStyles
 } from '@material-ui/core';
-import { Link } from "react-router-dom";
+import { QUERIES } from "../querys";
 import ImageAvatarComponent from "./ImageAvatarComponent";
 import GroupContainer from '../Containers/Group/groupContainer';
 import CreateGroupContainer from "../Containers/Group/createGroupContainer";
+
+
+
+const keys = [
+  'id',
+  'user',
+  'lastName',
+  'name',
+  'phone',
+  'favourite',
+]
+
 
 class DrawerPaper extends React.Component {
   constructor() {
@@ -75,6 +91,22 @@ class DrawerPaper extends React.Component {
     this.props.auth.logout()
   };
 
+  handleData = data => {
+    console.log(data)
+    fetch(QUERIES.contact, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+      },
+      body: JSON.stringify(data[0]),
+    })
+      .then(res => res.json())
+      .then(data => this.props.addContact(data.contact))
+      .catch(console.log);
+  }
+
   render() {
     const { classes } = this.props;
     const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
@@ -83,6 +115,7 @@ class DrawerPaper extends React.Component {
     const listItem = [
       { icon: <Contacts />, redirect: <Link className={classes.menuLink} to="/contacts">Contacts</Link> },
       { icon: <FileCopy />, redirect: <Link className={classes.menuLink} to="/merge">Duplicates</Link> },
+      { icon: <Star />, redirect: <Link className={classes.menuLink} to="/favourite">Favourites</Link> },
       { icon: <Archive />, redirect: <Link className={classes.menuLink} to="/other">Other contacts</Link> },
     ]
 
@@ -169,12 +202,19 @@ class DrawerPaper extends React.Component {
               </ExpansionPanelSummary>
               <MenuItem className={classes.menuItem}>
                 <CloudUpload />
-                <ListItemText>Import</ListItemText>
+                <CsvParse
+                  keys={keys}
+                  onDataUploaded={this.handleData}
+                  onError={this.handleError}
+                  render={onChange => <input type="file" onChange={onChange} />}
+                />
               </MenuItem>
-              <MenuItem className={classes.menuItem}>
-                <CloudDownload />
-                <ListItemText>Export</ListItemText>
-              </MenuItem>
+              <CSVLink data={this.props.contacts.contacts} separator={";"}>
+                <MenuItem className={classes.menuItem}>
+                  <CloudDownload />
+                  <ListItemText>Export</ListItemText>
+                </MenuItem>
+              </CSVLink>
             </ExpansionPanel>
           </List>
         </Drawer>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import MergeContactComponent from "../../Components/Contact/MergeContactComponent";
+import FavourieContactComponent from "../../Components/Contact/FavouriteContactComponent";
 import { addContact, editContact } from "../../Actions/contactAction";
 
 
@@ -15,4 +15,4 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(MergeContactComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(FavourieContactComponent)

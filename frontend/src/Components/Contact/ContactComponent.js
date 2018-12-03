@@ -11,16 +11,11 @@ import {
 import LogoutComponent from "../LogoutComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
-
 class ContactComponent extends React.Component {
 
   constructor() {
     super()
-    this.state = {
-      favourite: false,
-      starFilled: <Starfilled color="primary" onClick={this.handleFavouriteClick} />,
-      StarBorder: <StarBorder onClick={this.handleFavouriteClick} />,
-    }
+
   }
   componentWillMount() {
     const token = this.props.auth.getAccessToken();
@@ -39,9 +34,34 @@ class ContactComponent extends React.Component {
     }
   }
 
-  handleFavouriteClick = () => {
-    if (this.state.favourite) this.setState({ favourite: false });
-    this.setState({ favourite: true });
+  handleFavouriteClick = contact => evt => {
+    evt.preventDefault();
+    let favourite = null
+    const { id, sub, lastName, name, phone } = contact;
+
+    if (contact.favourite === 1)  {
+      favourite = 0;
+    } else {
+      favourite = 1;
+    }
+
+    const newContact =  { id, sub, lastName, name, phone, favourite }
+
+    fetch(QUERIES.contact + contact.id, {
+      method: "PUT",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+      },
+      body: JSON.stringify(newContact, contact.id),
+    })
+      .then(res => res.json())
+      .then(console.log)
+      .catch(console.log);
+    this.props.editContact(contact.id, newContact);
+    console.log(newContact)
+
   }
 
   isFavourite(favourite) {
@@ -77,7 +97,7 @@ class ContactComponent extends React.Component {
                     return (
                       <TableRow key={i}>
                         <TableCell component="th" scope="row">
-                          {this.isFavourite(contact.favourite)}
+                          <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
                         </TableCell>
                         <TableCell>
                           <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>

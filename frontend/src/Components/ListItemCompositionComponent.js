@@ -45,33 +45,14 @@ class ListItemComposition extends React.Component {
     this.setState({ anchorEl: null });
   };
  
-  changeAvatar = evt => {
-    let files = evt.target.files || evt.dataTransfer.files;
-    if (!files.length)
-      return;
-    this.createImage(files[0]);
-  }
-
-  createImage = file => {
-    let reader = new FileReader();
-    reader.onload = (evt) => {
-      this.setState({
-        avatar: evt.target.result
-      })
-      this.props.updateForm({
-        avatar: evt.target.result
-      });
-    };
-    reader.readAsDataURL(file);
-  }
-
+ 
   handleChange = name => evt => {
     this.setState({
       [name]: evt.target.value,
     });
     this.props.updateForm({
       name: this.state.name,
-      avatar: this.state.avatar,
+      lastName: this.state.lastName,
       phone: this.state.phone,
       favourite: this.state.favourite,
       [evt.target.name]: evt.target.value
@@ -93,7 +74,6 @@ class ListItemComposition extends React.Component {
     .then(res => res.json())
     .then(data => this.props.deleteContact(data.contact.id))
     .catch(console.log);
-    // this.props.deleteContact(id);
     this.handleClose();
   }
 
@@ -181,11 +161,11 @@ class ListItemComposition extends React.Component {
           <DialogContent>
             <TextField
               margin="normal"
-              name="avatar"
-              label="Avatar"
-              type="file"
+              name="lastName"
+              label="Last name"
+              type="text"
               defaultValue={this.props.contact.avatar}
-              onChange={this.changeAvatar}
+              onChange={this.handleChange('lastName')}
             />
           </DialogContent>
           <DialogContent>

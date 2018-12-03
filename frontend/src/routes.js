@@ -6,6 +6,7 @@ import AppComponent from "./Components/AppComponent";
 import Callback from './Components/Callback/CallbackComponent';
 import LogoutComponent from './Components/LogoutComponent';
 import MergeContactContainer from "./Containers/Contact/mergeContactContainer";
+import FavouriteContactContainer from "./Containers/Contact/favouriteContactContainer";
 import ContactContainer from "./Containers/Contact/contactContainer";
 import OtherContactContainer from "./Containers/Contact/otherContactContainer";
 
@@ -25,6 +26,7 @@ export const makeMainRoutes = () => {
         <Route path="/contacts" render={(props) => <ContactContainer auth={auth} {...props} />} />
         <Route path="/logout" render={(props) => <LogoutComponent auth={auth} {...props} />} />
         <Route path="/merge" render={(props) => <MergeContactContainer auth={auth} {...props} />} />
+        <Route path="/favourite" render={(props) => <FavouriteContactContainer auth={auth} {...props} />} />
         <Route path="/other" render={(props) => <OtherContactContainer auth={auth} {...props} />} />
         <Route path="/callback" render={(props) => {
           handleAuthentication(props)
