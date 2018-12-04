@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LogoutComponent from "../LogoutComponent";
 import deepOrange from '@material-ui/core/colors/deepOrange';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -9,20 +9,11 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
 } from '@material-ui/core';
+import LogoutComponent from "../LogoutComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
 
 class FavouriteComponent extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      favourites: [],
-    }
-  }
-  componentWillMount() {
-    const { contacts } = this.props.contacts;
-    this.setState({ favourites: contacts.filter(contact => contact.favourite === 1) })
-  }
 
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
@@ -62,7 +53,7 @@ class FavouriteComponent extends React.Component {
   render() {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
-    const { favourites } = this.state;
+    const favourites = this.props.contacts.contacts.filter(contact => contact.favourite === 1)
 
     return (
       <div>
@@ -70,7 +61,7 @@ class FavouriteComponent extends React.Component {
           {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
             <main className={classes.content}>
-              {favourites.length !== 0 ?
+              {favourites.length === 0 ? <CircularProgress disableShrink /> :
                 <Paper className={classes.paper}>
                   <Table>
                     <TableHead>
@@ -103,8 +94,7 @@ class FavouriteComponent extends React.Component {
                     </TableBody>
                   </Table>
                 </Paper>
-                :
-                <h3>No hay contactos favoritos</h3>
+
               }
             </main>
           )}

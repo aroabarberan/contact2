@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import OtherContactComponent from "../../Components/Contact/OtherContactComponent";
-// import { addContact } from "../../Actions/contactAction";
+import { addContact, editContact } from "../../Actions/contactAction";
 
 
 const mapStateToProps = state => ({
@@ -10,7 +10,12 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  //TODO
+  addContact: contact => {
+    dispatch(addContact(contact))
+  },
+  editContact: (id, contact) => {
+    dispatch(editContact(id, contact))
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(OtherContactComponent)

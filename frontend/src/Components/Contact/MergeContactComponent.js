@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LogoutComponent from "../LogoutComponent";
 import deepOrange from '@material-ui/core/colors/deepOrange';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -9,38 +9,21 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
 } from '@material-ui/core';
+import LogoutComponent from "../LogoutComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
 
 class MergeComponent extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      duplicates: [],
+
+  count(contacts, contact) {
+    var countContacts = [];
+    for (var i = 0; i < contacts.length; i++) {
+      if (contacts[i].name.toLowerCase() === contact.name &&
+        contacts[i].lastName.toLowerCase() === contact.lastName) {
+        countContacts.push(contact);
+      }
     }
-  }
-  componentWillMount() {
-    const token = this.props.auth.getAccessToken();
-    // change path when deploy
-    fetch(QUERIES.contact + 'merge', {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-      },
-    })
-      .then(resp => resp.json())
-      .then(console.log)
-      .catch(console.log)
-    // let contacts = this.props.contacts.contacts;
-    // for (let i = 0; i < contacts.length; i++) {
-    //   for (let j = 0; j < contacts.length; j++) {
-    //     if (contacts[i].name == contacts[j].name) {
-    //       console.log(contacts[i].name)
-    //     }
-    //   }
-    // }
+    return countContacts;
   }
 
   handleFavouriteClick = contact => evt => {
@@ -48,12 +31,12 @@ class MergeComponent extends React.Component {
     let favourite = null
     const { id, sub, lastName, name, phone } = contact;
 
-    if (contact.favourite === 1)  {
+    if (contact.favourite === 1) {
       favourite = 0;
     } else {
       favourite = 1;
     }
-    const newContact =  { id, sub, lastName, name, phone, favourite }
+    const newContact = { id, sub, lastName, name, phone, favourite }
 
     fetch(QUERIES.contact + contact.id, {
       method: "PUT",
@@ -69,7 +52,6 @@ class MergeComponent extends React.Component {
       .catch(console.log);
     this.props.editContact(contact.id, newContact);
     console.log(newContact)
-
   }
 
   isFavourite(favourite) {
@@ -77,11 +59,22 @@ class MergeComponent extends React.Component {
     return <StarBorder />
   }
 
-
   render() {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
+    let duplicateContacts = [];
+    let countContacts = [];
+
+    contacts.forEach(contact => {
+      countContacts = this.count(contacts, contact).length;
+
+      if (countContacts > 1) {
+        this.count(contacts, contact).forEach(c => {
+          duplicateContacts[c.id] = c
+        });
+      }
+    });
 
     return (
       <div>
@@ -89,7 +82,7 @@ class MergeComponent extends React.Component {
           {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
             <main className={classes.content}>
-              <h1>Contacts Duplicates</h1>
+             {duplicateContacts.length === 0 ? <CircularProgress disableShrink /> :
               <Paper className={classes.paper}>
                 <Table>
                   <TableHead>
@@ -103,11 +96,11 @@ class MergeComponent extends React.Component {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {contacts.map((contact, i) => {
+                    {duplicateContacts.map((contact, i) => {
                       return (
                         <TableRow key={i}>
                           <TableCell component="th" scope="row">
-                          <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
+                            <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
                           </TableCell>
                           <TableCell>
                             <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
@@ -122,6 +115,7 @@ class MergeComponent extends React.Component {
                   </TableBody>
                 </Table>
               </Paper>
+             }
             </main>
           )}
         </div>

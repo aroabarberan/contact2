@@ -24,7 +24,6 @@ import GroupContainer from '../Containers/Group/groupContainer';
 import CreateGroupContainer from "../Containers/Group/createGroupContainer";
 
 
-
 const keys = [
   'id',
   'user',
@@ -33,7 +32,6 @@ const keys = [
   'phone',
   'favourite',
 ]
-
 
 class DrawerPaper extends React.Component {
   constructor() {
@@ -47,10 +45,23 @@ class DrawerPaper extends React.Component {
     };
   }
   componentWillMount() {
-    const { userProfile, getProfile } = this.props.auth;
+    const { userProfile, getProfile, getAccessToken } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile });
+        if (this.props.contacts.contacts.length === 0) {
+          fetch(QUERIES.contact, {
+            method: "GET",
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json',
+              'Authorization': 'Bearer ' + getAccessToken(),
+            },
+          })
+            .then(res => res.json())
+            .then(contacts => contacts.map(contact => this.props.addContact(contact)))
+            .catch(console.log)
+        }
       });
     } else {
       this.setState({ profile: userProfile });
@@ -92,19 +103,21 @@ class DrawerPaper extends React.Component {
   };
 
   handleData = data => {
-    console.log(data)
-    fetch(QUERIES.contact, {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
-      },
-      body: JSON.stringify(data[0]),
+    data.map(c => {
+      const { lastName, name, phone, favourite } = c
+      fetch(QUERIES.contact, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+        },
+        body: JSON.stringify({ lastName, name, phone, favourite }),
+      })
+        .then(res => res.json())
+        .then(data => this.props.addContact(data.contact))
+        .catch(console.log);
     })
-      .then(res => res.json())
-      .then(data => this.props.addContact(data.contact))
-      .catch(console.log);
   }
 
   render() {
@@ -202,6 +215,7 @@ class DrawerPaper extends React.Component {
               </ExpansionPanelSummary>
               <MenuItem className={classes.menuItem}>
                 <CloudUpload />
+                <ListItemText>Import</ListItemText>                
                 <CsvParse
                   keys={keys}
                   onDataUploaded={this.handleData}
@@ -209,7 +223,7 @@ class DrawerPaper extends React.Component {
                   render={onChange => <input type="file" onChange={onChange} />}
                 />
               </MenuItem>
-              <CSVLink data={this.props.contacts.contacts} separator={";"}>
+              <CSVLink data={this.props.contacts.contacts} className={classes.menuLink} separator={";"}>
                 <MenuItem className={classes.menuItem}>
                   <CloudDownload />
                   <ListItemText>Export</ListItemText>

@@ -41,6 +41,7 @@ const initialState = {
     //   favourite: 0,
     // },
   ],
+  favourites: [],
   form: {
     create: {
       avatar: '',
@@ -73,13 +74,7 @@ export default (state = initialState, action) => {
         ...state,
         contacts: state.contacts.filter((c => c.id !== action.payload))
       };
-
-    // case 'SELECT_CONTACT':
-    //   return {
-    //     contacts: [...state.contacts],
-    //     selectedContact: state.contacts.filter(c => c.id === action.payload)[0]
-    //   };
-
+      
     case 'UNSELECT_CONTACT':
       return {
         contacts: [...state.contacts],

@@ -10,6 +10,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
+  addContact: contact => {
+    dispatch(addContact(contact))
+  },
   editContact: (id, contact) => {
     dispatch(editContact(id, contact))
   },

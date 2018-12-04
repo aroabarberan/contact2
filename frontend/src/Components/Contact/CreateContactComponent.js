@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
+import Snackbar from '@material-ui/core/Snackbar';
 import { QUERIES } from "../../querys";
 import {
   Divider, Button, Dialog, DialogTitle, TextField,
   DialogActions, DialogContent, withStyles,
 } from '@material-ui/core';
-// import { MySnackbarContentWrapper } from "../Components/SnackbarComponent";
-
+import MySnackbarContentWrapper from "../SnackbarComponent";
 
 class CreateContact extends React.Component {
   constructor() {
     super()
     this.state = {
       open: false,
+      openSnack: false,
     }
   }
 
@@ -33,11 +34,23 @@ class CreateContact extends React.Component {
       [evt.target.name]: evt.target.value
     });
   }
+  handleClick = () => {
+    this.setState({ openSnack: true });
+  };
+  handleCloseSnack = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
 
   submit = (evt) => {
     evt.preventDefault();
+    this.handleClick();
     const { name, lastName, phone } = this.props.form.create;
     const favourite = 0;
+    const { classes } = this.props;
 
     fetch(QUERIES.contact, {
       method: "POST",
@@ -49,15 +62,32 @@ class CreateContact extends React.Component {
       body: JSON.stringify({ name, lastName, phone, favourite }),
     })
       .then(res => res.json())
-      .then(data => this.props.addContact(data.contact))
+      .then(data => {
+        if (data.code === 201) {
+          return (
+            <div>
+              {/* <Button>
+              <MySnackbarContentWrapper
+                onClose={this.handleClose}
+                variant="success"
+                message="This is a success message!"
+              />
+              </Button> */}
+            </div>
+          )
+        }
+        this.props.addContact(data.contact)
+      })
       .catch(console.log);
     this.handleClose();
   }
 
   render() {
     const { classes } = this.props;
+
     return (
       <div>
+
         <Button variant="fab" color="secondary" aria-label="Add"
           className={classes.buttonAdd} onClick={this.handleOpen}>
           <AddIcon />
@@ -120,6 +150,9 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3,
+  },
+  margin: {
+    margin: theme.spacing.unit,
   },
 });
 

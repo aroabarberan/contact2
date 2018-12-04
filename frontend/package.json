@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.6.1",
     "@material-ui/icons": "^3.0.1",
+    "@vtex/react-csv-parse": "^3.0.2",
     "auth0-js": "^9.8.2",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.18.0",
@@ -15,6 +16,7 @@
     "react-avatar": "^3.4.6",
     "react-avatar-edit": "^0.6.0",
     "react-avatar-uploader": "^1.0.3",
+    "react-csv": "^1.0.19",
     "react-dom": "^16.6.3",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.4.0-beta.6",

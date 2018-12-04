@@ -13,27 +13,6 @@ import ListItemCompositionContainer from '../../Containers/ListItemCompositionCo
 
 class ContactComponent extends React.Component {
 
-  constructor() {
-    super()
-
-  }
-  componentWillMount() {
-    const token = this.props.auth.getAccessToken();
-    if (this.props.contacts.contacts.length === 0) {
-      fetch(QUERIES.contact, {
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json',
-          'Authorization': 'Bearer ' + token,
-        },
-      })
-        .then(res => res.json())
-        .then(contacts => contacts.map(contact => this.props.addContact(contact)))
-        .catch(console.log)
-    }
-  }
-
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
     let favourite = null
@@ -60,7 +39,7 @@ class ContactComponent extends React.Component {
       .then(console.log)
       .catch(console.log);
     this.props.editContact(contact.id, newContact);
-    console.log(newContact)
+    // console.log(newContact)
 
   }
 
