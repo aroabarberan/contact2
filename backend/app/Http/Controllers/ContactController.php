@@ -68,13 +68,5 @@ class ContactController extends Controller
             'contact' => $contact
         ], 201);
     }
-    public function merge()
-    {
-        $contacts = JwtUser::get()->contacts;
-        return response()->json([
-            'contact' => array_count_values($array)
-        ]);
-    }
-
 
 }
