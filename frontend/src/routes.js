@@ -9,6 +9,7 @@ import MergeContactContainer from "./Containers/Contact/mergeContactContainer";
 import FavouriteContactContainer from "./Containers/Contact/favouriteContactContainer";
 import ContactContainer from "./Containers/Contact/contactContainer";
 import OtherContactContainer from "./Containers/Contact/otherContactContainer";
+import ShowContactGroup from "./Components/Contact/ShowContactGroupComponent";
 
 
 const auth = new Auth();
@@ -28,6 +29,7 @@ export const makeMainRoutes = () => {
         <Route path="/merge" render={(props) => <MergeContactContainer auth={auth} {...props} />} />
         <Route path="/favourite" render={(props) => <FavouriteContactContainer auth={auth} {...props} />} />
         <Route path="/other" render={(props) => <OtherContactContainer auth={auth} {...props} />} />
+        <Route path="/group/:nameGroup" render={(props) => <ShowContactGroup auth={auth} {...props} />} />
         <Route path="/callback" render={(props) => {
           handleAuthentication(props)
           return <Callback {...props} />

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import Snackbar from '@material-ui/core/Snackbar';
 import { QUERIES } from "../../querys";
 import {
-  Divider, Button, Dialog, DialogTitle, TextField, Fab,
+  Fab, Divider, Button, Dialog, DialogTitle, TextField,
   DialogActions, DialogContent, withStyles,
 } from '@material-ui/core';
-import MySnackbarContentWrapper from "../SnackbarComponent";
+import ReactPhoneInput from "material-ui-phone-number";
 
 class CreateContact extends React.Component {
   constructor() {
@@ -17,7 +16,11 @@ class CreateContact extends React.Component {
       openSnack: false,
     }
   }
-
+  handleChangePhone = (evt) => {
+    this.props.updateForm({
+      phone:evt
+    });
+  }
   handleOpen = () => {
     this.setState({ open: true });
   }
@@ -34,9 +37,11 @@ class CreateContact extends React.Component {
       [evt.target.name]: evt.target.value
     });
   }
+
   handleClick = () => {
     this.setState({ openSnack: true });
   };
+
   handleCloseSnack = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -71,12 +76,12 @@ class CreateContact extends React.Component {
 
     return (
       <div>
-
         <Fab color="secondary" aria-label="Add"
           className={classes.buttonAdd} onClick={this.handleOpen}>
           <AddIcon />
         </Fab>
         <Dialog
+          className={classes.size}
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
@@ -85,8 +90,9 @@ class CreateContact extends React.Component {
           <Divider />
           <DialogContent>
           </DialogContent>
-          <DialogContent>
+          <DialogContent className={classes.dialog}>
             <TextField
+              className={classes.space}
               autoFocus
               margin="normal"
               name="name"
@@ -94,9 +100,8 @@ class CreateContact extends React.Component {
               type="text"
               onChange={this.handleChange}
             />
-          </DialogContent>
-          <DialogContent>
             <TextField
+              className={classes.space}
               margin="normal"
               name="lastName"
               label="Last Name"
@@ -105,12 +110,15 @@ class CreateContact extends React.Component {
             />
           </DialogContent>
           <DialogContent>
-            <TextField
-              margin="normal"
-              name="phone"
-              label="Phone"
-              type="text"
-              onChange={this.handleChange}
+
+          </DialogContent>
+          <DialogContent>
+            <ReactPhoneInput
+              onChange={this.handleChangePhone}
+              name={"phone"}
+              // localization={{ 'Germany': 'Deutschland', 'Spain': 'España' }}
+              defaultCountry={'es'}
+              regions={'europe'}
             />
           </DialogContent>
           <DialogActions>
@@ -123,17 +131,16 @@ class CreateContact extends React.Component {
   }
 }
 const styles = theme => ({
-  paper: {
-    position: 'absolute',
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+  dialog: {
+    width: '600px',
   },
   buttonAdd: {
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3,
+  },
+  space: {
+    margin: '0 5px',
   },
 });
 

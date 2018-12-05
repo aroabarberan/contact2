@@ -52,7 +52,7 @@ class ContactComponent extends React.Component {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
-
+console.log(this.props.auth.getAccessToken())
     return (
       <div>
         {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}        {}

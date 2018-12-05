@@ -19,7 +19,6 @@ class AppComponent extends React.Component {
               <div className={classes.toolbar} />
               <Tooltip title="FAB 'position: absolute;'">
                 <CreateContactContainer auth={this.props.auth} />
-
               </Tooltip>
 
             </div>

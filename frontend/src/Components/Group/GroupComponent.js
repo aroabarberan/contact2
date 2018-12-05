@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
 import Label from "@material-ui/icons/Label";
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Link } from "react-router-dom";
 import { QUERIES } from "../../querys";
 import {
   Button, Divider, TextField,
@@ -111,7 +112,7 @@ class GroupComponent extends React.Component {
               <List >
                 <MenuItem className={classes.menuItem}>
                   <Label />
-                  <ListItemText onClick={() => this.handleOpen(group)}>{group.name}</ListItemText>
+                  <ListItemText><Link to={{ pathname: '/group/'+ group.name, state: { group } }}>{group.name}</Link></ListItemText>
                   <Edit onClick={() => this.handleOpenEdit(group)} />
                   <DeleteIcon onClick={() => this.delete(group)} />
                 </MenuItem>

@@ -59,7 +59,6 @@ class DrawerPaper extends React.Component {
             },
           })
             .then(res => res.json())
-            .then(console.log)
             .then(contacts => contacts.map(contact => this.props.addContact(contact)))
             .catch(console.log)
         }

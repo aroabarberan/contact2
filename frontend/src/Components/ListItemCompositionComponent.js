@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Label from "@material-ui/icons/Label";
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import Archive from "@material-ui/icons/Archive";
@@ -44,8 +45,8 @@ class ListItemComposition extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
- 
- 
+
+
   handleChange = name => evt => {
     this.setState({
       [name]: evt.target.value,
@@ -71,9 +72,9 @@ class ListItemComposition extends React.Component {
         'Authorization': 'Bearer ' + token,
       },
     })
-    .then(res => res.json())
-    .then(data => this.props.deleteContact(data.contact.id))
-    .catch(console.log);
+      .then(res => res.json())
+      .then(data => this.props.deleteContact(data.contact.id))
+      .catch(console.log);
     this.handleClose();
   }
 
@@ -109,7 +110,7 @@ class ListItemComposition extends React.Component {
           aria-haspopup="true" onClick={this.handleClick} >
           <MoreVertIcon />
         </IconButton>
-       
+
         <Menu
           id="long-menu"
           anchorEl={anchorEl}
@@ -147,6 +148,14 @@ class ListItemComposition extends React.Component {
                 <DeleteIcon />
               </ListItemIcon>
               <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
+            </MenuItem>
+            <Divider />
+              <p className={classes.title}>Groups</p>
+            <MenuItem className={classes.menuItem} >
+              <ListItemIcon onClick={() => this.handleClose}>
+                <Label />
+              </ListItemIcon>
+              <ListItemText classes={{ primary: classes.primary }} inset primary="nombre de un grupo" />
             </MenuItem>
           </MenuList>
         </Menu>
@@ -218,7 +227,13 @@ const styles = theme => ({
     fontSize: 13,
     margin: '10px 20px',
     fontFamily: "Roboto, Arial, sans-serif"
-  }
+  },
+  title: {
+    margin: '10px 20px',
+    color: '#757575;',
+    fontSize: 13,
+    fontFamily: "Roboto, Arial, sans-serif"
+  },
 });
 
 ListItemComposition.propTypes = {
