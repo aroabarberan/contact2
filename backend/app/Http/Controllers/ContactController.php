@@ -4,21 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
-use App\JwtUser;
 
 class ContactController extends Controller
 {
 
     public function index()
     {
-        $contacts = JwtUser::get()->contacts;
+        $contacts = Contact::where('user', \Auth0::jwtUser()->sub)->get();
+        foreach ($contacts as $contact) {
+            $contact->phones;
+        }
         return response()->json($contacts);
     }
-
+    
     public function store(Request $request)
     {
-        // $path =  $request->file('avatar')->store('');
-     
         $contact = new Contact;
         $contact->user = \Auth0::jwtUser()->sub;
         $contact->lastName = $request['lastName'];
@@ -48,6 +48,7 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $contact = Contact::find($id);
+        if ($contact->user !=  \Auth0::jwtUser()->sub) return response('Error. This user is invalid', 500);
         if ($contact == '') return response('Error. Contact not found', 404);
         $contact->update($request->all());
         return response()->json([
@@ -60,6 +61,7 @@ class ContactController extends Controller
     public function destroy($id)
     {
         $contact = contact::find($id);
+        if ($contact->user !=  \Auth0::jwtUser()->sub) return response('Error. This user is invalid', 500);
         if ($contact == '') return response('Error. Contact not found', 404);
         $contact->delete();
         return response()->json([
