@@ -11,9 +11,8 @@ class PhoneController extends Controller
 
     public function index()
     {    
-        // $user = \Auth0::jwtUser();
-        // return response()->json($user->sub);
-        // return response()->json(phone::all());
+        $phones = JwtUser::get()->phones;
+        return response()->json($phones);
     }
 
     public function store(Request $request)

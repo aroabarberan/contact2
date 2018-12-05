@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Phone extends Model
 {
-    protected $fillable = ['phone'];
+    protected $fillable = ['user','phone'];
 
 
-    // public function contact()
-    // {
-    //     return $this->belongsTo('App\Contact');
-    // }
+    public function contacts()
+    {
+        return $this->belongsTo('App\Contact');
+    }
 }

@@ -4,7 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Snackbar from '@material-ui/core/Snackbar';
 import { QUERIES } from "../../querys";
 import {
-  Divider, Button, Dialog, DialogTitle, TextField,
+  Divider, Button, Dialog, DialogTitle, TextField, Fab,
   DialogActions, DialogContent, withStyles,
 } from '@material-ui/core';
 import MySnackbarContentWrapper from "../SnackbarComponent";
@@ -50,7 +50,6 @@ class CreateContact extends React.Component {
     this.handleClick();
     const { name, lastName, phone } = this.props.form.create;
     const favourite = 0;
-    const { classes } = this.props;
 
     fetch(QUERIES.contact, {
       method: "POST",
@@ -62,22 +61,7 @@ class CreateContact extends React.Component {
       body: JSON.stringify({ name, lastName, phone, favourite }),
     })
       .then(res => res.json())
-      .then(data => {
-        if (data.code === 201) {
-          return (
-            <div>
-              {/* <Button>
-              <MySnackbarContentWrapper
-                onClose={this.handleClose}
-                variant="success"
-                message="This is a success message!"
-              />
-              </Button> */}
-            </div>
-          )
-        }
-        this.props.addContact(data.contact)
-      })
+      .then(data => this.props.addContact(data.contact))
       .catch(console.log);
     this.handleClose();
   }
@@ -88,10 +72,10 @@ class CreateContact extends React.Component {
     return (
       <div>
 
-        <Button variant="fab" color="secondary" aria-label="Add"
+        <Fab color="secondary" aria-label="Add"
           className={classes.buttonAdd} onClick={this.handleOpen}>
           <AddIcon />
-        </Button>
+        </Fab>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -150,9 +134,6 @@ const styles = theme => ({
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 3,
-  },
-  margin: {
-    margin: theme.spacing.unit,
   },
 });
 

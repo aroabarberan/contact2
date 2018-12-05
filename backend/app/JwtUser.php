@@ -32,7 +32,6 @@ class JwtUser
                 }
             } catch (\Exception $ex) {
                 $this->properties->contacts = Contact::where('user', $this->user->sub)->get();
-            }
         }
 
         if ($key == 'groups') {
@@ -42,6 +41,16 @@ class JwtUser
                 }
             } catch (\Exception $ex) {
                 $this->properties->groups = Group::where('user', $this->user->sub)->get();
+            }
+        }
+
+        if ($key == 'phones') {
+            try {
+                if ($this->properties->phones == null) {
+                    $this->properties->phones = $this->where('App\Phone');
+                }
+            } catch (\Exception $ex) {
+                $this->properties->groups = Phone::where('user', $this->user->sub)->get();
             }
         }
         return $this->properties->$key;
