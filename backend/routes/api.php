@@ -4,8 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\PhoneController;
-use App\Contact;
-use App\Group;
+use App\Http\Controllers\API\ContactGroup;
+
 
 
 Route::get('/contacts', 'ContactController@index')->middleware('jwt');
@@ -27,3 +27,8 @@ Route::post('/phones', 'PhoneController@store')->middleware('jwt');
 Route::get('/phones/{id}', 'PhoneController@show')->middleware('jwt');
 Route::put('/phones/{id}', 'PhoneController@update')->middleware('jwt');
 Route::delete('/phones/{id}', 'PhoneController@destroy')->middleware('jwt');
+
+
+Route::get('/contactgroup', 'ContactGroupController@index')->middleware('jwt');
+Route::post('/contactgroup', 'ContactGroupController@store')->middleware('jwt');
+Route::delete('/contactgroup/{id}', 'ContactGroupController@destroy')->middleware('jwt');
