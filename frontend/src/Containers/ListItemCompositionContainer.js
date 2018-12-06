@@ -6,8 +6,8 @@ import {
 
 
 const mapStateToProps = state => ({
-  profile: state.profile,
   contacts: state.contacts,
+  groups: state.groups,
   form : state.contacts.form,
 });
 

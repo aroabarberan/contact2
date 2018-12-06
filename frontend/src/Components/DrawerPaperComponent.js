@@ -29,7 +29,7 @@ const keys = [
   'user',
   'lastName',
   'name',
-  'phone',
+  'phones',
   'favourite',
 ]
 
@@ -129,7 +129,6 @@ class DrawerPaper extends React.Component {
       { icon: <Contacts />, redirect: <Link className={classes.menuLink} to="/contacts">Contacts</Link> },
       { icon: <FileCopy />, redirect: <Link className={classes.menuLink} to="/merge">Duplicates</Link> },
       { icon: <Star />, redirect: <Link className={classes.menuLink} to="/favourite">Favourites</Link> },
-      { icon: <Archive />, redirect: <Link className={classes.menuLink} to="/other">Other contacts</Link> },
     ]
 
     const renderMenu = (

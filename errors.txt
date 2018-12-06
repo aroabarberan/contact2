@@ -1,0 +1,8 @@
+- Cuando agregas un contacto a un grupo:
+    - no aparecen los contactos agregados en el grupo hasta que no se recarga la pagina.
+    
+- Formulario editar, borrar, y agregar No funcionan.
+- Si una ruta no existe redirecionar al ininio o al login en caso de no estar registrado.
+- Si el token no existe cambiar el error. Echar afuera.
+- Cuando importo contactos solo aparecen cuando recargo la pagina.
+- Poner bonito el boton de importar.

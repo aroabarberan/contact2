@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Label from "@material-ui/icons/Label";
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudDownload from "@material-ui/icons/CloudDownload";
-import Archive from "@material-ui/icons/Archive";
+import Label from "@material-ui/icons/Label";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import {
-  Divider, Button, IconButton, TextField,
+  Divider, Button, IconButton, TextField, List,
   Menu, MenuList, MenuItem, ListItemIcon, ListItemText,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
@@ -100,10 +99,33 @@ class ListItemComposition extends React.Component {
     this.handleCloseEdit();
   }
 
+  click = group => {
+    const groupId = group.id;
+    const contactId = this.props.contact.id
+
+    fetch(QUERIES.contactgroup, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+      },
+      body: JSON.stringify({ contactId, groupId }),
+    })
+      .then(res => res.json())
+      .then(console.log)
+      // .then(data => this.props.addContact(data.contact))
+      .catch(console.log);
+    this.handleClose();
+
+  }
+
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
     const { classes } = this.props;
+    const { groups } = this.props.groups;
+
     return (
       <div>
         <IconButton aria-label="More" aria-owns={open ? 'long-menu' : undefined}
@@ -126,13 +148,6 @@ class ListItemComposition extends React.Component {
               <ListItemText classes={{ primary: classes.primary }} inset primary="Export" />
             </MenuItem>
 
-            <MenuItem className={classes.menuItem}>
-              <ListItemIcon>
-                <Archive />
-              </ListItemIcon>
-              <ListItemText classes={{ primary: classes.primary }} inset primary="Hidden" />
-            </MenuItem>
-
             <MenuItem
               onClick={this.handleOpenEdit}
               className={classes.menuItem}>
@@ -150,13 +165,19 @@ class ListItemComposition extends React.Component {
               <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
             </MenuItem>
             <Divider />
-              <p className={classes.title}>Groups</p>
-            <MenuItem className={classes.menuItem} >
-              <ListItemIcon onClick={() => this.handleClose}>
-                <Label />
-              </ListItemIcon>
-              <ListItemText classes={{ primary: classes.primary }} inset primary="nombre de un grupo" />
-            </MenuItem>
+            <p className={classes.title}>Groups</p>
+            {groups.map((group, i) => {
+              return (
+                <div key={i}>
+                  <MenuItem className={classes.menuItem} onClick={() => this.click(group)}>
+                    <ListItemIcon onClick={() => this.handleClose}>
+                      <Label />
+                    </ListItemIcon>
+                    <ListItemText>{group.name}</ListItemText>
+                  </MenuItem>
+                </div>
+              );
+            })}
           </MenuList>
         </Menu>
 

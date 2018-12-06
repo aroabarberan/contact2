@@ -10,10 +10,13 @@ import {
   Paper, Avatar, withStyles
 } from '@material-ui/core';
 import LogoutComponent from "../LogoutComponent";
-import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
 
 class ShowContactGroupComponent extends React.Component {
+
+  componentWillMount() {
+    
+  }
 
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
@@ -52,7 +55,7 @@ class ShowContactGroupComponent extends React.Component {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.location.state.group;
-    console.log('que grupito es', contacts)
+
     return (
       <div>
         <div>
@@ -68,7 +71,6 @@ class ShowContactGroupComponent extends React.Component {
                         <TableCell>Avatar</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Last Name</TableCell>
-                        <TableCell>Phone</TableCell>
                         <TableCell>Setting</TableCell>
                       </TableRow>
                     </TableHead>
@@ -84,8 +86,7 @@ class ShowContactGroupComponent extends React.Component {
                             </TableCell>
                             <TableCell>{contact.name}</TableCell>
                             <TableCell>{contact.lastName}</TableCell>
-                            <TableCell>{contact.phone}</TableCell>
-                            <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
+                            <TableCell>X</TableCell>
                           </TableRow>
                         );
                       })}

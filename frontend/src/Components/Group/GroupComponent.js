@@ -16,7 +16,6 @@ class GroupComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      // open: false,
       openEdit: false,
       id: null,
       name: '',
@@ -100,7 +99,6 @@ class GroupComponent extends React.Component {
 
   render() {
     const { classes } = this.props;
-    // const open = Boolean(this.state.open);
     const { openEdit } = this.state;
     const { groups } = this.props.groups;
     return (
