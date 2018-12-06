@@ -18,13 +18,13 @@ class ContactComponent extends React.Component {
     let favourite = null
     const { id, sub, lastName, name, phone } = contact;
 
-    if (contact.favourite === 1)  {
+    if (contact.favourite === 1) {
       favourite = 0;
     } else {
       favourite = 1;
     }
 
-    const newContact =  { id, sub, lastName, name, phone, favourite }
+    const newContact = { id, sub, lastName, name, phone, favourite }
 
     fetch(QUERIES.contact + contact.id, {
       method: "PUT",
@@ -52,7 +52,6 @@ class ContactComponent extends React.Component {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
-console.log(this.props.auth.getAccessToken())
     return (
       <div>
         {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}        {}
@@ -83,7 +82,8 @@ console.log(this.props.auth.getAccessToken())
                         </TableCell>
                         <TableCell>{contact.name}</TableCell>
                         <TableCell>{contact.lastName}</TableCell>
-                        <TableCell>{contact.phone}</TableCell>
+                        <TableCell>patatin@gmail.com</TableCell>
+                        {/* <TableCell>{contact.phones.phone}</TableCell> */}
                         <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
                       </TableRow>
                     );

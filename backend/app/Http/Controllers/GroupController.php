@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Group;
-use App\JwtUser;
 Use \DB;
 
 
 class GroupController extends Controller
 {
     public function index() {
-        $groups = JwtUser::get()->groups;
+        $groups = Group::where('user', \Auth0::jwtUser()->sub)->get();
+        foreach ($groups as $group) {
+            $group->contacts;
+        }
         return response()->json($groups);
     }
 

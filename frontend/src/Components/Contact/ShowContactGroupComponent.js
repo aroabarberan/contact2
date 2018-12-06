@@ -15,17 +15,6 @@ import ListItemCompositionContainer from '../../Containers/ListItemCompositionCo
 
 class ShowContactGroupComponent extends React.Component {
 
-  count(contacts, contact) {
-    var countContacts = [];
-    for (var i = 0; i < contacts.length; i++) {
-      if (contacts[i].name.toLowerCase() === contact.name &&
-        contacts[i].lastName.toLowerCase() === contact.lastName) {
-        countContacts.push(contact);
-      }
-    }
-    return countContacts;
-  }
-
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
     let favourite = null
@@ -62,15 +51,15 @@ class ShowContactGroupComponent extends React.Component {
   render() {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
-    const { group } = this.props.location.state;
-    console.log('que grupito es', group)
+    const { contacts } = this.props.location.state.group;
+    console.log('que grupito es', contacts)
     return (
       <div>
         <div>
           {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
             <main className={classes.content}>
-              {group.length === 0 ? <CircularProgress disableShrink /> :
+              {contacts.length === 0 ? <CircularProgress disableShrink /> :
                 <Paper className={classes.paper}>
                   <Table>
                     <TableHead>
@@ -83,8 +72,8 @@ class ShowContactGroupComponent extends React.Component {
                         <TableCell>Setting</TableCell>
                       </TableRow>
                     </TableHead>
-                    {/* <TableBody>
-                      {group.map((contact, i) => {
+                    <TableBody>
+                      {contacts.map((contact, i) => {
                         return (
                           <TableRow key={i}>
                             <TableCell component="th" scope="row">
@@ -100,7 +89,7 @@ class ShowContactGroupComponent extends React.Component {
                           </TableRow>
                         );
                       })}
-                    </TableBody> */}
+                    </TableBody>
                   </Table>
                 </Paper>
               }

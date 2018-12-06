@@ -13,6 +13,7 @@ class ContactController extends Controller
         $contacts = Contact::where('user', \Auth0::jwtUser()->sub)->get();
         foreach ($contacts as $contact) {
             $contact->phones;
+            $contact->groups;
         }
         return response()->json($contacts);
     }

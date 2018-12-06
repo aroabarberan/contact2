@@ -46,7 +46,7 @@ const initialState = {
     create: {
       avatar: '',
       name: '',
-      phone: '',
+      phones: [],
       favourite: '',
     }
   },
