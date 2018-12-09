@@ -1,52 +1,12 @@
 const initialState = {
   contacts: [
-    // {
-    //   id: 0,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   lastName: 'a',
-    //   name: 'c',
-    //   phone: '123123123124241',
-    //   favourite: 0,
-    // },
-    // {
-    //   id: 1,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   lastName: 'a',
-    //   name: 'a',
-    //   phone: '123123123124241',
-    //   favourite: 1,
-    // },
-    // {
-    //   id: 2,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   lastName: 'a',
-    //   name: 'b',
-    //   phone: '123123123124241',
-    //   favourite: 1,
-    // },
-    // {
-    //   id: 3,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   lastName: 'a',
-    //   name: 'b',
-    //   phone: '123123123124241',
-    //   favourite: 1,
-    // },
-    // {
-    //   id: 4,
-    //   sub: 'google-contact|02948184719284712897012',
-    //   lastName: 'a',
-    //   name: 'a',
-    //   phone: '123123123124241',
-    //   favourite: 0,
-    // },
   ],
   favourites: [],
   form: {
     create: {
-      avatar: '',
+      lastName: '',
       name: '',
-      phones: [],
+      // phones: [],
       favourite: '',
     }
   },
@@ -94,6 +54,19 @@ export default (state = initialState, action) => {
           create: {
             ...state.form.create,
             ...action.payload,
+          }
+        },
+      }
+      case 'RESET_FORM':
+      return {
+        ...state,
+        form: {
+          ...state.form,
+          create: {
+            lastName: '',
+            name: '',
+            phone: '',
+            favourite: '',
           }
         },
       }

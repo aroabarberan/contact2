@@ -5,6 +5,7 @@ import DrawerPaperContainer from "../Containers/DrawerPaperContainer";
 import CreateContactContainer from "../Containers/Contact/createContactContainer";
 import { Tooltip, withStyles } from '@material-ui/core';
 
+
 class AppComponent extends React.Component {
   render() {
     const { classes } = this.props;
@@ -20,7 +21,6 @@ class AppComponent extends React.Component {
               <Tooltip title="FAB 'position: absolute;'">
                 <CreateContactContainer auth={this.props.auth} />
               </Tooltip>
-
             </div>
           )}
         </div>

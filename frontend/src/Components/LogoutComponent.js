@@ -14,8 +14,8 @@ class LogoutComponent extends React.Component {
     const { isAuthenticated } = this.props.auth;
     return (
       <div>
+          {!isAuthenticated() && (<button onClick={this.login}>Log In</button>)}
           {isAuthenticated() && (this.goTo(this, '/'))}
-        <button onClick={this.login}>Log In</button>
       </div>
     );
   }

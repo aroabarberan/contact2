@@ -11,6 +11,7 @@ import {
 import LogoutComponent from "../LogoutComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
+
 class ContactComponent extends React.Component {
 
   handleFavouriteClick = contact => evt => {
@@ -39,8 +40,6 @@ class ContactComponent extends React.Component {
       .then(console.log)
       .catch(console.log);
     this.props.editContact(contact.id, newContact);
-    // console.log(newContact)
-
   }
 
   isFavourite(favourite) {
@@ -66,7 +65,7 @@ class ContactComponent extends React.Component {
                     <TableCell>Avatar</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Last Name</TableCell>
-                    <TableCell>Phone</TableCell>
+                    {/* <TableCell>Phone</TableCell> */}
                     <TableCell>Setting</TableCell>
                   </TableRow>
                 </TableHead>
@@ -78,12 +77,14 @@ class ContactComponent extends React.Component {
                           <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
                         </TableCell>
                         <TableCell>
-                          <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
+                          <Avatar className={classes.orangeAvatar}>
+                            {contact.name !== '' ? contact.name[0].toUpperCase() : ''}
+                          </Avatar>
                         </TableCell>
                         <TableCell>{contact.name}</TableCell>
                         <TableCell>{contact.lastName}</TableCell>
-                        <TableCell>patatin@gmail.com</TableCell>
-                        {/* <TableCell>{contact.phones.phone}</TableCell> */}
+                        {/* <TableCell>{setTimeout(function(){ return contact.phones.length > 0 ? contact.phones[0].phone : contact.phones[0]}, 3000)}</TableCell> */}
+                        {/* <TableCell>{contact.phones.length > 0 ? contact.phones[0].phone : contact.phones[0]}</TableCell> */}
                         <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
                       </TableRow>
                     );

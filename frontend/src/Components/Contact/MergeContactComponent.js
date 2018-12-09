@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepOrange from '@material-ui/core/colors/deepOrange';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -36,7 +35,7 @@ class MergeComponent extends React.Component {
     } else {
       favourite = 1;
     }
-    const newContact = { id, sub, lastName, name, phone, favourite }
+    const newContact = { id, lastName, name, phone, favourite }
 
     fetch(QUERIES.contact + contact.id, {
       method: "PUT",
@@ -82,12 +81,12 @@ class MergeComponent extends React.Component {
           {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
             <main className={classes.content}>
-             {duplicateContacts.length === 0 ? <CircularProgress disableShrink /> :
+             {duplicateContacts.length === 0 ? <h2 className={classes.title}>There are no duplicate contacts</h2>:
               <Paper className={classes.paper}>
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell>Fav</TableCell>
+                      {/* <TableCell>Fav</TableCell> */}
                       <TableCell>Avatar</TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Last Name</TableCell>
@@ -99,9 +98,9 @@ class MergeComponent extends React.Component {
                     {duplicateContacts.map((contact, i) => {
                       return (
                         <TableRow key={i}>
-                          <TableCell component="th" scope="row">
+                          {/* <TableCell component="th" scope="row">
                             <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
-                          </TableCell>
+                          </TableCell> */}
                           <TableCell>
                             <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
                           </TableCell>
@@ -139,6 +138,11 @@ const styles = theme => ({
   row: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  title: {
+    color: '#666;',
+    margin: '10px 10px',
+    fontFamily: "Roboto, Arial, sans-serif"
   },
   paper: {
     ...theme.mixins.gutters(),

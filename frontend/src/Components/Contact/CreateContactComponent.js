@@ -1,26 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
+import RemoveCircle from '@material-ui/icons/RemoveCircleOutline';
+import { Formik, Form, Field, FieldArray } from 'formik';
 import { QUERIES } from "../../querys";
 import {
   Fab, Divider, Button, Dialog, DialogTitle, TextField,
   DialogActions, DialogContent, withStyles,
 } from '@material-ui/core';
-import ReactPhoneInput from "material-ui-phone-number";
 
 class CreateContact extends React.Component {
   constructor() {
     super()
     this.state = {
       open: false,
-      openSnack: false,
     }
   }
-  handleChangePhone = (evt) => {
-    this.props.updateForm({
-      phone:evt
-    });
-  }
+
   handleOpen = () => {
     this.setState({ open: true });
   }
@@ -29,32 +25,11 @@ class CreateContact extends React.Component {
     this.setState({ open: false });
   }
 
-  handleChange = (evt) => {
-    this.props.updateForm({
-      name: this.props.form.create.name,
-      lastName: this.props.form.create.lastName,
-      phone: this.props.form.create.phone,
-      [evt.target.name]: evt.target.value
-    });
-  }
+  handleSubmit = (values, actions) => {
 
-  handleClick = () => {
-    this.setState({ openSnack: true });
-  };
+    console.log(values)
 
-  handleCloseSnack = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ open: false });
-  };
-
-  submit = (evt) => {
-    evt.preventDefault();
-    this.handleClick();
-    const { name, lastName, phone } = this.props.form.create;
-    const favourite = 0;
+    let { name, lastName, favourite } = values
 
     fetch(QUERIES.contact, {
       method: "POST",
@@ -63,11 +38,30 @@ class CreateContact extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify({ name, lastName, phone, favourite }),
+      body: JSON.stringify({ name, lastName, favourite }),
     })
       .then(res => res.json())
-      .then(data => this.props.addContact(data.contact))
+      .then(data => {
+        this.props.addContact(data.contact);
+        let contact_id = data.contact.id;
+        values.phones.map(phone => {
+          fetch(QUERIES.phone, {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json',
+              'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+            },
+            body: JSON.stringify({phone, contact_id}),
+          })
+            .then(res => res.json())
+            .then(console.log)
+            .then(data => this.props.addPhone(data.phone))
+            .catch(console.log);
+        })
+      })
       .catch(console.log);
+
     this.handleClose();
   }
 
@@ -90,41 +84,72 @@ class CreateContact extends React.Component {
           <Divider />
           <DialogContent>
           </DialogContent>
-          <DialogContent className={classes.dialog}>
-            <TextField
-              className={classes.space}
-              autoFocus
-              margin="normal"
-              name="name"
-              label="Name"
-              type="text"
-              onChange={this.handleChange}
-            />
-            <TextField
-              className={classes.space}
-              margin="normal"
-              name="lastName"
-              label="Last Name"
-              type="text"
-              onChange={this.handleChange}
-            />
-          </DialogContent>
-          <DialogContent>
 
-          </DialogContent>
-          <DialogContent>
-            <ReactPhoneInput
-              onChange={this.handleChangePhone}
-              name={"phone"}
-              // localization={{ 'Germany': 'Deutschland', 'Spain': 'España' }}
-              defaultCountry={'es'}
-              regions={'europe'}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">Cancel</Button>
-            <Button onClick={this.submit} color="primary">Save</Button>
-          </DialogActions>
+          <Formik
+            initialValues={{ phones: [''], name: '', lastName: '', favourite: 0 }}
+            onSubmit={values => this.handleSubmit(values)}
+            render={({ values }) => (
+              <Form>
+                <DialogContent className={classes.dialog}>
+                  <Field
+                    className={classes.space}
+                    autoFocus
+                    margin="normal"
+                    name="name"
+                    label="Name"
+                    type="text"
+                    value={values.name}
+                  />
+                  <Field
+                    className={classes.space}
+                    margin="normal"
+                    name="lastName"
+                    label="Last Name"
+                    type="text"
+                    value={values.lastName}
+                  />
+                </DialogContent>
+                <DialogContent className={classes.dialog}>
+                  <FieldArray
+                    name="phones"
+                    render={arrayHelpers => (
+                      <div>
+                        {values.phones && values.phones.length > 0 ? (
+                          values.phones.map((phone, index) => (
+                            <div key={index}>
+                              <Field name={`phones.${index}`} />
+
+                              <Fab size="small" color="primary"
+                                className={classes.margin}
+                                onClick={() => arrayHelpers.remove(index)}>
+                                <RemoveCircle />
+                              </Fab>
+
+                              <Fab size="small" color="primary"
+                                className={classes.margin}
+                                onClick={() => arrayHelpers.insert(index, '')}>
+                                <AddIcon />
+                              </Fab>
+                            </div>
+                          ))
+                        ) : (
+                            <DialogActions>
+                              <Button type="button" onClick={() => arrayHelpers.push('')}>
+                                Add a Phone
+                          </Button>
+                            </DialogActions>
+                          )}
+                        <DialogActions>
+                          <Button onClick={this.handleClose} color="primary">Cancel</Button>
+                          <Button type="submit" color="primary" >Save</Button>
+                        </DialogActions>
+                      </div>
+                    )}
+                  />
+                </DialogContent>
+              </Form>
+            )}
+          />
         </Dialog>
       </div>
     );
@@ -140,7 +165,7 @@ const styles = theme => ({
     right: theme.spacing.unit * 3,
   },
   space: {
-    margin: '0 5px',
+    margin: '5px 5px',
   },
 });
 

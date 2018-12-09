@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { QUERIES } from "../../querys";
-import Starfilled from "@material-ui/icons/Grade";
-import StarBorder from "@material-ui/icons/StarBorder";
+// import Starfilled from "@material-ui/icons/Grade";
+// import StarBorder from "@material-ui/icons/StarBorder";
+// import Delete from '@material-ui/icons/Delete';
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
@@ -14,42 +15,20 @@ import LogoutComponent from "../LogoutComponent";
 
 class ShowContactGroupComponent extends React.Component {
 
-  componentWillMount() {
-    
-  }
-
-  handleFavouriteClick = contact => evt => {
-    evt.preventDefault();
-    let favourite = null
-    const { id, sub, lastName, name, phone } = contact;
-
-    if (contact.favourite === 1) {
-      favourite = 0;
-    } else {
-      favourite = 1;
-    }
-    const newContact = { id, sub, lastName, name, phone, favourite }
-
-    fetch(QUERIES.contact + contact.id, {
-      method: "PUT",
+  delete = contact => {
+    fetch(QUERIES.contactgroup + contact.id, {
+      method: "DELETE",
       headers: {
         'Accept': 'application/json',
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify(newContact, contact.id),
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(data => this.props.deleteContact(data.contact.id))
       .catch(console.log);
-    this.props.editContact(contact.id, newContact);
-    console.log(newContact)
   }
 
-  isFavourite(favourite) {
-    if (favourite) return <Starfilled color="primary" />
-    return <StarBorder />
-  }
 
   render() {
     const { classes } = this.props;
@@ -67,26 +46,26 @@ class ShowContactGroupComponent extends React.Component {
                   <Table>
                     <TableHead>
                       <TableRow>
-                        <TableCell>Fav</TableCell>
                         <TableCell>Avatar</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Last Name</TableCell>
-                        <TableCell>Setting</TableCell>
+                        <TableCell>Phone</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {contacts.map((contact, i) => {
                         return (
                           <TableRow key={i}>
-                            <TableCell component="th" scope="row">
+                            {/* <TableCell component="th" scope="row">
                               <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell>
                               <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
                             </TableCell>
                             <TableCell>{contact.name}</TableCell>
                             <TableCell>{contact.lastName}</TableCell>
-                            <TableCell>X</TableCell>
+                            <TableCell>{contact.phone}</TableCell>
+                            {/* <TableCell><Delete onClick={() => this.delete(contact)} /></TableCell> */}
                           </TableRow>
                         );
                       })}

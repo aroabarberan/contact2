@@ -31,3 +31,6 @@ export const updateForm = contact => ({
   type: 'UPDATE_FORM',
   payload: contact,
 });
+export const resetForm = () => ({
+  type: 'RESET_FORM',
+})

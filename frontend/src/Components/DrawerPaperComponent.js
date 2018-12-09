@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { CSVLink } from "react-csv";
 import CsvParse from '@vtex/react-csv-parse'
 import { Link } from "react-router-dom";
-import Archive from "@material-ui/icons/Archive";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import FileCopy from '@material-ui/icons/FileCopy';
@@ -29,8 +28,9 @@ const keys = [
   'user',
   'lastName',
   'name',
-  'phones',
   'favourite',
+  'phone',
+  'groups',
 ]
 
 class DrawerPaper extends React.Component {
@@ -104,7 +104,8 @@ class DrawerPaper extends React.Component {
 
   handleData = data => {
     data.map(c => {
-      const { lastName, name, phone, favourite } = c
+      const { lastName, name, favourite, phone } = c
+
       fetch(QUERIES.contact, {
         method: "POST",
         headers: {
@@ -112,9 +113,10 @@ class DrawerPaper extends React.Component {
           'Content-type': 'application/json',
           'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
         },
-        body: JSON.stringify({ lastName, name, phone, favourite }),
+        body: JSON.stringify({ lastName, name, favourite, phone }),
       })
         .then(res => res.json())
+        .then(console.log)
         .then(data => this.props.addContact(data.contact))
         .catch(console.log);
     })
@@ -214,7 +216,7 @@ class DrawerPaper extends React.Component {
               </ExpansionPanelSummary>
               <MenuItem className={classes.menuItem}>
                 <CloudUpload />
-                <ListItemText>Import</ListItemText>                
+                <ListItemText>Import</ListItemText>
                 <CsvParse
                   keys={keys}
                   onDataUploaded={this.handleData}
@@ -266,10 +268,6 @@ const styles = theme => ({
   },
   menuItem: {
     color: '#666',
-    // '&:focus': {
-    //   color: '#fff',
-    //   backgroundColor: theme.palette.primary.main,
-    // },
   },
   sectionDesktop: {
     display: 'none',

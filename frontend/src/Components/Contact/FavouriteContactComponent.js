@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import deepOrange from '@material-ui/core/colors/deepOrange';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -61,7 +60,7 @@ class FavouriteComponent extends React.Component {
           {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
             <main className={classes.content}>
-              {favourites.length === 0 ? <CircularProgress disableShrink /> :
+              {favourites.length === 0 ? <h2 className={classes.title}>There are no favourite contacts</h2> :
                 <Paper className={classes.paper}>
                   <Table>
                     <TableHead>
@@ -125,6 +124,11 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
     minWidth: '800px',
+  },
+  title: {
+    color: '#666;',
+    margin: '10px 10px',
+    fontFamily: "Roboto, Arial, sans-serif"
   },
   orangeAvatar: {
     color: '#fff',
