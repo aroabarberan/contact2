@@ -14,7 +14,7 @@ class RenameAvatarColumn extends Migration
     public function up()
     {
         Schema::table('contacts', function($table) {
-            $table->renameColumn('avatar', 'lastName');
+            $table->renameColumn('avatar', 'lastName')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class RenameAvatarColumn extends Migration
     public function down()
     {
         Schema::table('contacts', function($table) {
-            $table->renameColumn('lastName', 'avatar');
+            $table->renameColumn('lastName', 'avatar')->nullable();
         });
     }
 }

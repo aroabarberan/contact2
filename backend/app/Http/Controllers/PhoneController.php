@@ -17,7 +17,16 @@ class PhoneController extends Controller
 
     public function store(Request $request)
     {
+        $phones = new Phone;
+        $phones->phone = $request['phone'];
+        $phones->contact_id = $request['contact_id'];
+        $phones->save();
 
+        return response()->json([
+            'code' => 201,
+            'status' => 'The phone is created successfully',
+            'phones' => $phones,
+        ], 201);
     }
 
     public function show($id)

@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Phone extends Model
+class Website extends Model
 {
-    protected $fillable = ['phone'];
+    protected $fillable = ['url'];
 
     public function contacts()
     {

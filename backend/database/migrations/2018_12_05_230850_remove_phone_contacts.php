@@ -26,7 +26,7 @@ class RemovePhoneContacts extends Migration
     public function down()
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->string('phone');
+            $table->string('phone')->nullable();
         });
     }
 }

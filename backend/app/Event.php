@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Phone extends Model
+class Event extends Model
 {
-    protected $fillable = ['phone'];
+    protected $fillable = ['title', 'description'];
 
     public function contacts()
     {

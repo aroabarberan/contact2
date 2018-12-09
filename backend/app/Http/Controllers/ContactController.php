@@ -13,6 +13,10 @@ class ContactController extends Controller
         $contacts = Contact::where('user', \Auth0::jwtUser()->sub)->get();
         foreach ($contacts as $contact) {
             $contact->phones;
+            $contact->emails;
+            $contact->events;
+            $contact->notes;
+            $contact->websites;
             $contact->groups;
         }
         return response()->json($contacts);
@@ -24,10 +28,14 @@ class ContactController extends Controller
         $contact->user = \Auth0::jwtUser()->sub;
         $contact->lastName = $request['lastName'];
         $contact->name = $request['name'];
-        $contact->phone = $request['phone'];
         $contact->favourite = $request['favourite'];
+        $contact->phones;
+        $contact->emails;
+        $contact->events;
+        $contact->notes;
+        $contact->websites;
+        $contact->groups;
         $contact->save();
-        // if ($contact->save()) return response('Error. Contact not found', 404);
         return response()->json([
             'code' => 201,
             'status' => 'The contact is created successfully',
@@ -49,7 +57,7 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         $contact = Contact::find($id);
-        if ($contact->user !=  \Auth0::jwtUser()->sub) return response('Error. This user is invalid', 500);
+        // if ($contact->user !=  \Auth0::jwtUser()->sub) return response('Error. This user is invalid', 500);
         if ($contact == '') return response('Error. Contact not found', 404);
         $contact->update($request->all());
         return response()->json([

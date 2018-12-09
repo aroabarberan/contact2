@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameFilenameColumn extends Migration
+class CreateNotesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class RenameFilenameColumn extends Migration
      */
     public function up()
     {
-        Schema::table('contacts', function($table) {
-            $table->renameColumn('filename', 'avatar')->nullable();
+        Schema::create('notes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ class RenameFilenameColumn extends Migration
      */
     public function down()
     {
-        Schema::table('contacts', function($table) {
-            $table->renameColumn('avatar', 'filename')->nullable();
-        });
+        Schema::dropIfExists('notes');
     }
 }
