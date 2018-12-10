@@ -116,7 +116,7 @@ class DrawerPaper extends React.Component {
         body: JSON.stringify({ lastName, name, favourite, phone }),
       })
         .then(res => res.json())
-        .then(console.log)
+        // .then(console.log)
         .then(data => this.props.addContact(data.contact))
         .catch(console.log);
     })

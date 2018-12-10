@@ -13,10 +13,6 @@ class ContactController extends Controller
         $contacts = Contact::where('user', \Auth0::jwtUser()->sub)->get();
         foreach ($contacts as $contact) {
             $contact->phones;
-            $contact->emails;
-            $contact->events;
-            $contact->notes;
-            $contact->websites;
             $contact->groups;
         }
         return response()->json($contacts);
@@ -30,10 +26,6 @@ class ContactController extends Controller
         $contact->name = $request['name'];
         $contact->favourite = $request['favourite'];
         $contact->phones;
-        $contact->emails;
-        $contact->events;
-        $contact->notes;
-        $contact->websites;
         $contact->groups;
         $contact->save();
         return response()->json([

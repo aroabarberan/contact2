@@ -12,21 +12,21 @@ class Contact extends Model
         return $this->hasMany('App\Phone');
     }
 
-    public function emails() {
-        return $this->hasMany('App\Email');
-    }
+    // public function emails() {
+    //     return $this->hasMany('App\Email');
+    // }
 
-    public function events() {
-        return $this->hasMany('App\Event');
-    }
+    // public function events() {
+    //     return $this->hasMany('App\Event');
+    // }
 
-    public function notes() {
-        return $this->hasMany('App\Note');
-    }
+    // public function notes() {
+    //     return $this->hasMany('App\Note');
+    // }
 
-    public function websites() {
-        return $this->hasMany('App\Website');
-    }
+    // public function websites() {
+    //     return $this->hasMany('App\Website');
+    // }
 
     public function groups()
     {

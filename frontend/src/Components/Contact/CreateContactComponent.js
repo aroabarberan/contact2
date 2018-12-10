@@ -41,6 +41,7 @@ class CreateContact extends React.Component {
       body: JSON.stringify({ name, lastName, favourite }),
     })
       .then(res => res.json())
+      .then(console.log)
       .then(data => {
         this.props.addContact(data.contact);
         let contact_id = data.contact.id;

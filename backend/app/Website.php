@@ -8,8 +8,8 @@ class Website extends Model
 {
     protected $fillable = ['url'];
 
-    public function contacts()
-    {
-        return $this->belongsTo('App\Contact');
-    }
+    // public function contacts()
+    // {
+    //     return $this->belongsTo('App\Contact');
+    // }
 }

@@ -17,7 +17,7 @@ class ContactComponent extends React.Component {
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
     let favourite = null
-    const { id, sub, lastName, name, phone } = contact;
+    const { id, sub, lastName, name } = contact;
 
     if (contact.favourite === 1) {
       favourite = 0;
@@ -25,7 +25,7 @@ class ContactComponent extends React.Component {
       favourite = 1;
     }
 
-    const newContact = { id, sub, lastName, name, phone, favourite }
+    const newContact = { id, sub, lastName, name, favourite }
 
     fetch(QUERIES.contact + contact.id, {
       method: "PUT",
@@ -51,7 +51,7 @@ class ContactComponent extends React.Component {
     const { classes } = this.props;
     const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
-
+    // console.log(this.props.auth.getAccessToken())
     return (
       <div>
         {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
