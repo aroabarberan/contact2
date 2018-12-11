@@ -12,7 +12,7 @@ import RemoveCircle from '@material-ui/icons/RemoveCircleOutline';
 import { Formik, Form, Field, FieldArray } from 'formik';
 import {
   Divider, Button, IconButton, Fab,
-  Menu, MenuItem, ListItemIcon, ListItemText,
+  Menu, MenuItem, ListItemIcon, ListItemText, TextField,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
 
@@ -115,7 +115,7 @@ class ListItemComposition extends React.Component {
 
     console.log(this.props.contacts.contacts)
     values.phones.map(p => {
-      
+
       let phone = p.phone;
       let contact_id = id;
 
@@ -133,19 +133,19 @@ class ListItemComposition extends React.Component {
       //   .then(data => this.props.addPhone(data.phone))
       //   .catch(console.log);
 
-    //   fetch(QUERIES.phone + p.id, {
-    //     method: "PUT",
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-type': 'application/json',
-    //       'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
-    //     },
-    //     body: JSON.stringify({ phone, contact_id }, p.id),
-    //   })
-    //     .then(res => res.json())
-    //     .then(console.log)
-    //     .then(data => this.props.editPhone(data.phone.id, data.phone))
-    //     .catch(console.log);
+      //   fetch(QUERIES.phone + p.id, {
+      //     method: "PUT",
+      //     headers: {
+      //       'Accept': 'application/json',
+      //       'Content-type': 'application/json',
+      //       'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+      //     },
+      //     body: JSON.stringify({ phone, contact_id }, p.id),
+      //   })
+      //     .then(res => res.json())
+      //     .then(console.log)
+      //     .then(data => this.props.editPhone(data.phone.id, data.phone))
+      //     .catch(console.log);
     })
 
     this.handleCloseEdit();
@@ -219,8 +219,6 @@ class ListItemComposition extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Edit contact</DialogTitle>
           <Divider />
-          <DialogContent></DialogContent>
-
           <Formik
             initialValues={{ phones: contact.phones, name: contact.name, lastName: contact.lastName, favourite: contact.favourite }}
             onSubmit={values => this.handleSubmit(values)}
@@ -228,21 +226,18 @@ class ListItemComposition extends React.Component {
               <Form>
                 <DialogContent className={classes.dialog}>
                   <Field
-                    className={classes.space}
-                    autoFocus
-                    margin="normal"
                     name="name"
-                    label="Name"
-                    type="text"
                     value={values.name}
+                    render={({ field }) => (
+                      <TextField className={classes.space} {...field} autoFocus margin="normal" label="Name" type="text" />
+                    )}
                   />
                   <Field
-                    className={classes.space}
-                    margin="normal"
                     name="lastName"
-                    label="Last Name"
-                    type="text"
                     value={values.lastName}
+                    render={({ field }) => (
+                      <TextField className={classes.space} {...field} margin="normal" label="Last Name" type="text" />
+                    )}
                   />
                 </DialogContent>
                 <DialogContent className={classes.dialog}>

@@ -83,8 +83,7 @@ class ContactComponent extends React.Component {
                         </TableCell>
                         <TableCell>{contact.name}</TableCell>
                         <TableCell>{contact.lastName}</TableCell>
-                        {/* <TableCell>{setTimeout(function(){ return contact.phones.length > 0 ? contact.phones[0].phone : contact.phones[0]}, 3000)}</TableCell> */}
-                        {/* <TableCell>{contact.phones.length > 0 ? contact.phones[0].phone : contact.phones[0]}</TableCell> */}
+                        {/* <TableCell>{contact.phones.length > 0 && ( contact.phones[0].phone)}</TableCell> */}
                         <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
                       </TableRow>
                     );

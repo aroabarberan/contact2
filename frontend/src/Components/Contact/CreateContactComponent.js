@@ -41,7 +41,7 @@ class CreateContact extends React.Component {
       body: JSON.stringify({ name, lastName, favourite }),
     })
       .then(res => res.json())
-      .then(console.log)
+      // .then(console.log)
       .then(data => {
         this.props.addContact(data.contact);
         let contact_id = data.contact.id;
@@ -53,10 +53,10 @@ class CreateContact extends React.Component {
               'Content-type': 'application/json',
               'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
             },
-            body: JSON.stringify({phone, contact_id}),
+            body: JSON.stringify({ phone, contact_id }),
           })
             .then(res => res.json())
-            .then(console.log)
+            // .then(console.log)
             .then(data => this.props.addPhone(data.phone))
             .catch(console.log);
         })
@@ -83,9 +83,6 @@ class CreateContact extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
-          <DialogContent>
-          </DialogContent>
-
           <Formik
             initialValues={{ phones: [''], name: '', lastName: '', favourite: 0 }}
             onSubmit={values => this.handleSubmit(values)}
@@ -93,21 +90,18 @@ class CreateContact extends React.Component {
               <Form>
                 <DialogContent className={classes.dialog}>
                   <Field
-                    className={classes.space}
-                    autoFocus
-                    margin="normal"
                     name="name"
-                    label="Name"
-                    type="text"
                     value={values.name}
+                    render={({ field }) => (
+                      <TextField className={classes.space} {...field} autoFocus margin="normal" label="Name" type="text" />
+                    )}
                   />
                   <Field
-                    className={classes.space}
-                    margin="normal"
                     name="lastName"
-                    label="Last Name"
-                    type="text"
                     value={values.lastName}
+                    render={({ field }) => (
+                      <TextField className={classes.space} {...field} margin="normal" label="Last Name" type="text" />
+                    )}
                   />
                 </DialogContent>
                 <DialogContent className={classes.dialog}>
@@ -120,17 +114,13 @@ class CreateContact extends React.Component {
                             <div key={index}>
                               <Field name={`phones.${index}`} />
 
-                              <Fab size="small" color="primary"
-                                className={classes.margin}
-                                onClick={() => arrayHelpers.remove(index)}>
-                                <RemoveCircle />
-                              </Fab>
+                              {/* <Fab size="small" className={classes.margin} > */}
+                                <RemoveCircle className={classes.margin}  onClick={() => arrayHelpers.remove(index)} />
+                              {/* </Fab> */}
 
-                              <Fab size="small" color="primary"
-                                className={classes.margin}
-                                onClick={() => arrayHelpers.insert(index, '')}>
-                                <AddIcon />
-                              </Fab>
+                              {/* <Fab size="small" color="primary"> */}
+                                <AddIcon className={classes.margin} onClick={() => arrayHelpers.insert(index, '')} />
+                              {/* </Fab> */}
                             </div>
                           ))
                         ) : (
@@ -166,7 +156,7 @@ const styles = theme => ({
     right: theme.spacing.unit * 3,
   },
   space: {
-    margin: '5px 5px',
+    margin: '0 5px',
   },
 });
 
