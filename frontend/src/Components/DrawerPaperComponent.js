@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CSVLink } from "react-csv";
 import CsvParse from '@vtex/react-csv-parse'
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import FileCopy from '@material-ui/icons/FileCopy';
@@ -123,14 +123,15 @@ class DrawerPaper extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
+    console.log('history', history)
     const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const listItem = [
-      { icon: <Contacts />, redirect: <Link className={classes.menuLink} to="/contacts">Contacts</Link> },
-      { icon: <FileCopy />, redirect: <Link className={classes.menuLink} to="/merge">Duplicates</Link> },
-      { icon: <Star />, redirect: <Link className={classes.menuLink} to="/favourite">Favourites</Link> },
+      { icon: <Contacts />, path: "/contacts" , name: 'Contacts' },
+      { icon: <FileCopy />, path: "/merge" , name: 'Duplicates' },
+      { icon: <Star />, path: "/favourite" , name: 'Favourites' },
     ]
 
     const renderMenu = (
@@ -195,8 +196,8 @@ class DrawerPaper extends React.Component {
           <div className={classes.toolbar} />
           <List open>
             {listItem.map((item, i) => (
-              <MenuItem className={classes.menuItem} key={i} >
-                {item.icon} <ListItemText>{item.redirect}</ListItemText>
+              <MenuItem className={classes.menuItem} key={i} onClick={() => history.push(item.path)}>
+                {item.icon} <ListItemText>{item.name}</ListItemText>
               </MenuItem>)
             )}
 
@@ -288,4 +289,4 @@ DrawerPaper.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(DrawerPaper)
+export default withRouter(withStyles(styles, { withTheme: true })(DrawerPaper));

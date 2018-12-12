@@ -181,8 +181,7 @@ class ListItemComposition extends React.Component {
           </CSVLink>
 
           <MenuItem
-            onClick={this.handleOpenEdit}
-            className={classes.menuItem}>
+            onClick={this.handleOpenEdit}>
             <ListItemIcon>
               <Edit variant="fab" aria-label="Edit" className={classes.icon} />
             </ListItemIcon>
@@ -330,12 +329,6 @@ const styles = theme => ({
     ...theme.mixins.gutters(),
     paddingTop: theme.spacing.unit * 2,
     paddingBottom: theme.spacing.unit * 2,
-  },
-  menuItem: {
-    '&:focus': {
-      color: '#fff',
-      backgroundColor: theme.palette.primary.main,
-    },
   },
   dialog: {
     width: '600px',

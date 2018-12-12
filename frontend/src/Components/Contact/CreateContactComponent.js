@@ -115,11 +115,11 @@ class CreateContact extends React.Component {
                               <Field name={`phones.${index}`} />
 
                               {/* <Fab size="small" className={classes.margin} > */}
-                                <RemoveCircle className={classes.margin}  onClick={() => arrayHelpers.remove(index)} />
+                              <RemoveCircle className={classes.margin} onClick={() => arrayHelpers.remove(index)} />
                               {/* </Fab> */}
 
                               {/* <Fab size="small" color="primary"> */}
-                                <AddIcon className={classes.margin} onClick={() => arrayHelpers.insert(index, '')} />
+                              <AddIcon className={classes.margin} onClick={() => arrayHelpers.insert(index, '')} />
                               {/* </Fab> */}
                             </div>
                           ))

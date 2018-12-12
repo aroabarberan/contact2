@@ -61,12 +61,12 @@ class ContactComponent extends React.Component {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Fav</TableCell>
+                    <TableCell></TableCell>
                     <TableCell>Avatar</TableCell>
                     <TableCell>Name</TableCell>
                     <TableCell>Last Name</TableCell>
                     {/* <TableCell>Phone</TableCell> */}
-                    <TableCell>Setting</TableCell>
+                    <TableCell></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -108,7 +108,7 @@ const styles = theme => ({
     margin: '0 0 0 245px',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    // padding: theme.spacing.unit * 3,
   },
   icon: {
     color: '#666'
