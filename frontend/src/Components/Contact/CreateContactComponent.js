@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
-import RemoveCircle from '@material-ui/icons/RemoveCircleOutline';
-import { Formik, Form, Field, FieldArray } from 'formik';
+import { PhoneCallback } from '@material-ui/icons'
+import { Formik, Field } from 'formik';
 import { QUERIES } from "../../querys";
 import {
   Fab, Divider, Button, Dialog, DialogTitle, TextField,
-  DialogActions, DialogContent, withStyles,
+  DialogContent, DialogActions, withStyles,
 } from '@material-ui/core';
+import { DynamicList } from '@ivanbeldad/dynamic-list';
 
 class CreateContact extends React.Component {
   constructor() {
@@ -27,7 +28,7 @@ class CreateContact extends React.Component {
 
   handleSubmit = (values, actions) => {
 
-    console.log(values)
+    console.log('Valores desde el handleSubmit', values)
 
     let { name, lastName, favourite } = values
 
@@ -56,7 +57,7 @@ class CreateContact extends React.Component {
             body: JSON.stringify({ phone, contact_id }),
           })
             .then(res => res.json())
-            // .then(console.log)
+            .then(console.log)
             .then(data => this.props.addPhone(data.phone))
             .catch(console.log);
         })
@@ -84,6 +85,49 @@ class CreateContact extends React.Component {
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
           <Formik
+            initialValues={{ phones: [], name: '', lastName: '', favourite: 0 }}
+            // onSubmit={values => console.log('values')}
+            onSubmit={this.handleSubmit}
+            render={props => (
+              <form>
+                <DialogContent >
+                  <Field
+                    name="name"
+                    value={props.name}
+                    render={({ field }) => (
+                      <TextField {...field} autoFocus margin="normal" label="Name" type="text" />
+                    )}
+                  />
+                  <Field
+                    name="lastName"
+                    value={props.lastName}
+                    render={({ field }) => (
+                      <TextField {...field} margin="normal" label="Last Name" type="text" />
+                    )}
+                  />
+                </DialogContent>
+                <DynamicList
+                  name='phones'
+                  initialValue={{ phone: '', tag: '' }}
+                  sectionIcon={<PhoneCallback />}
+                  render={(fields) => {
+                    const [phone, tag] = fields;
+                    return (
+                      <div>
+                        <TextField {...phone} placeholder='Phone' />
+                        <TextField {...tag} placeholder='Tag' />
+                      </div>
+                    )
+                  }}
+                />
+                <DialogActions>
+                  <Button onClick={this.handleClose} color="primary">Cancel</Button>
+                  <Button type="submit" color="primary"onClick={props.handleSubmit}>Save</Button>
+                </DialogActions>
+              </form>
+            )}
+          />
+          {/* <Formik
             initialValues={{ phones: [''], name: '', lastName: '', favourite: 0 }}
             onSubmit={values => this.handleSubmit(values)}
             render={({ values }) => (
@@ -113,14 +157,8 @@ class CreateContact extends React.Component {
                           values.phones.map((phone, index) => (
                             <div key={index}>
                               <Field name={`phones.${index}`} />
-
-                              {/* <Fab size="small" className={classes.margin} > */}
                               <RemoveCircle className={classes.margin} onClick={() => arrayHelpers.remove(index)} />
-                              {/* </Fab> */}
-
-                              {/* <Fab size="small" color="primary"> */}
                               <AddIcon className={classes.margin} onClick={() => arrayHelpers.insert(index, '')} />
-                              {/* </Fab> */}
                             </div>
                           ))
                         ) : (
@@ -140,7 +178,7 @@ class CreateContact extends React.Component {
                 </DialogContent>
               </Form>
             )}
-          />
+          /> */}
         </Dialog>
       </div>
     );

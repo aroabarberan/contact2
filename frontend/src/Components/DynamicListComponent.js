@@ -14,11 +14,10 @@ const handleSubmit = (props) => (values, actions) => {
 
 class Form extends React.Component {
   render() {
-    const { classes } = this.props
     return (
       <div>
         <Formik
-          initialValues={{ phones: [] }}
+          initialValues={{ phones: [], name: '', lastName: '', favourite: 0 }}
           onSubmit={values => console.log(values)}
           render={props => (
             <form>
@@ -37,22 +36,22 @@ class Form extends React.Component {
                 }
                 }
               />
-              {/* <DialogContent >
+              <DialogContent >
                 <Field
                   name="name"
-                  // value={values.name}
+                  value={props.name}
                   render={({ field }) => (
                     <TextField {...field} autoFocus margin="normal" label="Name" type="text" />
                   )}
                 />
                 <Field
                   name="lastName"
-                  // value={values.lastName}
+                  value={props.lastName}
                   render={({ field }) => (
                     <TextField {...field} margin="normal" label="Last Name" type="text" />
                   )}
                 />
-              </DialogContent> */}
+              </DialogContent>
               <Button variant='outlined' onClick={props.handleSubmit}>Save</Button>
             </form>
           )}
@@ -63,4 +62,3 @@ class Form extends React.Component {
 }
 
 export default Form;
-

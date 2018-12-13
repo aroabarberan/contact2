@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CloudDownload from "@material-ui/icons/CloudDownload";
@@ -171,14 +171,14 @@ class ListItemComposition extends React.Component {
           onClose={this.handleClose}
           PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 256, }, }}
         >
-          <CSVLink data={[this.props.contact]} className={classes.menuLink} separator={";"}>
+          {/* <CSVLink data={[this.props.contact]} className={classes.menuLink} separator={";"}>
             <MenuItem className={classes.menuItem}>
               <ListItemIcon onClick={() => this.handleClose}>
                 <CloudDownload />
               </ListItemIcon>
               <ListItemText>Export</ListItemText>
             </MenuItem>
-          </CSVLink>
+          </CSVLink> */}
 
           <MenuItem
             onClick={this.handleOpenEdit}>
@@ -195,20 +195,25 @@ class ListItemComposition extends React.Component {
             </ListItemIcon>
             <ListItemText classes={{ primary: classes.primary }} inset primary="Delete" />
           </MenuItem>
-          <Divider />
-          <p className={classes.title}>Groups</p>
-          {groups.map((group, i) => {
-            return (
-              <div key={i}>
-                <MenuItem className={classes.menuItem} onClick={() => this.click(group)}>
-                  <ListItemIcon onClick={() => this.handleClose}>
-                    <Label />
-                  </ListItemIcon>
-                  <ListItemText>{group.name}</ListItemText>
-                </MenuItem>
-              </div>
-            );
-          })}
+
+          {groups.length > 0 && (
+            <Fragment>
+              <Divider />
+              <p className={classes.title}>Groups</p>
+              {groups.map((group, i) => {
+                return (
+                  <div key={i}>
+                    <MenuItem className={classes.menuItem} onClick={() => this.click(group)}>
+                      <ListItemIcon onClick={() => this.handleClose}>
+                        <Label />
+                      </ListItemIcon>
+                      <ListItemText>{group.name}</ListItemText>
+                    </MenuItem>
+                  </div>
+                );
+              })}
+            </Fragment>
+          )}
         </Menu>
 
         <Dialog
@@ -340,12 +345,12 @@ const styles = theme => ({
   title: {
     color: '#666;',
     fontSize: 13,
-    margin: '10px 20px',
+    margin: '20px',
     fontFamily: "Roboto, Arial, sans-serif"
   },
   menuLink: {
-    color: '#666',
     textDecoration: 'none',
+    outline: 'none'
   },
 });
 

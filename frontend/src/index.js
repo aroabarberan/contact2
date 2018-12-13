@@ -24,12 +24,10 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true,
-  },  
+  },
 })
 
-console.log('process', process.env)
-
-// if (process.env.NODE_ENV === 'development') console.log(theme)
+if (process.env.NODE_ENV === 'development') console.log(theme)
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>

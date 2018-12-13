@@ -65,7 +65,7 @@ class CreateGroupComponent extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
+          <DialogTitle id="form-dialog-title">Create new group</DialogTitle>
           <Divider />
           <DialogContent>
             <TextField
@@ -99,4 +99,3 @@ CreateGroupComponent.propTypes = {
 };
 
 export default withStyles(styles)(CreateGroupComponent);
-

@@ -15,7 +15,7 @@ import {
   ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
   List, ListItemText,
-  Menu, MenuItem, CssBaseline, withStyles
+  Menu, MenuItem, CssBaseline, withStyles, Button
 } from '@material-ui/core';
 import { QUERIES } from "../querys";
 import ImageAvatarComponent from "./ImageAvatarComponent";
@@ -25,11 +25,15 @@ import CreateGroupContainer from "../Containers/Group/createGroupContainer";
 
 const keys = [
   'id',
+  'contact_id',
+  'group_id',
+  'name',
   'user',
   'lastName',
-  'name',
   'favourite',
-  'phone',
+  'updated_at',
+  'created_at',
+  'phones',
   'groups',
 ]
 
@@ -53,18 +57,8 @@ class DrawerPaper extends React.Component {
     } else {
       this.setState({ profile: userProfile });
     }
-    fetch(QUERIES.contact, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-type': 'application/json',
-        'Authorization': 'Bearer ' + getAccessToken(),
-      },
-    })
-      .then(res => res.json())
-      .then(contacts => contacts.map(contact => this.props.addContact(contact)))
-      .catch(console.log)
   }
+
   handleChange = panel => (event, expanded) => {
     this.setState({
       expanded: expanded ? panel : false,
@@ -114,9 +108,9 @@ class DrawerPaper extends React.Component {
         body: JSON.stringify({ lastName, name, favourite, phone }),
       })
         .then(res => res.json())
-        // .then(console.log)
+        .then(console.log)
         .then(data => this.props.addContact(data.contact))
-        .catch(console.log);
+        .catch(console.error);
     })
   }
 

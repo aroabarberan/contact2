@@ -15,12 +15,12 @@ class ContactController extends Controller
 
         return response()->json($contacts);
     }
-    
+
     public function store(Request $request)
     {
         $contact = new Contact;
         $contact->user = \Auth0::jwtUser()->sub;
-        $contact->lastName = $request['lastName'];
+        $contact->last_name = $request['lastName'];
         $contact->name = $request['name'];
         $contact->favourite = $request['favourite'];
         $contact->phones;

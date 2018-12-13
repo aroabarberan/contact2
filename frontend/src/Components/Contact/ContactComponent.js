@@ -1,30 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { 
-  deepOrange, pink, green, red, purple, deepPurple, 
-  indigo, blue, teal, cyan, lime, amber, brown, grey, blueGrey
+import {
+  pink, red, purple, blue, teal, cyan, brown, grey, blueGrey
 } from '@material-ui/core/colors';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, Avatar, withStyles
+  Paper, Avatar, withStyles, IconButton
 } from '@material-ui/core';
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
-import Form from "../DynamicListComponent";
 
-
-function colorRandomAvatar() {
-  const colors = [
-    deepOrange[500], cyan[500], lime[500], amber[500], brown[500],
-    pink[500], grey[500], blueGrey[500], green[500], red[500],
-    purple[500], deepPurple[500], indigo[500], blue[500], teal[500],
-  ]
-  return colors[Math.floor((Math.random() * colors.length) + 1)];
-}
 
 class ContactComponent extends React.Component {
+
+  componentWillMount() {
+    if (this.props.contacts.contacts.length === 0) {
+      fetch(QUERIES.contact, {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+        },
+      })
+        .then(res => res.json())
+        .then(contacts => contacts.map(contact => this.props.addContact(contact)))
+        .catch(console.log)
+    }
+  }
+
+  previewContact = contact => () => {
+    // TODO: SHOW INFORMATION OF THE CONTACT
+  }
 
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
@@ -54,53 +63,68 @@ class ContactComponent extends React.Component {
     this.props.editContact(contact.id, newContact);
   }
 
-  isFavourite(favourite) {
-    if (favourite) return <Starfilled color="primary" />
-    return <StarBorder />
-  }
-
   render() {
     const { classes } = this.props;
     const { contacts } = this.props.contacts;
-    console.log(this.props.auth.getAccessToken())
+    const colors = [
+      cyan[500], brown[500], pink[500], grey[500],
+      blueGrey[500], red[500], purple[500], blue[500], teal[500],
+    ];
+    let count = 0;
+
+
     return (
       <div className={classes.grow}>
         <main className={classes.content}>
-          <Paper>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell></TableCell>
-                  <TableCell>Avatar</TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell>Last Name</TableCell>
-                  {/* <TableCell>Phone</TableCell> */}
-                  <TableCell></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {contacts.map((contact, i) => {
-                  return (
-                    <TableRow key={i} onClick={() => console.log('pressed')}>
-                      <TableCell component="th" scope="row">
-                        <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
-                      </TableCell>
-                      <TableCell>
-                        <Avatar style={{ backgroundColor: colorRandomAvatar(), color: '#fff' }}>
-                          {contact.name !== '' ? contact.name[0].toUpperCase() : ''}
-                        </Avatar>
-                      </TableCell>
-                      <TableCell>{contact.name}</TableCell>
-                      <TableCell>{contact.lastName}</TableCell>
-                      {/* <TableCell>{contact.phones.length > 0 && ( contact.phones[0].phone)}</TableCell> */}
-                      <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </Paper>
-          <Form />
+          {contacts.length !== 0 && (
+            <Paper elevation={0}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell className={classes.firstShrink}></TableCell>
+                    <TableCell className={classes.shrink}>Avatar</TableCell>
+                    <TableCell>Name</TableCell>
+                    <TableCell>Last Name</TableCell>
+                    <TableCell>Phone</TableCell>
+                    <TableCell className={classes.shrink}></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {contacts.map((contact, i) => {
+                    return (
+                      <TableRow key={i} hover>
+                        <TableCell component="th" scope="row" className={classes.firstShrink}>
+                          <IconButton onClick={this.handleFavouriteClick(contact)}>
+                            {contact.favourite ? <Starfilled style={{ color: '#fbc02d' }} /> : <StarBorder />}
+                          </IconButton>
+                        </TableCell>
+                        <TableCell className={classes.shrink + ' ' + classes.clickable} onClick={this.previewContac}>
+                          <Avatar style={{
+                            color: '#fff',
+                            backgroundColor: '',
+                          }}>
+                            {contact.name !== '' ? contact.name[0].toUpperCase() : ''}
+                          </Avatar>
+                        </TableCell>
+                        <TableCell className={classes.clickable} onClick={this.previewContac}>
+                          {contact.name}
+                        </TableCell>
+                        <TableCell className={classes.clickable} onClick={this.previewContact}>
+                          {contact.lastName}
+                        </TableCell>
+                        <TableCell className={classes.clickable} onClick={this.previewContact}>
+                          {contact.phones && contact.phones.length > 0 && (contact.phones[0].phone)}
+                        </TableCell>
+                        <TableCell className={classes.shrink} numeric>
+                          <ListItemCompositionContainer auth={this.props.auth} contact={contact} />
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </Paper>
+          )}
         </main>
       </div>
     );
@@ -114,7 +138,7 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   content: {
-    margin: '0 0 0 245px',
+    margin: '0 0 0 240px',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
   },
@@ -127,6 +151,18 @@ const styles = theme => ({
   row: {
     display: 'flex',
     justifyContent: 'center',
+  },
+  firstShrink: {
+    paddingRight: 0,
+  },
+  shrink: {
+    paddingLeft: 0,
+    paddingRight: 0,
+  },
+  clickable: {
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
 })
 

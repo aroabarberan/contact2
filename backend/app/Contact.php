@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    protected $fillable = ['user', 'lastName', 'name', 'favourite'];
+    protected $fillable = ['user', 'last_name', 'name', 'favourite'];
 
 
     public function phones() {

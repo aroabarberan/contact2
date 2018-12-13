@@ -107,12 +107,19 @@ class GroupComponent extends React.Component {
           return (
             <div key={i}>
               <Divider />
-              <List >
+              <List>
                 <MenuItem className={classes.menuItem}>
                   <Label />
-                  <ListItemText><Link to={{ pathname: '/group/'+ group.name, state: { group } }}>{group.name}</Link></ListItemText>
+                  <ListItemText>
+                    <Link
+                      to={{ pathname: '/group/'+ group.name, state: { group } }}
+                      className={classes.link}
+                    >
+                      {group.name}
+                    </Link>
+                    </ListItemText>
                   <Edit onClick={() => this.handleOpenEdit(group)} />
-                  <DeleteIcon onClick={() => this.delete(group)} />
+                  <DeleteIcon onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
                 </MenuItem>
               </List>
             </div>
@@ -150,6 +157,10 @@ const styles = theme => ({
   menuItem: {
     color: '#666',
   },
+  link: {
+    color: theme.typography.body1.color,
+    textDecoration: 'none',
+  }
 });
 
 GroupComponent.propTypes = {
