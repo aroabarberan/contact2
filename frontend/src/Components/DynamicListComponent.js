@@ -1,9 +1,10 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 import { PhoneCallback } from '@material-ui/icons'
 // import { QUERIES } from "../querys";
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, DialogContent } from '@material-ui/core';
 import { DynamicList } from '@ivanbeldad/dynamic-list';
+
 
 
 const handleSubmit = (props) => (values, actions) => {
@@ -13,6 +14,7 @@ const handleSubmit = (props) => (values, actions) => {
 
 class Form extends React.Component {
   render() {
+    const { classes } = this.props
     return (
       <div>
         <Formik
@@ -32,8 +34,25 @@ class Form extends React.Component {
                       <TextField {...field2} placeholder='Tag' />
                     </div>
                   )
-                }}
+                }
+                }
               />
+              {/* <DialogContent >
+                <Field
+                  name="name"
+                  // value={values.name}
+                  render={({ field }) => (
+                    <TextField {...field} autoFocus margin="normal" label="Name" type="text" />
+                  )}
+                />
+                <Field
+                  name="lastName"
+                  // value={values.lastName}
+                  render={({ field }) => (
+                    <TextField {...field} margin="normal" label="Last Name" type="text" />
+                  )}
+                />
+              </DialogContent> */}
               <Button variant='outlined' onClick={props.handleSubmit}>Save</Button>
             </form>
           )}

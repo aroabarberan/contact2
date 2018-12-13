@@ -49,23 +49,21 @@ class DrawerPaper extends React.Component {
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile });
-        if (this.props.contacts.contacts.length === 0) {
-          fetch(QUERIES.contact, {
-            method: "GET",
-            headers: {
-              'Accept': 'application/json',
-              'Content-type': 'application/json',
-              'Authorization': 'Bearer ' + getAccessToken(),
-            },
-          })
-            .then(res => res.json())
-            .then(contacts => contacts.map(contact => this.props.addContact(contact)))
-            .catch(console.log)
-        }
       });
     } else {
       this.setState({ profile: userProfile });
     }
+    fetch(QUERIES.contact, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + getAccessToken(),
+      },
+    })
+      .then(res => res.json())
+      .then(contacts => contacts.map(contact => this.props.addContact(contact)))
+      .catch(console.log)
   }
   handleChange = panel => (event, expanded) => {
     this.setState({

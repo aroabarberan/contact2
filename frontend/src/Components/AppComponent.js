@@ -8,7 +8,6 @@ import { Tooltip, withStyles } from '@material-ui/core';
 class AppComponent extends React.Component {
   render() {
     const { classes } = this.props;
-    const { isAuthenticated } = this.props.auth;
     return (
       <div>
         <div>

@@ -14,6 +14,7 @@ import {
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 import Form from "../DynamicListComponent";
 
+
 function colorRandomAvatar() {
   const colors = [
     deepOrange[500], cyan[500], lime[500], amber[500], brown[500],
@@ -60,9 +61,8 @@ class ContactComponent extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
-    // console.log(this.props.auth.getAccessToken())
+    console.log(this.props.auth.getAccessToken())
     return (
       <div className={classes.grow}>
         <main className={classes.content}>
@@ -81,7 +81,7 @@ class ContactComponent extends React.Component {
               <TableBody>
                 {contacts.map((contact, i) => {
                   return (
-                    <TableRow key={i}>
+                    <TableRow key={i} onClick={() => console.log('pressed')}>
                       <TableCell component="th" scope="row">
                         <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
                       </TableCell>
@@ -117,7 +117,6 @@ const styles = theme => ({
     margin: '0 0 0 245px',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    // padding: theme.spacing.unit * 3,
   },
   icon: {
     color: '#666'
@@ -128,10 +127,6 @@ const styles = theme => ({
   row: {
     display: 'flex',
     justifyContent: 'center',
-  },
-  avatar: {
-    color: '#fff',
-    // backgroundColor: deepOrange[500],
   },
 })
 
