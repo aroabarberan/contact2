@@ -5,7 +5,7 @@ import Add from "@material-ui/icons/Add";
 import {
   Divider, Button, Dialog, DialogTitle, TextField,
   ListItemText, DialogActions, DialogContent, MenuItem,
-  withStyles,
+  withStyles, ListItemIcon,
 } from '@material-ui/core';
 
 
@@ -54,7 +54,10 @@ class CreateGroupComponent extends React.Component {
     return (
       <div>
         <MenuItem className={classes.menuItem} onClick={this.handleOpen}>
-          <Add /><ListItemText>Create Group</ListItemText>
+          <ListItemIcon>
+            <Add />
+          </ListItemIcon>
+          <ListItemText>Create Group</ListItemText>
         </MenuItem>
 
         <Dialog
@@ -88,10 +91,6 @@ class CreateGroupComponent extends React.Component {
 const styles = theme => ({
   menuItem: {
     color: '#666',
-    '&:focus': {
-      color: '#fff',
-      backgroundColor: theme.palette.primary.main,
-    },
   },
 });
 

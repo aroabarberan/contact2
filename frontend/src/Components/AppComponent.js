@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LogoutComponent from "./LogoutComponent";
 import DrawerPaperContainer from "../Containers/DrawerPaperContainer";
 import CreateContactContainer from "../Containers/Contact/createContactContainer";
 import { Tooltip, withStyles } from '@material-ui/core';
@@ -13,16 +12,13 @@ class AppComponent extends React.Component {
     return (
       <div>
         <div>
-          {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} />)}
-          {isAuthenticated() && (
-            <div className={classes.root}>
-              <DrawerPaperContainer auth={this.props.auth} />
-              <div className={classes.toolbar} />
-              <Tooltip title="FAB 'position: absolute;'">
-                <CreateContactContainer auth={this.props.auth} />
-              </Tooltip>
-            </div>
-          )}
+          <div className={classes.root}>
+            <DrawerPaperContainer auth={this.props.auth} />
+            <div className={classes.toolbar} />
+            <Tooltip title="FAB 'position: absolute;'">
+              <CreateContactContainer auth={this.props.auth} />
+            </Tooltip>
+          </div>
         </div>
         {this.props.children}
       </div>

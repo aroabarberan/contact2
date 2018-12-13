@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import deepOrange from '@material-ui/core/colors/deepOrange';
+import { 
+  deepOrange, pink, green, red, purple, deepPurple, 
+  indigo, blue, teal, cyan, lime, amber, brown, grey, blueGrey
+} from '@material-ui/core/colors';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -8,9 +11,17 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
 } from '@material-ui/core';
-import LogoutComponent from "../LogoutComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
+import Form from "../DynamicListComponent";
 
+function colorRandomAvatar() {
+  const colors = [
+    deepOrange[500], cyan[500], lime[500], amber[500], brown[500],
+    pink[500], grey[500], blueGrey[500], green[500], red[500],
+    purple[500], deepPurple[500], indigo[500], blue[500], teal[500],
+  ]
+  return colors[Math.floor((Math.random() * colors.length) + 1)];
+}
 
 class ContactComponent extends React.Component {
 
@@ -53,46 +64,44 @@ class ContactComponent extends React.Component {
     const { contacts } = this.props.contacts;
     // console.log(this.props.auth.getAccessToken())
     return (
-      <div>
-        {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
-        {isAuthenticated() && (
-          <main className={classes.content}>
-            <Paper className={classes.paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell></TableCell>
-                    <TableCell>Avatar</TableCell>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Last Name</TableCell>
-                    {/* <TableCell>Phone</TableCell> */}
-                    <TableCell></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {contacts.map((contact, i) => {
-                    return (
-                      <TableRow key={i}>
-                        <TableCell component="th" scope="row">
-                          <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
-                        </TableCell>
-                        <TableCell>
-                          <Avatar className={classes.orangeAvatar}>
-                            {contact.name !== '' ? contact.name[0].toUpperCase() : ''}
-                          </Avatar>
-                        </TableCell>
-                        <TableCell>{contact.name}</TableCell>
-                        <TableCell>{contact.lastName}</TableCell>
-                        {/* <TableCell>{contact.phones.length > 0 && ( contact.phones[0].phone)}</TableCell> */}
-                        <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-            </Paper>
-          </main>
-        )}
+      <div className={classes.grow}>
+        <main className={classes.content}>
+          <Paper>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell></TableCell>
+                  <TableCell>Avatar</TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>Last Name</TableCell>
+                  {/* <TableCell>Phone</TableCell> */}
+                  <TableCell></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {contacts.map((contact, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell component="th" scope="row">
+                        <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
+                      </TableCell>
+                      <TableCell>
+                        <Avatar style={{ backgroundColor: colorRandomAvatar(), color: '#fff' }}>
+                          {contact.name !== '' ? contact.name[0].toUpperCase() : ''}
+                        </Avatar>
+                      </TableCell>
+                      <TableCell>{contact.name}</TableCell>
+                      <TableCell>{contact.lastName}</TableCell>
+                      {/* <TableCell>{contact.phones.length > 0 && ( contact.phones[0].phone)}</TableCell> */}
+                      <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </Paper>
+          <Form />
+        </main>
       </div>
     );
   }
@@ -113,19 +122,16 @@ const styles = theme => ({
   icon: {
     color: '#666'
   },
+  grow: {
+    flexGrow: 1,
+  },
   row: {
     display: 'flex',
     justifyContent: 'center',
   },
-  paper: {
-    ...theme.mixins.gutters(),
-    paddingTop: theme.spacing.unit * 2,
-    paddingBottom: theme.spacing.unit * 2,
-    minWidth: '800px',
-  },
-  orangeAvatar: {
+  avatar: {
     color: '#fff',
-    backgroundColor: deepOrange[500],
+    // backgroundColor: deepOrange[500],
   },
 })
 

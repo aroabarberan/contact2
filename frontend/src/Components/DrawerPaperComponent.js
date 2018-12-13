@@ -124,7 +124,6 @@ class DrawerPaper extends React.Component {
 
   render() {
     const { classes, history } = this.props;
-    console.log('history', history)
     const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -202,6 +201,7 @@ class DrawerPaper extends React.Component {
             )}
 
             <ExpansionPanel expanded={expanded === 'panel1'}
+              classes={{ expanded: classes.expanded }}
               onChange={this.handleChange('panel1')}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <ListItemText>Groups</ListItemText>
@@ -211,6 +211,7 @@ class DrawerPaper extends React.Component {
             </ExpansionPanel>
 
             <ExpansionPanel expanded={expanded === 'panel2'}
+              classes={{ expanded: classes.expanded }}
               onChange={this.handleChange('panel2')}>
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <ListItemText>More</ListItemText>
@@ -281,6 +282,9 @@ const styles = theme => ({
     [theme.breakpoints.up('md')]: {
       display: 'none',
     },
+  },
+  expanded: {
+    margin: 0,
   },
 });
 

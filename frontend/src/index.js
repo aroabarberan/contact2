@@ -7,7 +7,7 @@ import store from "./store"
 
 import { MuiThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core'
-import { deepOrange, brown } from '@material-ui/core/colors'
+import { deepOrange, green } from '@material-ui/core/colors'
 
 const routes = makeMainRoutes()
 
@@ -18,7 +18,7 @@ const theme = createMuiTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: brown[700],
+      main: green[500],
       contrastText: '#fff',
     },
   },
@@ -26,6 +26,8 @@ const theme = createMuiTheme({
     useNextVariants: true,
   },  
 })
+
+console.log('process', process.env)
 
 // if (process.env.NODE_ENV === 'development') console.log(theme)
 

@@ -8,7 +8,6 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
 } from '@material-ui/core';
-import LogoutComponent from "../LogoutComponent";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 
 
@@ -57,46 +56,43 @@ class FavouriteComponent extends React.Component {
     return (
       <div>
         <div>
-          {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
-          {isAuthenticated() && (
-            <main className={classes.content}>
-              {favourites.length === 0 ? <h2 className={classes.title}>There are no favourite contacts</h2> :
-                <Paper className={classes.paper}>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Fav</TableCell>
-                        <TableCell>Avatar</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Last Name</TableCell>
-                        <TableCell>Phone</TableCell>
-                        <TableCell>Setting</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {favourites.map((contact, i) => {
-                        return (
-                          <TableRow key={i}>
-                            <TableCell component="th" scope="row">
-                              <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
-                            </TableCell>
-                            <TableCell>
-                              <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
-                            </TableCell>
-                            <TableCell>{contact.name}</TableCell>
-                            <TableCell>{contact.lastName}</TableCell>
-                            <TableCell>{contact.phone}</TableCell>
-                            <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
-                          </TableRow>
-                        );
-                      })}
-                    </TableBody>
-                  </Table>
-                </Paper>
+          <main className={classes.content}>
+            {favourites.length === 0 ? <h2 className={classes.title}>There are no favourite contacts</h2> :
+              <Paper className={classes.paper}>
+                <Table>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Fav</TableCell>
+                      <TableCell>Avatar</TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell>Last Name</TableCell>
+                      <TableCell>Phone</TableCell>
+                      <TableCell>Setting</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {favourites.map((contact, i) => {
+                      return (
+                        <TableRow key={i}>
+                          <TableCell component="th" scope="row">
+                            <div onClick={this.handleFavouriteClick(contact)} >{this.isFavourite(contact.favourite)}</div>
+                          </TableCell>
+                          <TableCell>
+                            <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
+                          </TableCell>
+                          <TableCell>{contact.name}</TableCell>
+                          <TableCell>{contact.lastName}</TableCell>
+                          <TableCell>{contact.phone}</TableCell>
+                          <TableCell><ListItemCompositionContainer auth={this.props.auth} contact={contact} /></TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </Paper>
 
-              }
-            </main>
-          )}
+            }
+          </main>
         </div>
         {this.props.children}
       </div>

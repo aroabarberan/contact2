@@ -10,7 +10,6 @@ import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
 } from '@material-ui/core';
-import LogoutComponent from "../LogoutComponent";
 
 
 class ShowContactGroupComponent extends React.Component {
@@ -38,7 +37,6 @@ class ShowContactGroupComponent extends React.Component {
     return (
       <div>
         <div>
-          {!isAuthenticated() && (<LogoutComponent auth={this.props.auth} history={this.props.history} />)}
           {isAuthenticated() && (
             <main className={classes.content}>
               {contacts.length === 0 ? <CircularProgress disableShrink /> :
