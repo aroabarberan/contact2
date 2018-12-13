@@ -50,7 +50,6 @@ class FavouriteComponent extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { isAuthenticated } = this.props.auth;
     const favourites = this.props.contacts.contacts.filter(contact => contact.favourite === 1)
 
     return (

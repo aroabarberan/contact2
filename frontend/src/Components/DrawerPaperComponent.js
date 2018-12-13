@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { CSVLink } from "react-csv";
 import CsvParse from '@vtex/react-csv-parse'
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import FileCopy from '@material-ui/icons/FileCopy';
@@ -15,7 +15,7 @@ import {
   ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
   List, ListItemText,
-  Menu, MenuItem, CssBaseline, withStyles, Button
+  Menu, MenuItem, CssBaseline, withStyles,
 } from '@material-ui/core';
 import { QUERIES } from "../querys";
 import ImageAvatarComponent from "./ImageAvatarComponent";
@@ -49,7 +49,7 @@ class DrawerPaper extends React.Component {
     };
   }
   componentWillMount() {
-    const { userProfile, getProfile, getAccessToken } = this.props.auth;
+    const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
         this.setState({ profile });
@@ -95,7 +95,7 @@ class DrawerPaper extends React.Component {
   };
 
   handleData = data => {
-    data.map(c => {
+    data.forEach(c => {
       const { lastName, name, favourite, phone } = c
 
       fetch(QUERIES.contact, {

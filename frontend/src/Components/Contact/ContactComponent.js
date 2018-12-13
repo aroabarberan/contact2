@@ -1,8 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  pink, red, purple, blue, teal, cyan, brown, grey, blueGrey
-} from '@material-ui/core/colors';
 import { QUERIES } from "../../querys";
 import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
@@ -66,11 +63,11 @@ class ContactComponent extends React.Component {
   render() {
     const { classes } = this.props;
     const { contacts } = this.props.contacts;
-    const colors = [
-      cyan[500], brown[500], pink[500], grey[500],
-      blueGrey[500], red[500], purple[500], blue[500], teal[500],
-    ];
-    let count = 0;
+    // const colors = [
+    //   cyan[500], brown[500], pink[500], grey[500],
+    //   blueGrey[500], red[500], purple[500], blue[500], teal[500],
+    // ];
+    // let count = 0;
 
 
     return (

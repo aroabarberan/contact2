@@ -27,7 +27,7 @@ class MergeComponent extends React.Component {
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
     let favourite = null
-    const { id, sub, lastName, name, phone } = contact;
+    const { id, lastName, name, phone } = contact;
 
     if (contact.favourite === 1) {
       favourite = 0;
@@ -59,7 +59,6 @@ class MergeComponent extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { isAuthenticated } = this.props.auth;
     const { contacts } = this.props.contacts;
     let duplicateContacts = [];
     let countContacts = [];

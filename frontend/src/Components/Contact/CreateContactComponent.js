@@ -46,7 +46,7 @@ class CreateContact extends React.Component {
       .then(data => {
         this.props.addContact(data.contact);
         let contact_id = data.contact.id;
-        values.phones.map(phone => {
+        values.phones.forEach(phone => {
           fetch(QUERIES.phone, {
             method: "POST",
             headers: {

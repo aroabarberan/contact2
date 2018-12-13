@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
         ...state,
         contacts: state.contacts.filter((c => c.id !== action.payload))
       };
-      
+
     case 'UNSELECT_CONTACT':
       return {
         contacts: [...state.contacts],
@@ -72,5 +72,5 @@ export default (state = initialState, action) => {
       }
     default:
       return state
-  };
+  }
 }

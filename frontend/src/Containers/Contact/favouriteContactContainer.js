@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import FavourieContactComponent from "../../Components/Contact/FavouriteContactComponent";
-import { addContact, editContact } from "../../Actions/contactAction";
+import { editContact } from "../../Actions/contactAction";
 
 
 const mapStateToProps = state => ({

@@ -1,10 +1,8 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CloudDownload from "@material-ui/icons/CloudDownload";
 import Label from "@material-ui/icons/Label";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { CSVLink } from "react-csv";
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -114,10 +112,10 @@ class ListItemComposition extends React.Component {
 
 
     console.log(this.props.contacts.contacts)
-    values.phones.map(p => {
+    values.phones.forEach(p => {
 
-      let phone = p.phone;
-      let contact_id = id;
+      // let phone = p.phone;
+      // let contact_id = id;
 
       // fetch(QUERIES.phone, {
       //   method: "POST",
