@@ -27,9 +27,6 @@ class CreateContact extends React.Component {
   }
 
   handleSubmit = (values, actions) => {
-
-    console.log('Valores desde el handleSubmit', values)
-
     let { name, lastName, favourite } = values
 
     fetch(QUERIES.contact, {
@@ -72,10 +69,15 @@ class CreateContact extends React.Component {
 
     return (
       <div>
-        <Fab color="secondary" aria-label="Add"
-          className={classes.buttonAdd} onClick={this.handleOpen}>
-          <AddIcon />
-        </Fab>
+        <Button
+          color='secondary'
+          variant='contained'
+          onClick={this.handleOpen}
+          className={classes.addButton}
+          classes={{ label: classes.addButtonLabel }}
+        >
+          <AddIcon className={classes.addButtonIcon} /> Create contact
+        </Button>
         <Dialog
           className={classes.size}
           open={this.state.open}
@@ -86,7 +88,6 @@ class CreateContact extends React.Component {
           <Divider />
           <Formik
             initialValues={{ phones: [], name: '', lastName: '', favourite: 0 }}
-            // onSubmit={values => console.log('values')}
             onSubmit={this.handleSubmit}
             render={props => (
               <form>
@@ -127,58 +128,6 @@ class CreateContact extends React.Component {
               </form>
             )}
           />
-          {/* <Formik
-            initialValues={{ phones: [''], name: '', lastName: '', favourite: 0 }}
-            onSubmit={values => this.handleSubmit(values)}
-            render={({ values }) => (
-              <Form>
-                <DialogContent className={classes.dialog}>
-                  <Field
-                    name="name"
-                    value={values.name}
-                    render={({ field }) => (
-                      <TextField className={classes.space} {...field} autoFocus margin="normal" label="Name" type="text" />
-                    )}
-                  />
-                  <Field
-                    name="lastName"
-                    value={values.lastName}
-                    render={({ field }) => (
-                      <TextField className={classes.space} {...field} margin="normal" label="Last Name" type="text" />
-                    )}
-                  />
-                </DialogContent>
-                <DialogContent className={classes.dialog}>
-                  <FieldArray
-                    name="phones"
-                    render={arrayHelpers => (
-                      <div>
-                        {values.phones && values.phones.length > 0 ? (
-                          values.phones.map((phone, index) => (
-                            <div key={index}>
-                              <Field name={`phones.${index}`} />
-                              <RemoveCircle className={classes.margin} onClick={() => arrayHelpers.remove(index)} />
-                              <AddIcon className={classes.margin} onClick={() => arrayHelpers.insert(index, '')} />
-                            </div>
-                          ))
-                        ) : (
-                            <DialogActions>
-                              <Button type="button" onClick={() => arrayHelpers.push('')}>
-                                Add a Phone
-                          </Button>
-                            </DialogActions>
-                          )}
-                        <DialogActions>
-                          <Button onClick={this.handleClose} color="primary">Cancel</Button>
-                          <Button type="submit" color="primary" >Save</Button>
-                        </DialogActions>
-                      </div>
-                    )}
-                  />
-                </DialogContent>
-              </Form>
-            )}
-          /> */}
         </Dialog>
       </div>
     );
@@ -189,9 +138,27 @@ const styles = theme => ({
     width: '600px',
   },
   buttonAdd: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 3,
+    position: 'fixed',
+    bottom: theme.spacing.unit * 4,
+    right: theme.spacing.unit * 4,
+    zIndex: 999,
+  },
+  addButton: {
+    position: 'fixed',
+    bottom: theme.spacing.unit * 4,
+    right: theme.spacing.unit * 4,
+    zIndex: 999,
+    textTransform: 'none',
+    borderRadius: 100,
+    fontWeight: 600,
+  },
+  addButtonLabel: {
+    paddingRight: theme.spacing.unit,
+  },
+  addButtonIcon: {
+    width: '1.75em',
+    height: '1.75em',
+    paddingRight: theme.spacing.unit,
   },
   space: {
     margin: '0 5px',
