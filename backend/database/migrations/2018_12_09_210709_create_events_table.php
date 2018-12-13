@@ -18,6 +18,7 @@ class CreateEventsTable extends Migration
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->string('contact_id');
+            $table->string('tag');
             $table->timestamps();
         });
     }

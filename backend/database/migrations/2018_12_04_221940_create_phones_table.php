@@ -18,6 +18,7 @@ class CreatePhonesTable extends Migration
             $table->string('user');
             $table->string('phone')->nullable();
             $table->string('contact_id');
+            $table->string('tag');
             $table->timestamps();
         });
     }

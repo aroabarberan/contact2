@@ -10,11 +10,9 @@ class ContactController extends Controller
 
     public function index()
     {
-        $contacts = Contact::where('user', \Auth0::jwtUser()->sub)->get();
-        foreach ($contacts as $contact) {
-            $contact->phones;
-            $contact->groups;
-        }
+        $contacts = Contact::with(['phones', 'groups'])
+            ->where('user', \Auth0::jwtUser()->sub)->get();
+
         return response()->json($contacts);
     }
     
