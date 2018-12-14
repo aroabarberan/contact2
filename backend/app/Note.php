@@ -8,8 +8,8 @@ class Note extends Model
 {
     protected $fillable = ['title', 'description'];
 
-    // public function contacts()
-    // {
-    //     return $this->belongsTo('App\Contact');
-    // }
+    public function contacts()
+    {
+        return $this->belongsTo('App\Contact');
+    }
 }
