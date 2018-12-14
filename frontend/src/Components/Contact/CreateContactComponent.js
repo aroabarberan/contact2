@@ -27,7 +27,7 @@ class CreateContact extends React.Component {
   }
 
   handleSubmit = (values, actions) => {
-    let { name, last_name, favourite } = values
+    let { name, last_name, favourite, phones } = values
 
     fetch(QUERIES.contact, {
       method: "POST",
@@ -36,27 +36,28 @@ class CreateContact extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify({ name, last_name, favourite }),
+      body: JSON.stringify({ name, last_name, favourite, phones }),
     })
       .then(res => res.json())
       // .then(console.log)
       .then(data => {
         this.props.addContact(data.contact);
-        let contact_id = data.contact.id;
-        values.phones.forEach(phone => {
-          fetch(QUERIES.phone, {
-            method: "POST",
-            headers: {
-              'Accept': 'application/json',
-              'Content-type': 'application/json',
-              'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
-            },
-            body: JSON.stringify({ phone, contact_id }),
-          })
-            .then(res => res.json())
-            .then(data => this.props.addPhone(data.phone))
-            .catch(console.log);
-        })
+        data.contact.phones.forEach(phone => this.props.addPhone(phone));
+        // let contact_id = data.contact.id;
+        // values.phones.forEach(phone => {
+        //   fetch(QUERIES.phone, {
+        //     method: "POST",
+        //     headers: {
+        //       'Accept': 'application/json',
+        //       'Content-type': 'application/json',
+        //       'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+        //     },
+        //     body: JSON.stringify({ phone, contact_id }),
+        //   })
+        //     .then(res => res.json())
+        //     .then(data => this.props.addPhone(data.phone))
+        //     .catch(console.log);
+        // })
       })
       .catch(console.log);
 

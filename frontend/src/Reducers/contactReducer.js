@@ -25,14 +25,40 @@ export default (state = initialState, action) => {
         ...state,
         contacts: [...state.contacts, ...action.payload]
       };
+
     case 'EDIT_CONTACT':
+      const { contact } = action.payload;
+      const newContacts = [...state.contacts];
+      const indexOfContact = state.contacts.map(c => c.id).indexOf(contact.id);
+      if (indexOfContact > 0) {
+        newContacts.splice(indexOfContact, 1, contact);
+      }
       return {
         ...state,
-        contacts: [...state.contacts.map((contact => {
-          if (contact.id === action.payload) contact = action.value;
-          return contact
-        }))],
-      };
+        contacts: newContacts,
+      }
+
+    case 'ADD_CONTACT_GROUP':
+      const addContact = { ...action.payload.contact };
+      const allContacts = [...state.contacts];
+      addContact.groups = [...addContact.groups, action.payload.group];
+      const indexAddContact = state.contacts.map(c => c.id).indexOf(addContact.id);
+      allContacts.splice(indexAddContact, 1, addContact);
+      return {
+        ...state,
+        contacts: allContacts,
+      }
+
+    case 'REMOVE_CONTACT_GROUP':
+      const contactToRemoveGroup = { ...action.payload.contact };
+      contactToRemoveGroup.groups = [...contactToRemoveGroup.groups].filter(g => g.id !== action.payload.group.id);
+      const newContacts2 = [...state.contacts];
+      const indexToRemoveContact = state.contacts.map(c => c.id).indexOf(contactToRemoveGroup.id);
+      newContacts2.splice(indexToRemoveContact, 1, contactToRemoveGroup);
+      return {
+        ...state,
+        contacts: newContacts2,
+      }
 
     case 'DELETE_CONTACT':
       return {

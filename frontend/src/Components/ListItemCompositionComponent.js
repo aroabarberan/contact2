@@ -15,6 +15,7 @@ import {
   Menu, MenuItem, ListItemIcon, ListItemText, TextField,
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
+import { LabelOutlined } from '@material-ui/icons';
 
 
 class ListItemComposition extends React.Component {
@@ -64,6 +65,12 @@ class ListItemComposition extends React.Component {
     const groupId = group.id;
     const contactId = this.props.contact.id
 
+    const method = this.hasGroup(group) ? this.removeFromGroup(group) : this.addToGroup(group);
+
+  }
+
+  addToGroup = (group) => {
+    const { contact, addContactGroup } = this.props;
     fetch(QUERIES.contactgroup, {
       method: "POST",
       headers: {
@@ -71,28 +78,38 @@ class ListItemComposition extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify({ contactId, groupId }),
+      body: JSON.stringify({ contactId: contact.id, groupId: group.id }),
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(() => { addContactGroup(contact, group) })
       // .then(data => this.props.addContact(data.contact))
       .catch(console.log);
+  }
 
-    // fetch(QUERIES.contact + contactId, {
-    //   method: "PUT",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-type': 'application/json',
-    //     'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
-    //   },
-    //   body: JSON.stringify({ groups: group }, contactId),
-    // })
-    //   .then(res => res.json())
-    //   .then(console.log)
-    //   .catch(console.log);
-    // this.props.editContact(contactId, group);
-    this.handleClose();
+  removeFromGroup = (group) => {
+    const { contact, removeContactGroup } = this.props;
+    fetch(`${QUERIES.contactgroup}${contact.id}/${group.id}`, {
+      method: "DELETE",
+      headers: {
+        'Accept': 'application/json',
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
+      },
+    })
+      .then(res => {
+        if (res.status >= 200 && res.status < 400) return 'Contact deleted from group';
+        else throw new Error('Cannot delete contact from group');
+      })
+      .then(() => { removeContactGroup(contact, group) })
+      // .then(data => this.props.addContact(data.contact))
+      .catch(console.log);
+  }
 
+  hasGroup = (group) => {
+    const { contact } = this.props;
+    return contact.groups
+      .map(group => group.id)
+      .includes(group.id)
   }
 
   handleSubmit = (values) => {
@@ -208,8 +225,8 @@ class ListItemComposition extends React.Component {
                 return (
                   <div key={i}>
                     <MenuItem className={classes.menuItem} onClick={() => this.click(group)}>
-                      <ListItemIcon onClick={() => this.handleClose}>
-                        <Label />
+                      <ListItemIcon>
+                        {this.hasGroup(group) ? (<Label />) : (<LabelOutlined />)}
                       </ListItemIcon>
                       <ListItemText>{group.name}</ListItemText>
                     </MenuItem>

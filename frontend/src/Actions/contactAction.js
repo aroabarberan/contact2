@@ -8,10 +8,9 @@ export const addContacts = contacts => ({
   payload: contacts,
 });
 
-export const editContact = (id, contact) => ({
+export const editContact = (contact) => ({
   type: 'EDIT_CONTACT',
-  payload: id,
-  value: contact
+  payload: contact,
 });
 
 export const deleteContact = id => ({
@@ -38,4 +37,14 @@ export const updateForm = contact => ({
 });
 export const resetForm = () => ({
   type: 'RESET_FORM',
+})
+
+export const addContactGroup = (contact, group) => ({
+  type: 'ADD_CONTACT_GROUP',
+  payload: { contact, group },
+})
+
+export const removeContactGroup = (contact, group) => ({
+  type: 'REMOVE_CONTACT_GROUP',
+  payload: { contact, group },
 })
