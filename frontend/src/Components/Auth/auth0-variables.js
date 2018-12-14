@@ -14,7 +14,7 @@ export const AUTH_CONFIG = {
   clientId: 'm8iuTfWx5BYpgzJdU51RZL0xWTuUvJHp',
   clientSecret: '4X567sowOeI-OH71ulRHKYJYauI6ryGnmGNmB0E64ovPx4aPw3Y2uqC4y-qVph7V',
   applicationURL: 'https://contactboard.tk',
-  callbackUrl: 'https://contacboard.tk/callback',
+  callbackUrl: 'https://contactboard.tk/callback',
   responseType: 'token id_token',
   audience: 'https://api.contactboard.tk/',
   scope: 'openid profile'
