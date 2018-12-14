@@ -167,7 +167,7 @@ class ListItemComposition extends React.Component {
             <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
           </MenuItem>
 
-          <CSVLink className={classes.menuLink}
+          {/* <CSVLink className={classes.menuLink}
             separator={";"}
             data={[this.props.contact]}
             onClick={() => this.handleClose}
@@ -178,7 +178,7 @@ class ListItemComposition extends React.Component {
               </ListItemIcon>
               <ListItemText>Export</ListItemText>
             </MenuItem>
-          </CSVLink>
+          </CSVLink> */}
 
           <MenuItem className={classes.menuItem}
             onClick={this.delete} >
