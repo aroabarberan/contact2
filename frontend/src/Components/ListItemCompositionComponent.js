@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { CSVLink } from "react-csv";
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -97,7 +97,7 @@ class ListItemComposition extends React.Component {
 
   handleSubmit = (values) => {
     let { id } = this.props.contact
-    let { name, lastName, favourite } = values
+    let { name, last_name, favourite } = values
 
     fetch(QUERIES.contact + id, {
       method: "PUT",
@@ -106,7 +106,7 @@ class ListItemComposition extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify({ id, name, lastName, favourite }, id),
+      body: JSON.stringify({ id, name, last_name, favourite }, id),
     })
       .then(res => res.json())
       .then(data => this.props.editContact(data.contact.id, data.contact))
@@ -201,7 +201,7 @@ class ListItemComposition extends React.Component {
           </MenuItem>
 
           {groups.length > 0 && (
-            <Fragment>
+            <div>
               <Divider />
               <p className={classes.title}>Groups</p>
               {groups.map((group, i) => {
@@ -216,7 +216,7 @@ class ListItemComposition extends React.Component {
                   </div>
                 );
               })}
-            </Fragment>
+            </div>
           )}
         </Menu>
 
@@ -228,7 +228,7 @@ class ListItemComposition extends React.Component {
           <DialogTitle id="form-dialog-title">Edit contact</DialogTitle>
           <Divider />
           <Formik
-            initialValues={{ phones: contact.phones, name: contact.name, lastName: contact.lastName, favourite: contact.favourite }}
+            initialValues={{ phones: contact.phones, name: contact.name, last_name: contact.last_name, favourite: contact.favourite }}
             onSubmit={values => this.handleSubmit(values)}
             render={({ values }) => (
               <Form>
@@ -246,8 +246,8 @@ class ListItemComposition extends React.Component {
                     )}
                   />
                   <Field
-                    name="lastName"
-                    value={values.lastName}
+                    name="last_name"
+                    value={values.last_name}
                     render={({ field }) => (
                       <TextField className={classes.space}
                         {...field}

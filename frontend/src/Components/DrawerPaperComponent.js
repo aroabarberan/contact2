@@ -26,7 +26,7 @@ import CreateGroupContainer from "../Containers/Group/createGroupContainer";
 //   'group_id',
 //   'name',
 //   'user',
-//   'lastName',
+//   'last_name',
 //   'favourite',
 //   'updated_at',
 //   'created_at',
@@ -99,7 +99,7 @@ class DrawerPaper extends React.Component {
 
   handleData = data => {
     data.forEach(c => {
-      const { lastName, name, favourite, phone } = c
+      const { last_name, name, favourite, phone } = c
 
       fetch(QUERIES.contact, {
         method: "POST",
@@ -108,7 +108,7 @@ class DrawerPaper extends React.Component {
           'Content-type': 'application/json',
           'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
         },
-        body: JSON.stringify({ lastName, name, favourite, phone }),
+        body: JSON.stringify({ last_name, name, favourite, phone }),
       })
         .then(res => res.json())
         .then(console.log)
@@ -123,7 +123,7 @@ class DrawerPaper extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const listItem = [
-      { icon: <Contacts />, path: "/contacts" , name: 'Contacts' },
+      { icon: <Contacts />, path: "/" , name: 'Contacts' },
       { icon: <FileCopy />, path: "/merge" , name: 'Duplicates' },
       { icon: <Star />, path: "/favourite" , name: 'Favourites' },
     ]

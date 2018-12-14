@@ -4,7 +4,7 @@ const initialState = {
   favourites: [],
   form: {
     create: {
-      lastName: '',
+      last_name: '',
       name: '',
       // phones: [],
       favourite: '',
@@ -15,6 +15,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CONTACT':
+      const newContacts = action.payload;
       return {
         ...state,
         contacts: [...state.contacts, action.payload]
@@ -63,7 +64,7 @@ export default (state = initialState, action) => {
         form: {
           ...state.form,
           create: {
-            lastName: '',
+            last_name: '',
             name: '',
             phone: '',
             favourite: '',

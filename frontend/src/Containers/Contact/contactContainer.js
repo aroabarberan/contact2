@@ -4,10 +4,11 @@ import { addContact, editContact } from "../../Actions/contactAction";
 
 
 const mapStateToProps = state => ({
-  contacts: state.contacts,
+  contacts: {
+    ...state.contacts,
+    contacts: state.contacts.contacts.sort((a, b) => a.name.localeCompare(b.name)),
+  },
   groups: state.groups,
-  // form : state.contacts.form,
-  // favourite: state.contacts.favourite,
 })
 
 const mapDispatchToProps = dispatch => ({

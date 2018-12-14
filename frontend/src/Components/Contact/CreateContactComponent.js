@@ -27,7 +27,7 @@ class CreateContact extends React.Component {
   }
 
   handleSubmit = (values, actions) => {
-    let { name, lastName, favourite } = values
+    let { name, last_name, favourite } = values
 
     fetch(QUERIES.contact, {
       method: "POST",
@@ -36,7 +36,7 @@ class CreateContact extends React.Component {
         'Content-type': 'application/json',
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
-      body: JSON.stringify({ name, lastName, favourite }),
+      body: JSON.stringify({ name, last_name, favourite }),
     })
       .then(res => res.json())
       // .then(console.log)
@@ -54,7 +54,6 @@ class CreateContact extends React.Component {
             body: JSON.stringify({ phone, contact_id }),
           })
             .then(res => res.json())
-            .then(console.log)
             .then(data => this.props.addPhone(data.phone))
             .catch(console.log);
         })
@@ -87,7 +86,7 @@ class CreateContact extends React.Component {
           <DialogTitle id="form-dialog-title">Create new contact</DialogTitle>
           <Divider />
           <Formik
-            initialValues={{ phones: [], name: '', lastName: '', favourite: 0 }}
+            initialValues={{ phones: [], name: '', last_name: '', favourite: 0 }}
             onSubmit={this.handleSubmit}
             render={props => (
               <form>
@@ -100,8 +99,8 @@ class CreateContact extends React.Component {
                     )}
                   />
                   <Field
-                    name="lastName"
-                    value={props.lastName}
+                    name="last_name"
+                    value={props.last_name}
                     render={({ field }) => (
                       <TextField {...field} margin="normal" label="Last Name" type="text" />
                     )}

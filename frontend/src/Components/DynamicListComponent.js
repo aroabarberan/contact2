@@ -17,7 +17,7 @@ class Form extends React.Component {
     return (
       <div>
         <Formik
-          initialValues={{ phones: [], name: '', lastName: '', favourite: 0 }}
+          initialValues={{ phones: [], name: '', last_name: '', favourite: 0 }}
           onSubmit={values => console.log(values)}
           render={props => (
             <form>
@@ -45,8 +45,8 @@ class Form extends React.Component {
                   )}
                 />
                 <Field
-                  name="lastName"
-                  value={props.lastName}
+                  name="last_name"
+                  value={props.last_name}
                   render={({ field }) => (
                     <TextField {...field} margin="normal" label="Last Name" type="text" />
                   )}

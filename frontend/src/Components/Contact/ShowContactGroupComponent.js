@@ -58,7 +58,7 @@ class ShowContactGroupComponent extends React.Component {
                               <Avatar className={classes.orangeAvatar}>{contact.name[0]}</Avatar>
                             </TableCell>
                             <TableCell>{contact.name}</TableCell>
-                            <TableCell>{contact.lastName}</TableCell>
+                            <TableCell>{contact.last_name}</TableCell>
                             <TableCell>{contact.phone}</TableCell>
                             {/* <TableCell><Delete onClick={() => this.delete(contact)} /></TableCell> */}
                           </TableRow>

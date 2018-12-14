@@ -22,4 +22,3 @@ export const AUTH_CONFIG = {
 if (process.env && process.env.NODE_ENV === 'development') {
   AUTH_CONFIG.callbackUrl = 'http://localhost:3000/callback'
 }
-console.log(AUTH_CONFIG)
