@@ -23,6 +23,13 @@ class GroupController extends Controller
         $group->user =\Auth0::jwtUser()->sub;
         $group->name = ucfirst(strtolower($request['name']));
         $group->contacts;
+        $similarGroup = Group::where([
+            ['name', '=' , $group->name],
+            ['user', '=', $group->user],
+        ])->first();
+        if ($similarGroup) {
+            return response('Error, duplicated group', 400);
+        }
         if (!$group->save()) return response('Error. Group not save', 404);
         return response()->json([
             'code' => 201,
