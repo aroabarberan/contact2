@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import deepOrange from '@material-ui/core/colors/deepOrange';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { QUERIES } from "../../querys";
-// import Starfilled from "@material-ui/icons/Grade";
-// import StarBorder from "@material-ui/icons/StarBorder";
-// import Delete from '@material-ui/icons/Delete';
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
   Paper, Avatar, withStyles
@@ -113,4 +110,3 @@ ShowContactGroupComponent.propTypes = {
 }
 
 export default withStyles(styles, { withTheme: true })(ShowContactGroupComponent)
-

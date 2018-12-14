@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { CSVLink } from "react-csv";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Label from "@material-ui/icons/Label";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import CloudDownload from '@material-ui/icons/CloudDownload';
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
 import AddIcon from '@material-ui/icons/Add';
@@ -169,14 +171,18 @@ class ListItemComposition extends React.Component {
           onClose={this.handleClose}
           PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 256, }, }}
         >
-          {/* <CSVLink data={[this.props.contact]} className={classes.menuLink} separator={";"}>
+          <CSVLink className={classes.menuLink}
+            separator={";"}
+            data={[this.props.contact]}
+            onClick={() => this.handleClose}
+          >
             <MenuItem className={classes.menuItem}>
               <ListItemIcon onClick={() => this.handleClose}>
                 <CloudDownload />
               </ListItemIcon>
               <ListItemText>Export</ListItemText>
             </MenuItem>
-          </CSVLink> */}
+          </CSVLink>
 
           <MenuItem
             onClick={this.handleOpenEdit}>
@@ -231,14 +237,23 @@ class ListItemComposition extends React.Component {
                     name="name"
                     value={values.name}
                     render={({ field }) => (
-                      <TextField className={classes.space} {...field} autoFocus margin="normal" label="Name" type="text" />
+                      <TextField className={classes.space} {...field}
+                        autoFocus
+                        margin="normal"
+                        label="Name"
+                        type="text"
+                      />
                     )}
                   />
                   <Field
                     name="lastName"
                     value={values.lastName}
                     render={({ field }) => (
-                      <TextField className={classes.space} {...field} margin="normal" label="Last Name" type="text" />
+                      <TextField className={classes.space}
+                        {...field}
+                        margin="normal"
+                        label="Last Name"
+                        type="text" />
                     )}
                   />
                 </DialogContent>
@@ -283,42 +298,6 @@ class ListItemComposition extends React.Component {
               </Form>
             )}
           />
-
-          {/* <DialogContent className={classes.dialog}>
-            <TextField
-              className={classes.space}
-              margin="normal"
-              name="lastName"
-              label="Last name"
-              type="text"
-              defaultValue={this.props.contact.lastName}
-              onChange={this.handleChange('lastName')}
-            />
-            <TextField
-              className={classes.space}
-              margin="normal"
-              name="name"
-              label="Name"
-              type="text"
-              defaultValue={this.props.contact.name}
-              onChange={this.handleChange('name')}
-            />
-          </DialogContent>
-          <DialogContent>
-            <TextField
-              className={classes.space}
-              margin="normal"
-              name="phone"
-              label="Phone"
-              type="text"
-              defaultValue={this.props.contact.phone}
-              onChange={this.handleChange('phone')}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleCloseEdit} color="primary">Cancel</Button>
-            <Button onClick={this.submit} color="primary">Save</Button>
-          </DialogActions> */}
         </Dialog>
       </div>
     );

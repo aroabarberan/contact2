@@ -5,9 +5,10 @@ import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, Avatar, withStyles, IconButton
+  Paper, withStyles, IconButton
 } from '@material-ui/core';
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
+import CustomAvatar from '../CustomAvatar';
 
 
 class ContactComponent extends React.Component {
@@ -30,6 +31,17 @@ class ContactComponent extends React.Component {
 
   previewContact = contact => () => {
     // TODO: SHOW INFORMATION OF THE CONTACT
+  }
+
+  count(contacts, contact) {
+    var countContacts = [];
+    for (var i = 0; i < contacts.length; i++) {
+      if (contacts[i].name === contact.name &&
+        contacts[i].lastName === contact.lastName) {
+        countContacts.push(contact);
+      }
+    }
+    return countContacts;
   }
 
   handleFavouriteClick = contact => evt => {
@@ -61,13 +73,39 @@ class ContactComponent extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
     const { contacts } = this.props.contacts;
-    // const colors = [
-    //   cyan[500], brown[500], pink[500], grey[500],
-    //   blueGrey[500], red[500], purple[500], blue[500], teal[500],
-    // ];
-    // let count = 0;
+    const { groups } = this.props.groups;
+
+    let contactsToShow = [];
+
+    if (location.pathname === '/contacts') {
+      contactsToShow = contacts;
+    }
+
+    if (location.pathname === '/favourite') {
+      contactsToShow = this.props.contacts.contacts
+      .filter(contact => contact.favourite === 1)
+    }
+
+    if (location.pathname === '/merge') {
+      let countContacts = [];
+
+      contacts.forEach(contact => {
+        countContacts = this.count(contacts, contact).length;
+
+        if (countContacts > 1) {
+          this.count(contacts, contact).forEach(c => {
+            contactsToShow[c.id] = c
+          });
+        }
+      });
+    }
+    groups.forEach(g => {
+      if (location.pathname === '/group/'+ g.name) {
+        contactsToShow = this.props.location.state.group.contacts;
+      }
+    });
 
 
     return (
@@ -87,7 +125,7 @@ class ContactComponent extends React.Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {contacts.map((contact, i) => {
+                  {contactsToShow.map((contact, i) => {
                     return (
                       <TableRow key={i} hover>
                         <TableCell component="th" scope="row" className={classes.firstShrink}>
@@ -96,12 +134,7 @@ class ContactComponent extends React.Component {
                           </IconButton>
                         </TableCell>
                         <TableCell className={classes.shrink + ' ' + classes.clickable} onClick={this.previewContac}>
-                          <Avatar style={{
-                            color: '#fff',
-                            backgroundColor: '',
-                          }}>
-                            {contact.name !== '' ? contact.name[0].toUpperCase() : ''}
-                          </Avatar>
+                          <CustomAvatar index={i} name={contact.name} />
                         </TableCell>
                         <TableCell className={classes.clickable} onClick={this.previewContac}>
                           {contact.name}

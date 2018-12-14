@@ -27,7 +27,7 @@ const theme = createMuiTheme({
   },
 })
 
-if (process.env.NODE_ENV === 'development') console.log(theme)
+// if (process.env.NODE_ENV === 'development') console.log(theme)
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>

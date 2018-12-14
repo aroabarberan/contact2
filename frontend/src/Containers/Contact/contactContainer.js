@@ -5,8 +5,9 @@ import { addContact, editContact } from "../../Actions/contactAction";
 
 const mapStateToProps = state => ({
   contacts: state.contacts,
-  form : state.contacts.form,
-  favourite: state.contacts.favourite,
+  groups: state.groups,
+  // form : state.contacts.form,
+  // favourite: state.contacts.favourite,
 })
 
 const mapDispatchToProps = dispatch => ({

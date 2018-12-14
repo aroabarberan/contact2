@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CSVLink } from "react-csv";
-import CsvParse from '@vtex/react-csv-parse'
 import { withRouter } from "react-router-dom";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import FileCopy from '@material-ui/icons/FileCopy';
-import CloudUpload from "@material-ui/icons/CloudUpload";
 import CloudDownload from "@material-ui/icons/CloudDownload";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Star from "@material-ui/icons/Star";
@@ -22,20 +20,19 @@ import ImageAvatarComponent from "./ImageAvatarComponent";
 import GroupContainer from '../Containers/Group/groupContainer';
 import CreateGroupContainer from "../Containers/Group/createGroupContainer";
 
-
-const keys = [
-  'id',
-  'contact_id',
-  'group_id',
-  'name',
-  'user',
-  'lastName',
-  'favourite',
-  'updated_at',
-  'created_at',
-  'phones',
-  'groups',
-]
+// const keys = [
+//   'id',
+//   'contact_id',
+//   'group_id',
+//   'name',
+//   'user',
+//   'lastName',
+//   'favourite',
+//   'updated_at',
+//   'created_at',
+//   'phones',
+//   'groups',
+// ]
 
 class DrawerPaper extends React.Component {
   constructor() {
@@ -52,6 +49,12 @@ class DrawerPaper extends React.Component {
     const { userProfile, getProfile } = this.props.auth;
     if (!userProfile) {
       getProfile((err, profile) => {
+        if (err) {
+          console.error('getProfile error', err);
+          return;
+        } else {
+          console.log('getProfile info', profile)
+        }
         this.setState({ profile });
       });
     } else {
@@ -208,7 +211,7 @@ class DrawerPaper extends React.Component {
               <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                 <ListItemText>More</ListItemText>
               </ExpansionPanelSummary>
-              <MenuItem className={classes.menuItem}>
+              {/* <MenuItem className={classes.menuItem}>
                 <CloudUpload />
                 <ListItemText>Import</ListItemText>
                 <CsvParse
@@ -217,7 +220,7 @@ class DrawerPaper extends React.Component {
                   onError={this.handleError}
                   render={onChange => <input type="file" onChange={onChange} />}
                 />
-              </MenuItem>
+              </MenuItem> */}
               <CSVLink data={this.props.contacts.contacts} className={classes.menuLink} separator={";"}>
                 <MenuItem className={classes.menuItem}>
                   <CloudDownload />
