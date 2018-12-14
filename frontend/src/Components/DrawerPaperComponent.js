@@ -137,7 +137,7 @@ class DrawerPaper extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleClose}>
-          <IconButton color="primary"><PowerSettingsNew /></IconButton>Sing out
+          <IconButton color="primary"><PowerSettingsNew /></IconButton>Sign out
         </MenuItem>
       </Menu>
     );
@@ -151,7 +151,7 @@ class DrawerPaper extends React.Component {
         onClose={this.handleMobileMenuClose}
       >
         <MenuItem onClick={this.handleClose} >
-          <IconButton color="primary"><PowerSettingsNew /></IconButton>Sing out
+          <IconButton color="primary"><PowerSettingsNew /></IconButton>Sign out
         </MenuItem>
       </Menu>
     );

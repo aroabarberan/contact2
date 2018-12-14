@@ -75,7 +75,15 @@ export default class Auth {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     this.userProfile = null;
-    history.replace('/logout');
+
+    const { domain, applicationURL } = AUTH_CONFIG;
+    const params = new URLSearchParams();
+    params.append('returnTo', `${applicationURL}/logout`);
+    params.append('client_id', AUTH_CONFIG.clientId);
+    const logoutURL = new URL(`https://${domain}/v2/logout`);
+    logoutURL.search = params.toString();
+
+    window.location.href = logoutURL.toString();
   }
 
   isAuthenticated() {
