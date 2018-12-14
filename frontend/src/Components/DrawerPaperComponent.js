@@ -50,10 +50,7 @@ class DrawerPaper extends React.Component {
     if (!userProfile) {
       getProfile((err, profile) => {
         if (err) {
-          console.error('getProfile error', err);
           return;
-        } else {
-          console.log('getProfile info', profile)
         }
         this.setState({ profile });
       });
