@@ -86,7 +86,7 @@ class ContactComponent extends React.Component {
                         <TableCell>Phone</TableCell>
                       </Hidden>
                       <Hidden mdDown>
-                        <TableCell>Labels</TableCell>
+                        <TableCell>Groups</TableCell>
                       </Hidden>
                       <TableCell className={classes.shrink}></TableCell>
                     </TableRow>
@@ -266,7 +266,7 @@ const styles = theme => ({
     textAlign: 'center',
   },
   groupChip: {
-    margin: 2,
+    margin: '2px 4px 2px 0',
     borderRadius: 4,
     height: 'auto',
   },

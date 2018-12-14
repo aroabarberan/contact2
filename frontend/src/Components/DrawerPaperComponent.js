@@ -297,7 +297,6 @@ const styles = theme => ({
   powerMobile: {
     borderTop: `1px solid ${theme.palette.divider}`,
     marginBottom: -theme.spacing.unit,
-    marginTop: theme.spacing.unit * 2,
   },
 });
 

@@ -28,7 +28,15 @@ const theme = createMuiTheme({
 })
 
 theme.overrides = {
+  MuiInput: {
+    disabled: {
+      color: 'rgba(255, 87, 34, 0.7)',
+    },
+  },
   MuiOutlinedInput: {
+    disabled: {
+      color: 'rgba(255, 87, 34, 0.7)',
+    },
     input: {
       [theme.breakpoints.down('sm')]: {
         padding: '12px 14px',
