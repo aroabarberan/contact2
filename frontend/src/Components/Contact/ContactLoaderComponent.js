@@ -18,7 +18,7 @@ class ContactLoaderComponent extends Component {
       },
     })
       .then(res => res.json())
-      .then(contacts => contacts.map(contact => this.props.addContact(contact)))
+      .then(this.props.addContacts)
       .catch(console.log)
   }
 
@@ -30,7 +30,7 @@ class ContactLoaderComponent extends Component {
 }
 
 ContactLoaderComponent.propTypes = {
-  addContact: PropTypes.func.isRequired,
+  addContacts: PropTypes.func.isRequired,
 }
 
 export default ContactLoaderComponent

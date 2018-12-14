@@ -3,6 +3,11 @@ export const addContact = contact => ({
   payload: contact,
 });
 
+export const addContacts = contacts => ({
+  type: 'ADD_CONTACTS',
+  payload: contacts,
+});
+
 export const editContact = (id, contact) => ({
   type: 'EDIT_CONTACT',
   payload: id,

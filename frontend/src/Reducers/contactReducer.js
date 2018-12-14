@@ -15,12 +15,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CONTACT':
-      const newContacts = action.payload;
       return {
         ...state,
         contacts: [...state.contacts, action.payload]
       };
 
+    case 'ADD_CONTACTS':
+      return {
+        ...state,
+        contacts: [...state.contacts, ...action.payload]
+      };
     case 'EDIT_CONTACT':
       return {
         ...state,

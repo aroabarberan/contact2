@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 import ContactLoaderComponent from "../../Components/Contact/ContactLoaderComponent";
-import { addContact } from "../../Actions/contactAction";
+import { addContacts } from "../../Actions/contactAction";
 
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = dispatch => ({
-  addContact: contact => {
-    dispatch(addContact(contact))
+  addContacts: contacts => {
+    dispatch(addContacts(contacts))
   },
 })
 
