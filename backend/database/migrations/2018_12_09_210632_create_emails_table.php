@@ -16,9 +16,13 @@ class CreateEmailsTable extends Migration
         Schema::create('emails', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email')->nullable();
-            $table->string('contact_id');
+            $table->integer('contact_id')->unsigned();
             $table->string('tag');
             $table->timestamps();
+        });
+
+        Schema::table('emails', function($table) {
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');;
         });
     }
 

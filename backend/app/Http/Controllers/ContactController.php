@@ -14,7 +14,7 @@ class ContactController extends Controller
 
     public function index()
     {
-        $contacts = Contact::with(['phones', 'groups'])
+        $contacts = Contact::with(['phones', 'groups', 'notes', 'emails'])
             ->where('user', \Auth0::jwtUser()->sub)->get();
 
         return response()->json($contacts);

@@ -17,8 +17,12 @@ class CreateNotesTable extends Migration
             $table->increments('id');
             $table->string('title')->nullable();
             $table->string('description')->nullable();
-            $table->string('contact_id');
+            $table->integer('contact_id')->unsigned();
             $table->timestamps();
+        });
+
+        Schema::table('notes', function($table) {
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
         });
     }
 

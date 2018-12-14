@@ -17,9 +17,13 @@ class CreatePhonesTable extends Migration
             $table->increments('id');
             $table->string('user');
             $table->string('phone')->nullable();
-            $table->string('contact_id');
+            $table->integer('contact_id')->unsigned();
             $table->string('tag');
             $table->timestamps();
+        });
+
+        Schema::table('phones', function($table) {
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');;
         });
     }
 
