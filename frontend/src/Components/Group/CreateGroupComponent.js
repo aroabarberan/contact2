@@ -7,6 +7,7 @@ import {
   ListItemText, DialogActions, DialogContent, MenuItem,
   withStyles, ListItemIcon,
 } from '@material-ui/core';
+import { Formik, Field } from "formik";
 
 
 class CreateGroupComponent extends React.Component {
@@ -18,23 +19,11 @@ class CreateGroupComponent extends React.Component {
     }
   }
 
-  handleOpen = () => {
-    this.setState({ open: true });
-  }
+  handleOpen = () => { this.setState({ open: true }); }
+  handleClose = () => { this.setState({ open: false }); }
 
-  handleClose = () => {
-    this.setState({ open: false });
-  }
-
-  handleChange = (evt) => {
-    this.props.updateForm({
-      [evt.target.name]: evt.target.value
-    });
-  }
-
-  submit = (evt) => {
-    evt.preventDefault();
-    const { name } = this.props.form.create;
+  submit = (values, actions) => {
+    const { name } = values;
     fetch(QUERIES.group, {
       method: "POST",
       headers: {
@@ -49,6 +38,7 @@ class CreateGroupComponent extends React.Component {
       .catch(console.log);
     this.handleClose();
   }
+
   render() {
     const { classes } = this.props;
     return (
@@ -65,23 +55,37 @@ class CreateGroupComponent extends React.Component {
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Create new group</DialogTitle>
-          <Divider />
-          <DialogContent>
-            <TextField
-              autoFocus
-              margin="normal"
-              name="name"
-              label="Name"
-              type="text"
-              onChange={this.handleChange}
-            />
-
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">Cancel</Button>
-            <Button onClick={this.submit} color="primary">Save</Button>
-          </DialogActions>
+          <Formik
+            onSubmit={this.submit}
+            initialValues={{ name: '' }}
+            render={(props) => (
+              <div>
+                <DialogTitle id="form-dialog-title">Create new group</DialogTitle>
+                <Divider />
+                <DialogContent>
+                  <Field
+                    name='name'
+                    render={({ field }) => (
+                      <TextField
+                        {...field}
+                        autoFocus
+                        margin="normal"
+                        label="Name"
+                        type="text"
+                      />
+                    )}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => {
+                    this.handleClose();
+                    props.resetForm();
+                  }} color="primary">Cancel</Button>
+                  <Button onClick={props.handleSubmit} color="primary">Save</Button>
+                </DialogActions>
+              </div>
+            )}
+          />
         </Dialog>
       </div>
     );

@@ -123,9 +123,9 @@ class DrawerPaper extends React.Component {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const listItem = [
-      { icon: <Contacts />, path: "/" , name: 'Contacts' },
-      { icon: <FileCopy />, path: "/merge" , name: 'Duplicates' },
-      { icon: <Star />, path: "/favourite" , name: 'Favourites' },
+      { icon: <Contacts style={{ color: '#42a5f5' }} />, path: "/" , name: 'Contacts' },
+      { icon: <FileCopy style={{ color: '#7e57c2' }} />, path: "/merge" , name: 'Duplicates' },
+      { icon: <Star style={{ color: '#ffeb3b' }} />, path: "/favourite" , name: 'Favourites' },
     ]
 
     const renderMenu = (

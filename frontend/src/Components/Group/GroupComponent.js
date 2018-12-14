@@ -102,23 +102,24 @@ class GroupComponent extends React.Component {
     const { openEdit } = this.state;
     return (
       <div >
+        <Divider />
+        <List>
         {groups.map((group, i) => {
           return (
             <div key={i}>
-              <Divider />
-              <List>
-                <MenuItem className={classes.menuItem} onClick={() => history.push('/group/'+ group.name)}>
-                  <Label />
-                  <ListItemText>
-                    {group.name}
-                  </ListItemText>
-                  <Edit onClick={() => this.handleOpenEdit(group)} />
-                  <DeleteIcon onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
-                </MenuItem>
-              </List>
+              <MenuItem className={classes.menuItem} onClick={() => history.push('/group/'+ group.name)}>
+                <Label style={{ color: '#78909c' }} />
+                <ListItemText>
+                  {group.name}
+                </ListItemText>
+                <Edit onClick={() => this.handleOpenEdit(group)} />
+                <DeleteIcon onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
+              </MenuItem>
             </div>
           );
         })}
+        </List>
+        <Divider />
         <Dialog
           open={openEdit}
           onClose={this.handleCloseEdit}
