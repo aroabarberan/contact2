@@ -12,18 +12,23 @@ const initialState = {
   },
 }
 
+const emptyContact = {
+  groups: [],
+  phones: [],
+}
+
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CONTACT':
       return {
         ...state,
-        contacts: [...state.contacts, action.payload]
+        contacts: [...state.contacts, { ...emptyContact, ...action.payload }]
       };
 
     case 'ADD_CONTACTS':
       return {
         ...state,
-        contacts: [...state.contacts, ...action.payload]
+        contacts: [...state.contacts, ...action.payload.map(c => ({ ...emptyContact, ...c }))]
       };
 
     case 'EDIT_CONTACT':

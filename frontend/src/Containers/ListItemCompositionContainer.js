@@ -7,7 +7,6 @@ import { addPhone, editPhone } from "../Actions/phoneAction";
 
 
 const mapStateToProps = state => ({
-  contacts: state.contacts,
   groups: state.groups,
   phones: state.phones,
   form : state.contacts.form,

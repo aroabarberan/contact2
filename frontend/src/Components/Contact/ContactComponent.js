@@ -46,16 +46,10 @@ class ContactComponent extends React.Component {
   }
 
   render() {
-    const { classes, location, auth } = this.props;
+    const { classes, auth } = this.props;
     const { contacts } = this.props.contacts;
 
-    let contactsToShow = [];
-
-    if (location.pathname === '/') {
-      contactsToShow = contacts;
-    }
-
-    contactsToShow = contacts;
+    let contactsToShow = contacts;
 
     return (
       <Fragment>

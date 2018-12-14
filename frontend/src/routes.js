@@ -29,23 +29,13 @@ export const makeMainRoutes = () => {
         </Route>
         <Route render={() => (
           <Fragment>
-            <Route render={() => <ContactLoaderContainer auth={auth} />} />
             <Route render={() => { if (!auth.isAuthenticated()) auth.login(); }} />
-            <Route path="/" exact render={({ location }) =>
-              <ContactContainer auth={auth} location={location} />
-            }/>
-            <Route path="/merge" render={({ location }) =>
-              <MergeContactsContainer auth={auth} location={location} />
-            }/>
-            <Route path="/favourite" render={({ location }) =>
-            < FavouriteContactsContainer auth={auth} location={location} />
-            }/>
-            <Route path="/group/:groupName" render={({ location, match }) =>
-              <ContactByGroupContainer
-                auth={auth}
-                location={location}
-                groupName={match.params.groupName}
-              />
+            <Route render={() => <ContactLoaderContainer auth={auth} />} />
+            <Route path="/" exact render={() => <ContactContainer auth={auth} />}/>
+            <Route path="/merge" render={() => <MergeContactsContainer auth={auth} />}/>
+            <Route path="/favourite" render={() => <FavouriteContactsContainer auth={auth} />}/>
+            <Route path="/group/:groupName" render={({ match }) =>
+              <ContactByGroupContainer auth={auth} groupName={match.params.groupName}/>
             }/>
           </Fragment>
         )}/>

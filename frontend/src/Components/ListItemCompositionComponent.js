@@ -107,6 +107,7 @@ class ListItemComposition extends React.Component {
 
   hasGroup = (group) => {
     const { contact } = this.props;
+    console.log(contact)
     return contact.groups
       .map(group => group.id)
       .includes(group.id)
@@ -126,44 +127,8 @@ class ListItemComposition extends React.Component {
       body: JSON.stringify({ id, name, last_name, favourite }, id),
     })
       .then(res => res.json())
-      .then(data => this.props.editContact(data.contact.id, data.contact))
+      .then(data => this.props.editContact(data.contact))
       .catch(console.log);
-
-
-    console.log(this.props.contacts.contacts)
-    values.phones.forEach(p => {
-
-      // let phone = p.phone;
-      // let contact_id = id;
-
-      // fetch(QUERIES.phone, {
-      //   method: "POST",
-      //   headers: {
-      //     'Accept': 'application/json',
-      //     'Content-type': 'application/json',
-      //     'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
-      //   },
-      //   body: JSON.stringify({ phone, contact_id }),
-      // })
-      //   .then(res => res.json())
-      //   .then(console.log)
-      //   .then(data => this.props.addPhone(data.phone))
-      //   .catch(console.log);
-
-      //   fetch(QUERIES.phone + p.id, {
-      //     method: "PUT",
-      //     headers: {
-      //       'Accept': 'application/json',
-      //       'Content-type': 'application/json',
-      //       'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
-      //     },
-      //     body: JSON.stringify({ phone, contact_id }, p.id),
-      //   })
-      //     .then(res => res.json())
-      //     .then(console.log)
-      //     .then(data => this.props.editPhone(data.phone.id, data.phone))
-      //     .catch(console.log);
-    })
 
     this.handleCloseEdit();
   }
