@@ -13,7 +13,7 @@ import {
   ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
   List, ListItemText,
-  Menu, MenuItem, CssBaseline, withStyles,
+  Menu, MenuItem, CssBaseline, withStyles, Icon,
 } from '@material-ui/core';
 import { QUERIES } from "../querys";
 import ImageAvatarComponent from "./ImageAvatarComponent";
@@ -136,8 +136,11 @@ class DrawerPaper extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleClose}>
-          <IconButton color="primary"><PowerSettingsNew /></IconButton>Sign out
+        <MenuItem onClick={this.handleClose} style={{ paddingRight: 16 }}>
+          <Icon color="primary" style={{ paddingRight: 16 }}>
+            <PowerSettingsNew />
+          </Icon>
+          Sign out
         </MenuItem>
       </Menu>
     );
@@ -150,8 +153,11 @@ class DrawerPaper extends React.Component {
         open={isMobileMenuOpen}
         onClose={this.handleMobileMenuClose}
       >
-        <MenuItem onClick={this.handleClose} >
-          <IconButton color="primary"><PowerSettingsNew /></IconButton>Sign out
+        <MenuItem onClick={this.handleClose} style={{ paddingRight: 16 }}>
+          <Icon color="primary" style={{ paddingRight: 16 }}>
+            <PowerSettingsNew />
+          </Icon>
+          Sign out
         </MenuItem>
       </Menu>
     );

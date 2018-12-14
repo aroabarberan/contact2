@@ -13,23 +13,23 @@ const auth = new Auth();
 
 const handleAuthentication = ({ location }) => {
   if (/access_token|id_token|error/.test(location.hash)) {
-    auth.handleAuthentication()
+    auth.handleAuthentication();
   }
 }
 
 export const makeMainRoutes = () => {
   return (
     <Router history={history}>
-      <Route render={() => <ContactLoaderContainer auth={auth} />} />
       <Switch>
         <Route exact path='/callback'>
           <Route path="/callback" render={(props) => {
-            handleAuthentication(props)
+            handleAuthentication(props);
             return <Callback {...props} />
           }} />
         </Route>
         <Route render={() => (
           <Fragment>
+            <Route render={() => <ContactLoaderContainer auth={auth} />} />
             <Route render={() => { if (!auth.isAuthenticated()) auth.login(); }} />
             <Route path="/" exact render={({ location }) =>
               <ContactContainer auth={auth} location={location} />

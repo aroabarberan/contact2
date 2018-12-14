@@ -34,7 +34,7 @@ export default class Auth {
         this.setSession(authResult);
         history.replace('/');
       } else if (err) {
-        history.replace('/logout');
+        this.logout();
         console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
