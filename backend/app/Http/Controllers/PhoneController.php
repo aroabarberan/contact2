@@ -11,7 +11,7 @@ class PhoneController extends Controller
 
     public function index()
     {
-        $phones = JwtUser::get()->phones;
+        $phones = Phone::all(); //TODO: INSECURE
         return response()->json($phones);
     }
 

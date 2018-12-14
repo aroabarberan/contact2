@@ -5,7 +5,7 @@ import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, withStyles, IconButton
+  Paper, withStyles, IconButton, Typography
 } from '@material-ui/core';
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 import CustomAvatar from '../CustomAvatar';
@@ -63,7 +63,7 @@ class ContactComponent extends React.Component {
         <div className={classes.grow}>
           <main className={classes.content}>
             {contacts.length !== 0 && (
-              <Paper elevation={0}>
+              <Paper elevation={0} className={classes.paper}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -106,6 +106,11 @@ class ContactComponent extends React.Component {
                 </Table>
               </Paper>
             )}
+            <section className={classes.footer}>
+              <Typography variant='h6'>
+                Developed by Aroa Barberan
+              </Typography>
+            </section>
           </main>
         </div>
       </Fragment>
@@ -120,6 +125,8 @@ const styles = theme => ({
   },
   toolbar: theme.mixins.toolbar,
   content: {
+    display: 'flex',
+    flexDirection: 'column',
     margin: '0 0 0 240px',
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
@@ -128,6 +135,7 @@ const styles = theme => ({
     color: '#666'
   },
   grow: {
+    display: 'flex',
     flexGrow: 1,
   },
   row: {
@@ -146,6 +154,15 @@ const styles = theme => ({
       cursor: 'pointer',
     },
   },
+  paper: {
+    flexGrow: 1,
+  },
+  footer: {
+    borderTop: `1px solid ${theme.palette.divider}`,
+    padding: theme.spacing.unit * 5,
+    fontSize: theme.typography.fontSize,
+    textAlign: 'center',
+  }
 })
 
 ContactComponent.propTypes = {

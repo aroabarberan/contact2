@@ -20,38 +20,36 @@ const handleAuthentication = ({ location }) => {
 export const makeMainRoutes = () => {
   return (
     <Router history={history}>
-      <div>
-        <Route render={() => <ContactLoaderContainer auth={auth} />} />
-        <Switch>
-          <Route exact path='/callback'>
-            <Route path="/callback" render={(props) => {
-              handleAuthentication(props)
-              return <Callback {...props} />
-            }} />
-          </Route>
-          <Route render={() => (
-            <Fragment>
-              <Route render={() => { if (!auth.isAuthenticated()) auth.login(); }} />
-              <Route path="/" exact render={({ location }) =>
-                <ContactContainer auth={auth} location={location} />
-              }/>
-              <Route path="/merge" render={({ location }) =>
-                <MergeContactsContainer auth={auth} location={location} />
-              }/>
-              <Route path="/favourite" render={({ location }) =>
-              < FavouriteContactsContainer auth={auth} location={location} />
-              }/>
-              <Route path="/group/:groupName" render={({ location, match }) =>
-                <ContactByGroupContainer
-                  auth={auth}
-                  location={location}
-                  groupName={match.params.groupName}
-                />
-              }/>
-            </Fragment>
-          )}/>
-        </Switch>
-      </div>
+      <Route render={() => <ContactLoaderContainer auth={auth} />} />
+      <Switch>
+        <Route exact path='/callback'>
+          <Route path="/callback" render={(props) => {
+            handleAuthentication(props)
+            return <Callback {...props} />
+          }} />
+        </Route>
+        <Route render={() => (
+          <Fragment>
+            <Route render={() => { if (!auth.isAuthenticated()) auth.login(); }} />
+            <Route path="/" exact render={({ location }) =>
+              <ContactContainer auth={auth} location={location} />
+            }/>
+            <Route path="/merge" render={({ location }) =>
+              <MergeContactsContainer auth={auth} location={location} />
+            }/>
+            <Route path="/favourite" render={({ location }) =>
+            < FavouriteContactsContainer auth={auth} location={location} />
+            }/>
+            <Route path="/group/:groupName" render={({ location, match }) =>
+              <ContactByGroupContainer
+                auth={auth}
+                location={location}
+                groupName={match.params.groupName}
+              />
+            }/>
+          </Fragment>
+        )}/>
+      </Switch>
     </Router>
   )
 }
