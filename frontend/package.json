@@ -26,7 +26,8 @@
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.7",
     "redux-immutable-state-invariant": "^2.1.0",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "yup": "^0.26.6"
   },
   "scripts": {
     "start": "node server.js",

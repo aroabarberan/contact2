@@ -5,7 +5,38 @@ import { Call, Email, Note } from '@material-ui/icons'
 import { Formik, Field } from 'formik';
 import { DialogContent, TextField, DialogActions, Button, Grid } from '@material-ui/core';
 import { DynamicList } from '@ivanbeldad/dynamic-list'
+import * as Yup from 'yup'
 import { QUERIES } from '../../querys';
+
+const textType = Yup.string()
+  .matches(/^([a-zA-Záéíóúñ -])*$/, 'Only allowed characters, dashes and spaces');
+
+const noSemicolon = Yup.string()
+  .matches(/^([^;]*)$/, 'No semicolons');
+
+const contactSchema = Yup.object().shape({
+  name: textType.required('Required'),
+  second_name: textType,
+  last_name: textType,
+  second_last_name: textType,
+  nickname: textType,
+  direction: noSemicolon,
+  city: noSemicolon,
+  province: noSemicolon,
+  job: noSemicolon,
+  phones: Yup.array().of(Yup.object().shape({
+    phone: Yup.string().matches(/^((\+)?[0-9 ]{5,15})?$/, 'Only numbers and minimum 5'),
+    tag: noSemicolon,
+  })),
+  emails: Yup.array().of(Yup.object().shape({
+    email: Yup.string().email('Must be an email'),
+    tag: noSemicolon,
+  })),
+  notes: Yup.array().of(Yup.object().shape({
+    title: noSemicolon,
+    description: noSemicolon,
+  }))
+});
 
 class ContactFormComponent extends React.Component {
   state = {
@@ -21,6 +52,8 @@ class ContactFormComponent extends React.Component {
       phones, emails, notes
     } = values;
 
+    console.log(values);
+
     phones = phones.filter(p => !!p.phone);
     emails = emails.filter(e => !!e.email);
     notes = notes.filter(n => !!n.title);
@@ -30,7 +63,6 @@ class ContactFormComponent extends React.Component {
     if (id) {
       query += id;
     }
-
     fetch(query, {
       method,
       headers: {
@@ -83,10 +115,7 @@ class ContactFormComponent extends React.Component {
         <Formik
           initialValues={contactValues}
           onSubmit={this.handleSubmit}
-          validate={({ name }) => {
-            if (!name) return { name: 'Required' };
-            return {};
-          }}
+          validationSchema={contactSchema}
           render={props => (
             <Fragment>
               <DialogContent>
@@ -102,12 +131,12 @@ class ContactFormComponent extends React.Component {
                           color='secondary'
                           autoFocus
                           margin="normal"
-                          label={props.errors.name || 'Name'}
                           type="text"
-                          error={!!props.errors.name}
                           variant='outlined'
                           fullWidth
                           disabled={disabled}
+                          label={props.errors.name || 'Name'}
+                          error={!!props.errors.name}
                         />
                       )}
                     />
@@ -117,7 +146,16 @@ class ContactFormComponent extends React.Component {
                       name="second_name"
                       value={props.second_name}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Second name" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.second_name || 'Second name'}
+                          error={!!props.errors.second_name}
+                        />
                       )}
                     />
                   </Grid>
@@ -128,7 +166,12 @@ class ContactFormComponent extends React.Component {
                       render={({ field }) => (
                         <TextField {...field}
                           margin="normal" disabled={disabled}
-                          label="Last Name" type="text" variant='outlined' fullWidth />
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.last_name || 'Last Name'}
+                          error={!!props.errors.last_name}
+                        />
                       )}
                     />
                   </Grid>
@@ -137,7 +180,16 @@ class ContactFormComponent extends React.Component {
                       name="second_last_name"
                       value={props.second_last_name}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Second Last name" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.second_last_name || 'Second Last name'}
+                          error={!!props.errors.second_last_name}
+                        />
                       )}
                     />
                   </Grid>
@@ -146,7 +198,16 @@ class ContactFormComponent extends React.Component {
                       name="nickname"
                       value={props.nickname}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Nickname" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.nickname || 'Nickname'}
+                          error={!!props.errors.nickname}
+                        />
                       )}
                     />
                   </Grid>
@@ -155,7 +216,16 @@ class ContactFormComponent extends React.Component {
                       name="job"
                       value={props.job}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Job" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.job || 'Job'}
+                          error={!!props.errors.job}
+                        />
                       )}
                     />
                   </Grid>
@@ -164,7 +234,16 @@ class ContactFormComponent extends React.Component {
                       name="direction"
                       value={props.direction}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Address" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.direction || 'Address'}
+                          error={!!props.errors.direction}
+                        />
                       )}
                     />
                   </Grid>
@@ -173,7 +252,16 @@ class ContactFormComponent extends React.Component {
                       name="city"
                       value={props.city}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="City" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.city || 'City'}
+                          error={!!props.errors.city}
+                        />
                       )}
                     />
                   </Grid>
@@ -182,7 +270,16 @@ class ContactFormComponent extends React.Component {
                       name="province"
                       value={props.province}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Province" type="text" variant='outlined' fullWidth />
+                        <TextField
+                          {...field}
+                          disabled={disabled}
+                          margin="normal"
+                          type="text"
+                          variant='outlined'
+                          fullWidth
+                          label={props.errors.province || 'Province'}
+                          error={!!props.errors.province}
+                        />
                       )}
                     />
                   </Grid>
@@ -192,15 +289,30 @@ class ContactFormComponent extends React.Component {
                   name='phones'
                   initialValue={{ phone: '', tag: '' }}
                   sectionIcon={<Call />}
-                  render={(fields) => {
+                  render={(fields, errors) => {
                     const [phone, tag] = fields;
+                    const [phoneError, tagError] = errors;
                     return (
                       <Grid container spacing={16} style={{ marginTop: 8, marginBottom: 8 }}>
                         <Grid item xs={12} md={7}>
-                          <TextField {...phone} disabled={disabled} placeholder='Phone' fullWidth />
+                          <TextField
+                            {...phone}
+                            disabled={disabled}
+                            placeholder='Phone'
+                            fullWidth
+                            error={!!phoneError}
+                            label={phoneError}
+                          />
                         </Grid>
                         <Grid item xs={12} md={5}>
-                          <TextField {...tag} disabled={disabled} placeholder='Tag' fullWidth />
+                          <TextField
+                            {...tag}
+                            disabled={disabled}
+                            placeholder='Tag'
+                            fullWidth
+                            error={!!tagError}
+                            label={tagError}
+                          />
                         </Grid>
                       </Grid>
                     )
@@ -211,15 +323,30 @@ class ContactFormComponent extends React.Component {
                   initialValue={{ email: '', tag: '' }}
                   sectionIcon={<Email />}
                   style={{ width: '100%' }}
-                  render={(fields) => {
+                  render={(fields, errors) => {
                     const [email, tag] = fields;
+                    const [emailError, tagError] = errors;
                     return (
                       <Grid container spacing={16} style={{ marginTop: 8, marginBottom: 8 }}>
                         <Grid item xs={12} md={7}>
-                          <TextField {...email} disabled={disabled} placeholder='Email' fullWidth />
+                          <TextField
+                            {...email}
+                            disabled={disabled}
+                            placeholder='Email'
+                            fullWidth
+                            error={!!emailError}
+                            label={emailError}
+                          />
                         </Grid>
                         <Grid item xs={12} md={5}>
-                          <TextField {...tag} disabled={disabled} placeholder='Tag' fullWidth />
+                          <TextField
+                            {...tag}
+                            disabled={disabled}
+                            placeholder='Tag'
+                            fullWidth
+                            error={!!tagError}
+                            label={tagError}
+                          />
                         </Grid>
                       </Grid>
                     )
@@ -229,15 +356,30 @@ class ContactFormComponent extends React.Component {
                   name='notes'
                   initialValue={{ title: '', description: '' }}
                   sectionIcon={<Note />}
-                  render={(fields) => {
+                  render={(fields, errors) => {
                     const [title, description] = fields;
+                    const [titleError, descriptionError] = errors;
                     return (
                       <Grid container spacing={16} style={{ marginTop: 8, marginBottom: 8 }}>
                         <Grid item xs={12} md={7}>
-                          <TextField {...title} disabled={disabled} placeholder='Note Title' fullWidth />
+                          <TextField
+                            {...title}
+                            disabled={disabled}
+                            placeholder='Note Title'
+                            fullWidth
+                            error={!!titleError}
+                            label={titleError}
+                          />
                         </Grid>
                         <Grid item xs={12} md={5}>
-                          <TextField {...description} disabled={disabled} placeholder='Description' fullWidth />
+                          <TextField
+                            {...description}
+                            disabled={disabled}
+                            placeholder='Description'
+                            fullWidth
+                            error={!!descriptionError}
+                            label={descriptionError}
+                          />
                         </Grid>
                       </Grid>
                     )
