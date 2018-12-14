@@ -13,8 +13,24 @@ const initialState = {
 }
 
 const emptyContact = {
+  id: '',
+  nickname: '',
+  name: '',
+  second_name: '',
+  last_name: '',
+  second_last_name: '',
+  direction: '',
+  city: '',
+  province: '',
+  job: '',
+  favourite: 0,
   groups: [],
   phones: [],
+  emails: [],
+  notes: [],
+  created_at: '',
+  updated_at: '',
+  user: '',
 }
 
 export default (state = initialState, action) => {

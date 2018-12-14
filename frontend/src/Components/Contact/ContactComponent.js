@@ -48,7 +48,6 @@ class ContactComponent extends React.Component {
   render() {
     const { classes, auth } = this.props;
     const { contacts } = this.props.contacts;
-
     let contactsToShow = contacts;
 
     return (

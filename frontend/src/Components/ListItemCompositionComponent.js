@@ -7,16 +7,14 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CloudDownload from '@material-ui/icons/CloudDownload';
 import { QUERIES } from "../querys";
 import Edit from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveCircle from '@material-ui/icons/RemoveCircleOutline';
-import { Formik, Form, Field, FieldArray } from 'formik';
 import {
-  Divider, Button, IconButton, Fab,
-  Menu, MenuItem, ListItemIcon, ListItemText, TextField,
-  Dialog, DialogTitle, DialogActions, DialogContent, withStyles
+  Divider, IconButton,
+  Menu, MenuItem, ListItemIcon, ListItemText,
+  Dialog, DialogTitle, withStyles
 } from '@material-ui/core';
 import { LabelOutlined } from '@material-ui/icons';
 import { withRouter } from "react-router-dom";
+import ContactFormContainer from '../Containers/Contact/ContactFormContainer';
 
 
 class ListItemComposition extends React.Component {
@@ -146,7 +144,7 @@ class ListItemComposition extends React.Component {
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, contact } = this.props;
+    const { classes, contact, auth } = this.props;
     const { groups } = this.props.groups;
 
     return (
@@ -219,76 +217,10 @@ class ListItemComposition extends React.Component {
         >
           <DialogTitle id="form-dialog-title">Edit contact</DialogTitle>
           <Divider />
-          <Formik
-            initialValues={{ phones: contact.phones, name: contact.name, last_name: contact.last_name, favourite: contact.favourite }}
-            onSubmit={values => this.handleSubmit(values)}
-            render={({ values }) => (
-              <Form>
-                <DialogContent className={classes.dialog}>
-                  <Field
-                    name="name"
-                    value={values.name}
-                    render={({ field }) => (
-                      <TextField className={classes.space} {...field}
-                        autoFocus
-                        margin="normal"
-                        label="Name"
-                        type="text"
-                      />
-                    )}
-                  />
-                  <Field
-                    name="last_name"
-                    value={values.last_name}
-                    render={({ field }) => (
-                      <TextField className={classes.space}
-                        {...field}
-                        margin="normal"
-                        label="Last Name"
-                        type="text" />
-                    )}
-                  />
-                </DialogContent>
-                <DialogContent className={classes.dialog}>
-                  <FieldArray
-                    name="phones"
-                    render={arrayHelpers => (
-                      <div>
-                        {values.phones && values.phones.length > 0 ? (
-                          values.phones.map((phone, index) => (
-                            <div key={index}>
-                              <Field name={`phones.${index}.phone`} />
-
-                              <Fab size="small" color="primary"
-                                className={classes.margin}
-                                onClick={() => arrayHelpers.remove(index)}>
-                                <RemoveCircle />
-                              </Fab>
-
-                              <Fab size="small" color="primary"
-                                className={classes.margin}
-                                onClick={() => arrayHelpers.insert(index, '')}>
-                                <AddIcon />
-                              </Fab>
-                            </div>
-                          ))
-                        ) : (
-                            <DialogActions>
-                              <Button type="button" onClick={() => arrayHelpers.push('')}>
-                                Add a Phone
-                          </Button>
-                            </DialogActions>
-                          )}
-                        <DialogActions>
-                          <Button onClick={this.handleCloseEdit} color="primary">Cancel</Button>
-                          <Button type="submit" color="primary" >Save</Button>
-                        </DialogActions>
-                      </div>
-                    )}
-                  />
-                </DialogContent>
-              </Form>
-            )}
+          <ContactFormContainer
+            auth={auth}
+            contactInfo={contact}
+            handleClose={this.handleClose}
           />
         </Dialog>
       </div>
