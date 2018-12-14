@@ -5,12 +5,13 @@ import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, withStyles, IconButton, Typography, Divider, DialogTitle, Dialog
+  Paper, withStyles, IconButton, Typography, Divider, DialogTitle, Dialog, Hidden
 } from '@material-ui/core';
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 import CustomAvatar from '../CustomAvatar';
 import AppComponent from '../AppComponent';
 import ContactFormContainer from '../../Containers/Contact/ContactFormContainer';
+import ContactFormWrapperComponent from './ContactFormWrapperComponent';
 
 
 class ContactComponent extends React.Component {
@@ -138,22 +139,39 @@ class ContactComponent extends React.Component {
             </section>
           </main>
         </div>
-        <Dialog
-          className={classes.size}
-          open={this.state.open}
-          onClose={this.handleClosePreview}
-          aria-labelledby="scroll-preview-title"
-          scroll='paper'
-        >
-          <DialogTitle id="scroll-preview-title">Preview Contact</DialogTitle>
-          <Divider />
-          <ContactFormContainer
-            auth={auth}
-            handleClose={this.handleClosePreview}
-            contactInfo={previewContact}
-            preview
-          />
-        </Dialog>
+        <Hidden mdUp>
+          <Dialog
+            fullScreen
+            open={this.state.open}
+            onClose={this.handleClosePreview}
+            aria-labelledby="scroll-preview-title"
+            scroll='paper'
+          >
+            <ContactFormWrapperComponent
+              title='Preview Contact'
+              auth={auth}
+              handleClose={this.handleClosePreview}
+              contactInfo={previewContact}
+              preview
+            />
+          </Dialog>
+        </Hidden>
+        <Hidden smDown>
+          <Dialog
+            open={this.state.open}
+            onClose={this.handleClosePreview}
+            aria-labelledby="scroll-preview-title"
+            scroll='paper'
+          >
+            <ContactFormWrapperComponent
+              title='Preview Contact'
+              auth={auth}
+              handleClose={this.handleClosePreview}
+              contactInfo={previewContact}
+              preview
+            />
+          </Dialog>
+        </Hidden>
       </Fragment>
     );
   }
@@ -219,7 +237,7 @@ const styles = theme => ({
     padding: theme.spacing.unit * 5,
     fontSize: theme.typography.fontSize,
     textAlign: 'center',
-  }
+  },
 })
 
 ContactComponent.propTypes = {

@@ -10,11 +10,12 @@ import Edit from '@material-ui/icons/Edit';
 import {
   Divider, IconButton,
   Menu, MenuItem, ListItemIcon, ListItemText,
-  Dialog, DialogTitle, withStyles
+  Dialog, DialogTitle, withStyles, Hidden
 } from '@material-ui/core';
 import { LabelOutlined } from '@material-ui/icons';
 import { withRouter } from "react-router-dom";
 import ContactFormContainer from '../Containers/Contact/ContactFormContainer';
+import ContactFormWrapperComponent from './Contact/ContactFormWrapperComponent';
 
 
 class ListItemComposition extends React.Component {
@@ -207,19 +208,37 @@ class ListItemComposition extends React.Component {
           )}
         </Menu>
 
-        <Dialog
-          open={openEdit}
-          onClose={this.handleCloseEdit}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">Edit contact</DialogTitle>
-          <Divider />
-          <ContactFormContainer
-            auth={auth}
-            contactInfo={contact}
-            handleClose={this.handleCloseEdit}
-          />
-        </Dialog>
+        <Hidden mdUp>
+          <Dialog
+            fullScreen
+            open={this.state.openEdit}
+            onClose={this.handleCloseEdit}
+            aria-labelledby="scroll-dialog-title"
+            scroll='paper'
+          >
+            <ContactFormWrapperComponent
+              title='Edit Contact'
+              auth={auth}
+              handleClose={this.handleCloseEdit}
+              contactInfo={contact}
+            />
+          </Dialog>
+        </Hidden>
+        <Hidden smDown>
+          <Dialog
+            open={this.state.openEdit}
+            onClose={this.handleCloseEdit}
+            aria-labelledby="scroll-dialog-title"
+            scroll='paper'
+          >
+            <ContactFormWrapperComponent
+              title='Edit Contact'
+              auth={auth}
+              handleClose={this.handleCloseEdit}
+              contactInfo={contact}
+            />
+          </Dialog>
+        </Hidden>
       </div>
     );
   }

@@ -27,6 +27,29 @@ const theme = createMuiTheme({
   },
 })
 
+theme.overrides = {
+  MuiOutlinedInput: {
+    input: {
+      [theme.breakpoints.down('sm')]: {
+        padding: '12px 14px',
+      }
+    },
+  },
+  MuiInputLabel: {
+    outlined: {
+      [theme.breakpoints.down('sm')]: {
+        transform: 'translate(14px, 14px) scale(1)',
+      }
+    },
+  },
+  MuiFormControl: {
+    fullWidth: {
+      marginTop: 8,
+      marginBottom: 0
+    },
+  },
+}
+
 // if (process.env.NODE_ENV === 'development') console.log(theme)
 
 ReactDOM.render(

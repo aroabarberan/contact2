@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core';
 import ContactFormContainer from '../../Containers/Contact/ContactFormContainer';
 import { green } from '@material-ui/core/colors'
+import ContactFormWrapperComponent from './ContactFormWrapperComponent';
 
 class CreateContact extends React.Component {
   state = {
@@ -42,17 +43,37 @@ class CreateContact extends React.Component {
           </Button>
         </Hidden>
 
-        <Dialog
-          className={classes.size}
-          open={this.state.open}
-          onClose={this.handleClose}
-          aria-labelledby="scroll-dialog-title"
-          scroll='paper'
-        >
-          <DialogTitle id="scroll-dialog-title">Create new contact</DialogTitle>
-          <Divider />
-          <ContactFormContainer auth={auth} handleClose={this.handleClose} />
-        </Dialog>
+        <Hidden mdUp>
+          <Dialog
+            fullScreen
+            className={classes.size}
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="scroll-dialog-title"
+            scroll='paper'
+          >
+            <ContactFormWrapperComponent
+              title='Create new Contact'
+              auth={auth}
+              handleClose={this.handleClose}
+            />
+          </Dialog>
+        </Hidden>
+        <Hidden smDown>
+          <Dialog
+            className={classes.size}
+            open={this.state.open}
+            onClose={this.handleClose}
+            aria-labelledby="scroll-dialog-title"
+            scroll='paper'
+          >
+            <ContactFormWrapperComponent
+              title='Create new Contact'
+              auth={auth}
+              handleClose={this.handleClose}
+            />
+          </Dialog>
+        </Hidden>
       </div>
     );
   }

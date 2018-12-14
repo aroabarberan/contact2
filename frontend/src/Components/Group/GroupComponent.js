@@ -113,9 +113,12 @@ class GroupComponent extends React.Component {
                   className={classes.internalLabel}
                   onClick={() => history.push('/group/'+ group.name)}
                 />
-                <ListItemText className={classes.internalLabel} onClick={() => history.push('/group/'+ group.name)}>
-                  {group.name}
-                </ListItemText>
+                <ListItemText
+                  className={classes.internalLabel}
+                  onClick={() => history.push('/group/'+ group.name)}
+                  primary={group.name}
+                  primaryTypographyProps={{ className: classes.textOverflow }}
+                />
                 <Edit className={classes.internalLabel} onClick={() => this.handleOpenEdit(group)} />
                 <DeleteIcon className={classes.internalLabel} onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
               </MenuItem>
@@ -164,7 +167,11 @@ const styles = theme => ({
   },
   internalLabel: {
     padding: 8,
-  }
+  },
+  textOverflow: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 });
 
 GroupComponent.propTypes = {
