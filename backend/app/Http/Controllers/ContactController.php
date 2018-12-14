@@ -72,13 +72,13 @@ class ContactController extends Controller
         if ($contact == '') return response('Error. Contact not found', 404);
         $contact->delete();
         return response()->json([
-            'code' => 200,
+            'code' => 204,
             'status' => 'The contact is update successfully',
             'contact' => $contact
-        ], 201);
+        ], 204);
     }
 
-    private function createContactWithEverything(Request $request, $id)
+    private function createContactWithEverything(Request $request, $id = null)
     {
         try {
             $contact = new Contact;
