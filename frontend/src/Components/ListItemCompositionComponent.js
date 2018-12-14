@@ -159,6 +159,14 @@ class ListItemComposition extends React.Component {
           onClose={this.handleClose}
           PaperProps={{ style: { maxHeight: ITEM_HEIGHT * 4.5, width: 256, }, }}
         >
+          <MenuItem
+            onClick={this.handleOpenEdit}>
+            <ListItemIcon>
+              <Edit variant="fab" aria-label="Edit" className={classes.icon} />
+            </ListItemIcon>
+            <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
+          </MenuItem>
+
           <CSVLink className={classes.menuLink}
             separator={";"}
             data={[this.props.contact]}
@@ -171,14 +179,6 @@ class ListItemComposition extends React.Component {
               <ListItemText>Export</ListItemText>
             </MenuItem>
           </CSVLink>
-
-          <MenuItem
-            onClick={this.handleOpenEdit}>
-            <ListItemIcon>
-              <Edit variant="fab" aria-label="Edit" className={classes.icon} />
-            </ListItemIcon>
-            <ListItemText classes={{ primary: classes.primary }} inset primary="Edit" />
-          </MenuItem>
 
           <MenuItem className={classes.menuItem}
             onClick={this.delete} >
@@ -199,7 +199,9 @@ class ListItemComposition extends React.Component {
                       <ListItemIcon>
                         {this.hasGroup(group) ? (<Label />) : (<LabelOutlined />)}
                       </ListItemIcon>
-                      <ListItemText>{group.name}</ListItemText>
+                      <ListItemText primary={group.name} primaryTypographyProps={{
+                        style: { textOverflow: 'ellipsis', overflow: 'hidden' }
+                       }} />
                     </MenuItem>
                   </div>
                 );

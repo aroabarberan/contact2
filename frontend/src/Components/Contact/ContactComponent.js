@@ -5,12 +5,12 @@ import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, withStyles, IconButton, Typography, Divider, DialogTitle, Dialog, Hidden
+  Paper, withStyles, IconButton, Typography, Dialog, Hidden, Chip
 } from '@material-ui/core';
+import { withRouter } from "react-router-dom";
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 import CustomAvatar from '../CustomAvatar';
 import AppComponent from '../AppComponent';
-import ContactFormContainer from '../../Containers/Contact/ContactFormContainer';
 import ContactFormWrapperComponent from './ContactFormWrapperComponent';
 
 
@@ -58,7 +58,7 @@ class ContactComponent extends React.Component {
   }
 
   render() {
-    const { classes, auth, contacts } = this.props;
+    const { classes, auth, contacts, history } = this.props;
     const { previewContact } = this.state;
 
     let contactsToShow = contacts;
@@ -79,8 +79,15 @@ class ContactComponent extends React.Component {
                         Avatar
                       </TableCell>
                       <TableCell>Name</TableCell>
-                      <TableCell className={classes.desktop}>Last Name</TableCell>
-                      <TableCell className={classes.desktop}>Phone</TableCell>
+                      <Hidden smDown>
+                        <TableCell>Email</TableCell>
+                      </Hidden>
+                      <Hidden mdDown>
+                        <TableCell>Phone</TableCell>
+                      </Hidden>
+                      <Hidden mdDown>
+                        <TableCell>Labels</TableCell>
+                      </Hidden>
                       <TableCell className={classes.shrink}></TableCell>
                     </TableRow>
                   </TableHead>
@@ -88,12 +95,14 @@ class ContactComponent extends React.Component {
                     {contactsToShow.map((contact, i) => {
                       return (
                         <TableRow key={i} hover>
+
                           <TableCell component="th" scope="row"
                             className={`${classes.firstShrink} ${classes.centered}`}>
                             <IconButton onClick={this.handleFavouriteClick(contact)}>
                               {contact.favourite ? <Starfilled style={{ color: '#fbc02d' }} /> : <StarBorder />}
                             </IconButton>
                           </TableCell>
+
                           <TableCell
                             className={`${classes.shrink} ${classes.clickable} ${classes.centered}`}
                             onClick={this.handleOpenPreview(contact)}>
@@ -101,29 +110,52 @@ class ContactComponent extends React.Component {
                               <CustomAvatar index={i} name={contact.name} />
                             </div>
                           </TableCell>
+
                           <TableCell
                             className={classes.clickable}
                             onClick={this.handleOpenPreview(contact)}
                           >
-                            {contact.name}
+                            {`${contact.name} ${contact.second_name} ${contact.last_name} ${contact.second_last_name}`}
                           </TableCell>
-                          <TableCell
-                            className={`${classes.clickable} ${classes.desktop}`}
-                            onClick={this.handleOpenPreview(contact)}
-                          >
-                            {contact.last_name}
-                          </TableCell>
-                          <TableCell
-                            className={`${classes.clickable} ${classes.desktop}`}
-                            onClick={this.handleOpenPreview(contact)}
-                          >
-                            {contact.phones && contact.phones.length > 0 && (contact.phones[0].phone)}
-                          </TableCell>
+
+                          <Hidden smDown>
+                            <TableCell
+                              className={`${classes.clickable} ${classes.desktop}`}
+                              onClick={this.handleOpenPreview(contact)}
+                            >
+                              {contact.emails && contact.emails.length > 0 && contact.emails[0].email}
+                            </TableCell>
+                          </Hidden>
+
+                          <Hidden mdDown>
+                            <TableCell
+                              className={classes.clickable}
+                              onClick={this.handleOpenPreview(contact)}
+                            >
+                              {contact.phones && contact.phones.length > 0 && (contact.phones[0].phone)}
+                            </TableCell>
+                          </Hidden>
+
+                          <Hidden mdDown>
+                            <TableCell>
+                              {contact.groups.map(g => (
+                                <Chip
+                                  key={g.name}
+                                  className={classes.groupChip}
+                                  label={g.name}
+                                  classes={{ label: classes.groupChipLabel }}
+                                  onClick={() => history.push(`/group/${g.name}`)}
+                                />
+                              ))}
+                            </TableCell>
+                          </Hidden>
+
                           <TableCell className={classes.shrink} numeric>
                             <ListItemCompositionContainer
                               auth={this.props.auth}
                               contact={contact}
                             />
+
                           </TableCell>
                         </TableRow>
                       );
@@ -193,11 +225,6 @@ const styles = theme => ({
       marginLeft: 240,
     },
   },
-  desktop: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    }
-  },
   icon: {
     color: '#666'
   },
@@ -238,6 +265,14 @@ const styles = theme => ({
     fontSize: theme.typography.fontSize,
     textAlign: 'center',
   },
+  groupChip: {
+    margin: 2,
+    borderRadius: 4,
+    height: 'auto',
+  },
+  groupChipLabel: {
+    padding: '2px 4px',
+  },
 })
 
 ContactComponent.propTypes = {
@@ -245,4 +280,4 @@ ContactComponent.propTypes = {
   theme: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles, { withTheme: true })(ContactComponent)
+export default withRouter(withStyles(styles, { withTheme: true })(ContactComponent));

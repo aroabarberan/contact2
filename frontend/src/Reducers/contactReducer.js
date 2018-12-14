@@ -30,7 +30,7 @@ export default (state = initialState, action) => {
       return [...state, ...action.payload.map(c => ({ ...emptyContact, ...c }))];
 
     case 'EDIT_CONTACT':
-      let contact = action.payload;
+      let contact = {...action.payload};
       const newContacts = [...state];
       const indexOfContact = state.map(c => c.id).indexOf(contact.id);
       if (indexOfContact >= 0) {

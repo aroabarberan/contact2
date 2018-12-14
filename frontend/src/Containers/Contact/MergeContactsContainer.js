@@ -2,14 +2,13 @@ import { connect } from 'react-redux';
 import ContactComponent from "../../Components/Contact/ContactComponent";
 import { addContact, editContact } from "../../Actions/contactAction";
 
-const count = (contacts, contact, index) => {
+const count = (contacts, contact) => {
   const countContacts = [];
-  console.log(contact);
   for (let i = 0; i < contacts.length; i++) {
-    const sameName = contacts[i].name === contact.name;
-    const sameSecondName = contacts[i].second_name === contact.second_name;
-    const sameLastName = contacts[i].last_name === contact.last_name;
-    const sameSecondLastName = contacts[i].second_last_name === contact.second_last_name;
+    const sameName = contacts[i].name.toLowerCase() === contact.name.toLowerCase();
+    const sameSecondName = contacts[i].second_name.toLowerCase() === contact.second_name.toLowerCase();
+    const sameLastName = contacts[i].last_name.toLowerCase() === contact.last_name.toLowerCase();
+    const sameSecondLastName = contacts[i].second_last_name.toLowerCase() === contact.second_last_name.toLowerCase();
     if (sameName && sameSecondName && sameLastName && sameSecondLastName) {
       countContacts.push(contact);
     }
@@ -19,8 +18,8 @@ const count = (contacts, contact, index) => {
 
 const duplicatedContacts = (contacts) => {
   let duplicated = [];
-  contacts.forEach((contact, index) => {
-    const contactDuplicates = count(contacts, contact, index);
+  contacts.forEach(contact => {
+    const contactDuplicates = count(contacts, contact);
     const numberAppeared = contactDuplicates.length;
 
     if (numberAppeared > 1) {
