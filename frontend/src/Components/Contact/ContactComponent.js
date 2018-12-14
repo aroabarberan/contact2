@@ -42,7 +42,7 @@ class ContactComponent extends React.Component {
       .then(res => res.json())
       .then(console.log)
       .catch(console.log);
-    this.props.editContact(contact.id, newContact);
+    this.props.editContact(newContact);
   }
 
   render() {

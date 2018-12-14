@@ -16,8 +16,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(addContact(contact))
     dispatch(resetForm())
   },
-  editContact: (id, contact) => {
-    dispatch(editContact(id, contact))
+  editContact: (contact) => {
+    dispatch(editContact(contact))
   },
   updateForm: contact => {
     dispatch(updateForm(contact))

@@ -27,10 +27,11 @@ export default (state = initialState, action) => {
       };
 
     case 'EDIT_CONTACT':
-      const { contact } = action.payload;
+      let contact = action.payload;
       const newContacts = [...state.contacts];
       const indexOfContact = state.contacts.map(c => c.id).indexOf(contact.id);
-      if (indexOfContact > 0) {
+      if (indexOfContact >= 0) {
+        contact = { ...state.contacts[indexOfContact], ...contact };
         newContacts.splice(indexOfContact, 1, contact);
       }
       return {
