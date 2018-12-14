@@ -16,6 +16,7 @@ import {
   Dialog, DialogTitle, DialogActions, DialogContent, withStyles
 } from '@material-ui/core';
 import { LabelOutlined } from '@material-ui/icons';
+import { withRouter } from "react-router-dom";
 
 
 class ListItemComposition extends React.Component {
@@ -43,6 +44,19 @@ class ListItemComposition extends React.Component {
   handleClose = () => {
     this.setState({ anchorEl: null });
   };
+
+  closeMenuWhenClickOnGroupsIfInGroupsAndIsTheSame = (group) => {
+    const { location } = this.props;
+    const regex = new RegExp(/\/group\/(.*)/);
+    const results = regex.exec(location.pathname);
+    if (results.length >= 2) {
+      const groupNameInPath = results[1];
+      if (group.name === groupNameInPath) {
+        console.log('CLOSING BECAUSE', group.name, '=', groupNameInPath);
+        this.handleClose();
+      }
+    }
+  }
 
   delete = () => {
     const { id } = this.props.contact;
@@ -95,14 +109,15 @@ class ListItemComposition extends React.Component {
         if (res.status >= 200 && res.status < 400) return 'Contact deleted from group';
         else throw new Error('Cannot delete contact from group');
       })
-      .then(() => { removeContactGroup(contact, group) })
-      // .then(data => this.props.addContact(data.contact))
+      .then(() => {
+        this.closeMenuWhenClickOnGroupsIfInGroupsAndIsTheSame(group);
+        removeContactGroup(contact, group);
+      })
       .catch(console.log);
   }
 
   hasGroup = (group) => {
     const { contact } = this.props;
-    console.log(contact)
     return contact.groups
       .map(group => group.id)
       .includes(group.id)
@@ -312,4 +327,4 @@ ListItemComposition.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ListItemComposition);
+export default withRouter(withStyles(styles)(ListItemComposition));
