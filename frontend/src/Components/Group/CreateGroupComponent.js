@@ -58,11 +58,15 @@ class CreateGroupComponent extends React.Component {
           <Formik
             onSubmit={this.submit}
             initialValues={{ name: '' }}
+            validate={({ name }) => {
+              if (!name) return { name: 'Required' };
+              return {};
+            }}
             render={(props) => (
               <div>
                 <DialogTitle id="form-dialog-title">Create new group</DialogTitle>
                 <Divider />
-                <DialogContent>
+                <DialogContent style={{ marginTop: 16, marginLeft: 32, marginRight: 32 }}>
                   <Field
                     name='name'
                     render={({ field }) => (
@@ -70,8 +74,11 @@ class CreateGroupComponent extends React.Component {
                         {...field}
                         autoFocus
                         margin="normal"
-                        label="Name"
+                        label={props.errors.name || 'Group Name'}
                         type="text"
+                        variant='outlined'
+                        fullWidth
+                        error={props.errors.name}
                       />
                     )}
                   />
@@ -80,8 +87,10 @@ class CreateGroupComponent extends React.Component {
                   <Button onClick={() => {
                     this.handleClose();
                     props.resetForm();
-                  }} color="primary">Cancel</Button>
-                  <Button onClick={props.handleSubmit} color="primary">Save</Button>
+                  }} color="default">Cancel</Button>
+                  <Button onClick={props.handleSubmit} color="primary" variant='contained'>
+                    Save
+                  </Button>
                 </DialogActions>
               </div>
             )}

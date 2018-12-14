@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { Call, Email, Note } from '@material-ui/icons'
@@ -64,9 +64,7 @@ class ContactFormComponent extends React.Component {
 
   enableEdit = (evt) => {
     evt.preventDefault();
-    // setTimeout(() => {
-      this.setState({ disablePreview: true })
-    // }, 500);
+    this.setState({ disablePreview: true })
   }
 
   render() {
@@ -81,17 +79,16 @@ class ContactFormComponent extends React.Component {
     const disabled = preview && !disablePreview;
 
     return (
-      <div className={classes.root}>
+      <Fragment>
         <Formik
           initialValues={contactValues}
           onSubmit={this.handleSubmit}
           validate={({ name }) => {
-            console.log(name, 'validation')
             if (!name) return { name: 'Required' };
             return {};
           }}
           render={props => (
-            <form>
+            <Fragment>
               <DialogContent>
                 <Field name="id" value={props.id} style={{ display: 'none' }} />
                 <Grid container spacing={32}>
@@ -105,7 +102,7 @@ class ContactFormComponent extends React.Component {
                           color='secondary'
                           autoFocus
                           margin="normal"
-                          label="Name"
+                          label={props.errors.name || 'Name'}
                           type="text"
                           error={!!props.errors.name}
                           variant='outlined'
@@ -120,7 +117,7 @@ class ContactFormComponent extends React.Component {
                       name="second_name"
                       value={props.second_name}
                       render={({ field }) => (
-                        <TextField {...field} disabled={disabled} margin="normal" label="Second name" type="text" variant='outlined' />
+                        <TextField {...field} disabled={disabled} margin="normal" label="Second name" type="text" variant='outlined' fullWidth />
                       )}
                     />
                   </Grid>
@@ -263,7 +260,7 @@ class ContactFormComponent extends React.Component {
                 />
               </DialogContent>
 
-              <DialogActions>
+              <DialogActions className={classes.actions}>
                 {disabled ? (
                   <div>
                     <Button onClick={this.handleClose} color="default" style={{ marginRight: 16 }}>
@@ -284,20 +281,23 @@ class ContactFormComponent extends React.Component {
                   </div>
                 )}
               </DialogActions>
-            </form>
+            </Fragment>
           )}
         />
-      </div>
+      </Fragment>
     )
   }
 }
 
 const styles = theme => ({
-  root: {
-  },
   blue: {
     color: 'blue',
   },
+  actions: {
+    borderTop: `1px solid ${theme.palette.divider}`,
+    margin: 0,
+    padding: theme.spacing.unit,
+  }
 })
 
 ContactFormComponent.propTypes = {

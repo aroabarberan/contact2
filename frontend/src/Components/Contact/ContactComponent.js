@@ -150,7 +150,7 @@ class ContactComponent extends React.Component {
           <ContactFormContainer
             auth={auth}
             handleClose={this.handleClosePreview}
-            contact={previewContact}
+            contactInfo={previewContact}
             preview
           />
         </Dialog>
