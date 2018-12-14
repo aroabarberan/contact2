@@ -38,16 +38,16 @@ class ContactFormComponent extends React.Component {
 
   render() {
     const { classes, contactInfo, handleClose } = this.props;
-
-    contactInfo.phones = [...contactInfo.phones];
-    contactInfo.emails = [...contactInfo.emails];
-    contactInfo.notes = [...contactInfo.notes];
+    let contactValues = { ...contactInfo };
+    contactValues.phones = [...contactInfo.phones];
+    contactValues.emails = [...contactInfo.emails];
+    contactValues.notes = [...contactInfo.notes];
 
     console.log(contactInfo);
     return (
       <div className={classes.root}>
         <Formik
-          initialValues={contactInfo}
+          initialValues={contactValues}
           onSubmit={this.handleSubmit}
           render={props => (
             <form>
