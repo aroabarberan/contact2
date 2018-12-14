@@ -19,7 +19,8 @@ return array(
     |
     */
 
-    'client_id'     => getenv('AUTH0_CLIENT_ID'),
+    // 'client_id'     => getenv('AUTH0_CLIENT_ID'),
+    'client_id' => 'default',
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +29,8 @@ return array(
     |   As set in the auth0 administration page
     |
     */
-    'client_secret' => getenv('AUTH0_CLIENT_SECRET'),
+    // 'client_secret' => getenv('AUTH0_CLIENT_SECRET'),
+    'client_secret' => 'default',
 
 
    /*
@@ -40,7 +42,8 @@ return array(
     |
     */
 
-    'redirect_uri'  => getenv('AUTH0_CALLBACK_URL'),
+    // 'redirect_uri'  => getenv('AUTH0_CALLBACK_URL'),
+    'redirect_uri'  => 'default',
 
     /*
     |--------------------------------------------------------------------------

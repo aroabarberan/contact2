@@ -10,7 +10,7 @@ class PhoneController extends Controller
 {
 
     public function index()
-    {    
+    {
         $phones = JwtUser::get()->phones;
         return response()->json($phones);
     }

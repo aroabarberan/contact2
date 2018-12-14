@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Cache;
 use Auth0\Login\LaravelCacheWrapper;
-use Auth0\Login\Contract\Auth0UserRepository as Auth0UserRepositoryContract; 
+use Auth0\Login\Contract\Auth0UserRepository as Auth0UserRepositoryContract;
 use Auth0\Login\Repository\Auth0UserRepository as Auth0UserRepository;
 
 class AppServiceProvider extends ServiceProvider
@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
             Auth0UserRepositoryContract::class,
             Auth0UserRepository::class
         );
-        
+
         // This is used for RS256 tokens to avoid fetching the JWKs on each request
         $this->app->bind(
             '\Auth0\SDK\Helpers\Cache\CacheHandler',
