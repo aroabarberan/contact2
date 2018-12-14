@@ -31,4 +31,4 @@ Route::delete('/phones/{id}', 'PhoneController@destroy')->middleware('jwt');
 
 Route::get('/contactgroup', 'ContactGroupController@index')->middleware('jwt');
 Route::post('/contactgroup', 'ContactGroupController@store')->middleware('jwt');
-Route::delete('/contactgroup/{id}', 'ContactGroupController@destroy')->middleware('jwt');
+Route::delete('/contactgroup/{contactID}/{groupID}', 'ContactGroupController@destroy')->middleware('jwt');

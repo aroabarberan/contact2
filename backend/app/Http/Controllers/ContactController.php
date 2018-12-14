@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Phone;
 
 class ContactController extends Controller
 {
@@ -20,12 +21,22 @@ class ContactController extends Controller
     {
         $contact = new Contact;
         $contact->user = \Auth0::jwtUser()->sub;
-        $contact->last_name = $request['lastName'];
+        $contact->last_name = $request['last_name'];
         $contact->name = $request['name'];
         $contact->favourite = $request['favourite'];
-        $contact->phones;
-        $contact->groups;
+
         $contact->save();
+
+        foreach ($request->phones as $key => $phoneData) {
+            $phone = new Phone;
+            $phone->phone = $phoneData['phone'];
+            $phone->tag = $phoneData['tag'];
+            $phone->contact_id = $contact->id;
+            $phone->save();
+        }
+
+        $contact->phones;
+
         return response()->json([
             'code' => 201,
             'status' => 'The contact is created successfully',

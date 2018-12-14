@@ -34,15 +34,27 @@ class ContactGroupController extends Controller
         ], 201);
     }
 
-    public function destroy($id)
+    public function destroy($contactID, $groupID)
     {
-        $contactGroup = ContactGroup::find($id);
-        if ($contactGroup == '') return response('Error. Contact Group not found', 404);
-        $contactGroup->delete();
+        $contact = Contact::with('groups')->find($contactID);
+
+        if (\Auth0::jwtUser()->sub !== $contact->user) {
+            return response()->json([
+                'code' => 403,
+            ], 403);
+        }
+
+        foreach ($contact->groups as $key => $group) {
+            if ($group->id . "" === $groupID) {
+                $result = $contact->groups()->detach($groupID);
+                if ($result) {
+                    return response('', 204);
+                }
+            }
+        }
+
         return response()->json([
-            'code' => 200,
-            'status' => 'The contact group is update successfully',
-            'contactgroup' => $contactGroup
-        ], 201);
+            'code' => 404,
+        ], 404);
     }
 }
