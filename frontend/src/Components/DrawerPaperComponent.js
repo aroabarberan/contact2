@@ -1,45 +1,30 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { CSVLink } from "react-csv";
 import { withRouter } from "react-router-dom";
 import Contacts from '@material-ui/icons/Contacts';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import FileCopy from '@material-ui/icons/FileCopy';
-import CloudDownload from "@material-ui/icons/CloudDownload";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { CloudDownload, ExpandMore, MenuRounded } from "@material-ui/icons";
 import Star from "@material-ui/icons/Star";
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import {
   ExpansionPanel, ExpansionPanelSummary,
   AppBar, Toolbar, IconButton, Typography, Drawer,
   List, ListItemText,
-  Menu, MenuItem, CssBaseline, withStyles, Icon,
+  Menu, MenuItem, CssBaseline, withStyles, Icon, Hidden,
 } from '@material-ui/core';
 import { QUERIES } from "../querys";
 import ImageAvatarComponent from "./ImageAvatarComponent";
 import GroupContainer from '../Containers/Group/groupContainer';
 import CreateGroupContainer from "../Containers/Group/createGroupContainer";
 
-// const keys = [
-//   'id',
-//   'contact_id',
-//   'group_id',
-//   'name',
-//   'user',
-//   'last_name',
-//   'favourite',
-//   'updated_at',
-//   'created_at',
-//   'phones',
-//   'groups',
-// ]
-
 class DrawerPaper extends React.Component {
   constructor() {
     super()
     this.state = {
       profile: {},
-      open: false,
+      mobileOpen: false,
       expanded: null,
       anchorEl: null,
       mobileMoreAnchorEl: null,
@@ -65,12 +50,8 @@ class DrawerPaper extends React.Component {
     });
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
+  handleDrawerToggle = () => {
+    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
   handleProfileMenuOpen = event => {
@@ -90,7 +71,7 @@ class DrawerPaper extends React.Component {
     this.setState({ mobileMoreAnchorEl: null });
   };
 
-  handleClose = () => {
+  logout = () => {
     this.props.auth.logout()
   };
 
@@ -116,13 +97,12 @@ class DrawerPaper extends React.Component {
 
   render() {
     const { classes, history } = this.props;
-    const { expanded, anchorEl, mobileMoreAnchorEl } = this.state;
+    const { expanded, anchorEl } = this.state;
     const isMenuOpen = Boolean(anchorEl);
-    const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const listItem = [
-      { icon: <Contacts style={{ color: '#42a5f5' }} />, path: "/" , name: 'Contacts' },
-      { icon: <FileCopy style={{ color: '#7e57c2' }} />, path: "/merge" , name: 'Duplicates' },
-      { icon: <Star style={{ color: '#ffeb3b' }} />, path: "/favourite" , name: 'Favourites' },
+      { icon: <Contacts style={{ color: '#42a5f5' }} />, path: "/", name: 'Contacts' },
+      { icon: <FileCopy style={{ color: '#7e57c2' }} />, path: "/merge", name: 'Duplicates' },
+      { icon: <Star style={{ color: '#ffeb3b' }} />, path: "/favourite", name: 'Favourites' },
     ]
 
     const renderMenu = (
@@ -133,7 +113,7 @@ class DrawerPaper extends React.Component {
         open={isMenuOpen}
         onClose={this.handleMenuClose}
       >
-        <MenuItem onClick={this.handleClose} style={{ paddingRight: 16 }}>
+        <MenuItem onClick={this.logout} style={{ paddingRight: 16 }}>
           <Icon color="primary" style={{ paddingRight: 16 }}>
             <PowerSettingsNew />
           </Icon>
@@ -142,21 +122,49 @@ class DrawerPaper extends React.Component {
       </Menu>
     );
 
-    const renderMobileMenu = (
-      <Menu
-        anchorEl={mobileMoreAnchorEl}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={isMobileMenuOpen}
-        onClose={this.handleMobileMenuClose}
-      >
-        <MenuItem onClick={this.handleClose} style={{ paddingRight: 16 }}>
-          <Icon color="primary" style={{ paddingRight: 16 }}>
-            <PowerSettingsNew />
-          </Icon>
-          Sign out
-        </MenuItem>
-      </Menu>
+    const drawerContent = (
+      <Fragment>
+        <List open className={classes.list}>
+          {listItem.map((item, i) => (
+            <MenuItem
+              className={classes.menuItem}
+              key={i}
+              onClick={() => history.push(item.path)}
+            >
+              {item.icon} <ListItemText>{item.name}</ListItemText>
+            </MenuItem>)
+          )}
+          <ExpansionPanel expanded={expanded === 'panel1'}
+            classes={{ expanded: classes.expanded }}
+            onChange={this.handleChange('panel1')}>
+            <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+              <ListItemText>Groups</ListItemText>
+            </ExpansionPanelSummary>
+            <GroupContainer auth={this.props.auth} />
+            <CreateGroupContainer auth={this.props.auth} />
+          </ExpansionPanel>
+          <ExpansionPanel expanded={expanded === 'panel2'}
+            classes={{ expanded: classes.expanded }}
+            onChange={this.handleChange('panel2')}>
+            <ExpansionPanelSummary expandIcon={<ExpandMore />}>
+              <ListItemText>More</ListItemText>
+            </ExpansionPanelSummary>
+            <CSVLink data={this.props.contacts} className={classes.menuLink} separator={";"}>
+              <MenuItem className={classes.menuItem}>
+                <CloudDownload />
+                <ListItemText>Export</ListItemText>
+              </MenuItem>
+            </CSVLink>
+          </ExpansionPanel>
+          <Hidden mdUp>
+            <div className={classes.separator} />
+            <MenuItem className={`${classes.menuItem} ${classes.powerMobile}`} onClick={this.logout}>
+              <PowerSettingsNew color='primary' />
+              <ListItemText>Sign Out</ListItemText>
+            </MenuItem>
+          </Hidden>
+        </List>
+      </Fragment>
     );
 
     return (
@@ -164,6 +172,12 @@ class DrawerPaper extends React.Component {
         <CssBaseline />
         <AppBar className={classes.appBar} color='secondary'>
           <Toolbar>
+            <Hidden mdUp>
+              <IconButton onClick={this.handleDrawerToggle} color='inherit'
+                style={{ marginRight: 16 }}>
+                <MenuRounded />
+              </IconButton>
+            </Hidden>
             <Typography variant="h6" color="inherit" noWrap>Contactboard</Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
@@ -176,69 +190,40 @@ class DrawerPaper extends React.Component {
                 <ImageAvatarComponent profile={this.state.profile} />
               </IconButton>
             </div>
-
-            <div className={classes.sectionMobile}>
-              <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                <MoreIcon />
-              </IconButton>
-            </div>
+            <Hidden smDown>
+              <div className={classes.sectionMobile}>
+                <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                  <MoreIcon />
+                </IconButton>
+              </div>
+            </Hidden>
           </Toolbar>
         </AppBar>
 
-        <Drawer
-          className={classes.drawer}
-          variant="permanent"
-          classes={{ paper: classes.drawerPaper }}
-        >
-          <div className={classes.toolbar} />
-          <List open>
-            {listItem.map((item, i) => (
-              <MenuItem
-                className={classes.menuItem}
-                key={i}
-                onClick={() => history.push(item.path)}
-              >
-                {item.icon} <ListItemText>{item.name}</ListItemText>
-              </MenuItem>)
-            )}
+        <Hidden smDown>
+          <Drawer
+            className={classes.drawer}
+            variant="permanent"
+            classes={{ paper: classes.drawerPaper }}
+          >
+            <div className={classes.toolbar} />
+            {drawerContent}
+          </Drawer>
+        </Hidden>
 
-            <ExpansionPanel expanded={expanded === 'panel1'}
-              classes={{ expanded: classes.expanded }}
-              onChange={this.handleChange('panel1')}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <ListItemText>Groups</ListItemText>
-              </ExpansionPanelSummary>
-              <GroupContainer auth={this.props.auth} />
-              <CreateGroupContainer auth={this.props.auth} />
-            </ExpansionPanel>
+        <Hidden mdUp>
+          <Drawer
+            className={classes.drawerMobile}
+            variant="temporary"
+            classes={{ paper: classes.drawerPaper }}
+            open={this.state.mobileOpen}
+            onClose={this.handleDrawerToggle}
+          >
+            {drawerContent}
+          </Drawer>
+        </Hidden>
 
-            <ExpansionPanel expanded={expanded === 'panel2'}
-              classes={{ expanded: classes.expanded }}
-              onChange={this.handleChange('panel2')}>
-              <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                <ListItemText>More</ListItemText>
-              </ExpansionPanelSummary>
-              {/* <MenuItem className={classes.menuItem}>
-                <CloudUpload />
-                <ListItemText>Import</ListItemText>
-                <CsvParse
-                  keys={keys}
-                  onDataUploaded={this.handleData}
-                  onError={this.handleError}
-                  render={onChange => <input type="file" onChange={onChange} />}
-                />
-              </MenuItem> */}
-              <CSVLink data={this.props.contacts} className={classes.menuLink} separator={";"}>
-                <MenuItem className={classes.menuItem}>
-                  <CloudDownload />
-                  <ListItemText>Export</ListItemText>
-                </MenuItem>
-              </CSVLink>
-            </ExpansionPanel>
-          </List>
-        </Drawer>
         {renderMenu}
-        {renderMobileMenu}
       </div>
     );
   }
@@ -261,6 +246,11 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
   },
   grow: {
     flexGrow: 1,
@@ -287,6 +277,14 @@ const styles = theme => ({
   },
   expanded: {
     margin: 0,
+  },
+  separator: {
+    flexGrow: 1,
+    background: 'rgba(0, 0, 0, 0.05)',
+  },
+  powerMobile: {
+    borderTop: `1px solid ${theme.palette.divider}`,
+    marginBottom: -theme.spacing.unit,
   },
 });
 

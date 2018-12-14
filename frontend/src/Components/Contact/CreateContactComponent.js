@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 import {
-  Divider, Button, Dialog, DialogTitle, withStyles,
+  Divider, Button, Dialog, DialogTitle, withStyles, Hidden, Fab,
 } from '@material-ui/core';
 import ContactFormContainer from '../../Containers/Contact/ContactFormContainer';
 import { green } from '@material-ui/core/colors'
@@ -20,15 +20,28 @@ class CreateContact extends React.Component {
 
     return (
       <div>
-        <Button
+        <Hidden mdUp>
+          <Fab
           color='secondary'
-          variant='contained'
           onClick={this.handleOpen}
-          className={classes.addButton}
-          classes={{ label: classes.addButtonLabel }}
-        >
-          <AddIcon className={classes.addButtonIcon} /> Create contact
-        </Button>
+          className={classes.addButtonMobile}
+          >
+            <AddIcon />
+          </Fab>
+        </Hidden>
+
+        <Hidden smDown>
+          <Button
+            color='secondary'
+            variant='contained'
+            onClick={this.handleOpen}
+            className={classes.addButton}
+            classes={{ label: classes.addButtonLabel }}
+          >
+            <AddIcon className={classes.addButtonIcon} /> Create contact
+          </Button>
+        </Hidden>
+
         <Dialog
           className={classes.size}
           open={this.state.open}
@@ -46,7 +59,21 @@ class CreateContact extends React.Component {
 }
 
 const styles = theme => ({
+  addButtonMobile: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[600],
+    },
+    position: 'fixed',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
+    zIndex: 999,
+  },
   addButton: {
+    backgroundColor: green[500],
+    '&:hover': {
+      backgroundColor: green[600],
+    },
     position: 'fixed',
     bottom: theme.spacing.unit * 4,
     right: theme.spacing.unit * 4,
@@ -54,17 +81,15 @@ const styles = theme => ({
     textTransform: 'none',
     borderRadius: 100,
     fontWeight: 600,
-    backgroundColor: green[500],
-    '&:hover': {
-      backgroundColor: green[600],
-    },
   },
   addButtonLabel: {
     paddingRight: theme.spacing.unit,
+
   },
   addButtonIcon: {
     width: '1.75em',
     height: '1.75em',
+    padding: 0,
     paddingRight: theme.spacing.unit,
   },
 });

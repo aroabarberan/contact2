@@ -78,8 +78,8 @@ class ContactComponent extends React.Component {
                         Avatar
                       </TableCell>
                       <TableCell>Name</TableCell>
-                      <TableCell>Last Name</TableCell>
-                      <TableCell>Phone</TableCell>
+                      <TableCell className={classes.desktop}>Last Name</TableCell>
+                      <TableCell className={classes.desktop}>Phone</TableCell>
                       <TableCell className={classes.shrink}></TableCell>
                     </TableRow>
                   </TableHead>
@@ -107,13 +107,13 @@ class ContactComponent extends React.Component {
                             {contact.name}
                           </TableCell>
                           <TableCell
-                            className={classes.clickable}
+                            className={`${classes.clickable} ${classes.desktop}`}
                             onClick={this.handleOpenPreview(contact)}
                           >
                             {contact.last_name}
                           </TableCell>
                           <TableCell
-                            className={classes.clickable}
+                            className={`${classes.clickable} ${classes.desktop}`}
                             onClick={this.handleOpenPreview(contact)}
                           >
                             {contact.phones && contact.phones.length > 0 && (contact.phones[0].phone)}
@@ -168,9 +168,17 @@ const styles = theme => ({
   content: {
     display: 'flex',
     flexDirection: 'column',
-    margin: '0 0 0 240px',
+    margin: 0,
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.up('md')]: {
+      marginLeft: 240,
+    },
+  },
+  desktop: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    }
   },
   icon: {
     color: '#666'

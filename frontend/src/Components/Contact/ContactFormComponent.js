@@ -91,8 +91,8 @@ class ContactFormComponent extends React.Component {
             <Fragment>
               <DialogContent>
                 <Field name="id" value={props.id} style={{ display: 'none' }} />
-                <Grid container spacing={32}>
-                  <Grid item xs={6}>
+                <Grid container spacing={16} style={{ marginTop: 0 }}>
+                  <Grid item xs={12} md={6}>
                     <Field
                       name="name"
                       value={props.name}
@@ -112,7 +112,7 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <Field
                       name="second_name"
                       value={props.second_name}
@@ -121,10 +121,7 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                </Grid>
-
-                <Grid container spacing={32}>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <Field
                       name="last_name"
                       value={props.last_name}
@@ -135,7 +132,7 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <Field
                       name="second_last_name"
                       value={props.second_last_name}
@@ -144,10 +141,7 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                </Grid>
-
-                <Grid container spacing={32}>
-                  <Grid item xs={5}>
+                  <Grid item xs={12} md={5}>
                     <Field
                       name="nickname"
                       value={props.nickname}
@@ -156,7 +150,7 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                  <Grid item xs={7}>
+                  <Grid item xs={12} md={7}>
                     <Field
                       name="job"
                       value={props.job}
@@ -165,9 +159,6 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                </Grid>
-
-                <Grid container spacing={32}>
                   <Grid item xs={12}>
                     <Field
                       name="direction"
@@ -177,9 +168,6 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                </Grid>
-
-                <Grid container spacing={32}>
                   <Grid item xs={12}>
                     <Field
                       name="city"
@@ -189,9 +177,6 @@ class ContactFormComponent extends React.Component {
                       )}
                     />
                   </Grid>
-                </Grid>
-
-                <Grid container spacing={32}>
                   <Grid item xs={12}>
                     <Field
                       name="province"
@@ -203,6 +188,9 @@ class ContactFormComponent extends React.Component {
                   </Grid>
                 </Grid>
 
+
+
+
                 <DynamicList
                   name='phones'
                   initialValue={{ phone: '', tag: '' }}
@@ -211,10 +199,10 @@ class ContactFormComponent extends React.Component {
                     const [phone, tag] = fields;
                     return (
                       <Grid container spacing={16} style={{ marginTop: 8, marginBottom: 8 }}>
-                        <Grid item xs={7}>
+                        <Grid item xs={12} md={7}>
                           <TextField {...phone} disabled={disabled} placeholder='Phone' fullWidth />
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs={12} md={5}>
                           <TextField {...tag} disabled={disabled} placeholder='Tag' fullWidth />
                         </Grid>
                       </Grid>
@@ -230,10 +218,10 @@ class ContactFormComponent extends React.Component {
                     const [email, tag] = fields;
                     return (
                       <Grid container spacing={16} style={{ marginTop: 8, marginBottom: 8 }}>
-                        <Grid item xs={7}>
+                        <Grid item xs={12} md={7}>
                           <TextField {...email} disabled={disabled} placeholder='Email' fullWidth />
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs={12} md={5}>
                           <TextField {...tag} disabled={disabled} placeholder='Tag' fullWidth />
                         </Grid>
                       </Grid>
@@ -248,10 +236,10 @@ class ContactFormComponent extends React.Component {
                     const [title, description] = fields;
                     return (
                       <Grid container spacing={16} style={{ marginTop: 8, marginBottom: 8 }}>
-                        <Grid item xs={7}>
+                        <Grid item xs={12} md={7}>
                           <TextField {...title} disabled={disabled} placeholder='Note Title' fullWidth />
                         </Grid>
-                        <Grid item xs={5}>
+                        <Grid item xs={12} md={5}>
                           <TextField {...description} disabled={disabled} placeholder='Description' fullWidth />
                         </Grid>
                       </Grid>
@@ -271,15 +259,15 @@ class ContactFormComponent extends React.Component {
                     </Button>
                   </div>
                 ) : (
-                  <div>
-                    <Button onClick={this.handleClose} color="default" style={{ marginRight: 16 }}>
-                      Cancel
+                    <div>
+                      <Button onClick={this.handleClose} color="default" style={{ marginRight: 16 }}>
+                        Cancel
                     </Button>
-                    <Button type="submit" color="primary" onClick={props.handleSubmit} variant='contained'>
-                      Save
+                      <Button type="submit" color="primary" onClick={props.handleSubmit} variant='contained'>
+                        Save
                     </Button>
-                  </div>
-                )}
+                    </div>
+                  )}
               </DialogActions>
             </Fragment>
           )}
