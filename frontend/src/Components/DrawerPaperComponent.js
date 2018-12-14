@@ -178,7 +178,15 @@ class DrawerPaper extends React.Component {
                 <MenuRounded />
               </IconButton>
             </Hidden>
-            <Typography variant="h6" color="inherit" noWrap>Contactboard</Typography>
+            <Typography
+              variant="h6"
+              color="inherit"
+              noWrap
+              className={classes.title}
+              onClick={() => history.push('/')}
+            >
+              Contact Board
+            </Typography>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
               <IconButton
@@ -235,6 +243,10 @@ const styles = theme => ({
   root: {
     display: 'flex',
     color: '#666',
+  },
+  title: {
+    padding: '16px 8px',
+    cursor: 'pointer',
   },
   drawer: {
     width: drawerWidth,
