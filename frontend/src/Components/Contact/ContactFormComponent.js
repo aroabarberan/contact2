@@ -188,9 +188,6 @@ class ContactFormComponent extends React.Component {
                   </Grid>
                 </Grid>
 
-
-
-
                 <DynamicList
                   name='phones'
                   initialValue={{ phone: '', tag: '' }}

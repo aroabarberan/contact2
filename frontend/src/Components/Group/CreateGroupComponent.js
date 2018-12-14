@@ -33,7 +33,12 @@ class CreateGroupComponent extends React.Component {
       },
       body: JSON.stringify({ name }),
     })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status >= 400) {
+          throw new Error('Cannot add group');
+        }
+        return res.json();
+      })
       .then(data => this.props.addGroup(data.group))
       .catch(console.log);
     this.handleClose();
@@ -63,7 +68,7 @@ class CreateGroupComponent extends React.Component {
               return {};
             }}
             render={(props) => (
-              <div>
+              <form onSubmit={props.handleSubmit}>
                 <DialogTitle id="form-dialog-title">Create new group</DialogTitle>
                 <Divider />
                 <DialogContent style={{ marginTop: 16, marginLeft: 32, marginRight: 32 }}>
@@ -92,7 +97,7 @@ class CreateGroupComponent extends React.Component {
                     Save
                   </Button>
                 </DialogActions>
-              </div>
+              </form>
             )}
           />
         </Dialog>

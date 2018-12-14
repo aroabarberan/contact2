@@ -107,13 +107,17 @@ class GroupComponent extends React.Component {
         {groups.map((group, i) => {
           return (
             <div key={i}>
-              <MenuItem className={classes.menuItem} onClick={() => history.push('/group/'+ group.name)}>
-                <Label style={{ color: '#78909c' }} />
-                <ListItemText>
+              <MenuItem className={classes.menuItem}>
+                <Label
+                  style={{ color: '#78909c', paddingLeft: 16 }}
+                  className={classes.internalLabel}
+                  onClick={() => history.push('/group/'+ group.name)}
+                />
+                <ListItemText className={classes.internalLabel} onClick={() => history.push('/group/'+ group.name)}>
                   {group.name}
                 </ListItemText>
-                <Edit onClick={() => this.handleOpenEdit(group)} />
-                <DeleteIcon onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
+                <Edit className={classes.internalLabel} onClick={() => this.handleOpenEdit(group)} />
+                <DeleteIcon className={classes.internalLabel} onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
               </MenuItem>
             </div>
           );
@@ -151,10 +155,15 @@ class GroupComponent extends React.Component {
 const styles = theme => ({
   menuItem: {
     color: '#666',
+    padding: 0,
+    height: 'auto',
   },
   link: {
     color: theme.typography.body1.color,
     textDecoration: 'none',
+  },
+  internalLabel: {
+    padding: 8,
   }
 });
 
