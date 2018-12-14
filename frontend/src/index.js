@@ -7,18 +7,18 @@ import store from "./store"
 
 import { MuiThemeProvider } from '@material-ui/core'
 import { createMuiTheme } from '@material-ui/core'
-import { deepOrange, green } from '@material-ui/core/colors'
+import { deepOrange, blue } from '@material-ui/core/colors'
 
 const routes = makeMainRoutes()
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: deepOrange[500],
+      main: blue[500],
       contrastText: '#fff',
     },
     secondary: {
-      main: green[500],
+      main: deepOrange[500],
       contrastText: '#fff',
     },
   },

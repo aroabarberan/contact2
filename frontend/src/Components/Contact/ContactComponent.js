@@ -5,17 +5,28 @@ import Starfilled from "@material-ui/icons/Grade";
 import StarBorder from "@material-ui/icons/StarBorder";
 import {
   Table, TableBody, TableCell, TableHead, TableRow,
-  Paper, withStyles, IconButton, Typography
+  Paper, withStyles, IconButton, Typography, Divider, DialogTitle, Dialog
 } from '@material-ui/core';
 import ListItemCompositionContainer from '../../Containers/ListItemCompositionContainer';
 import CustomAvatar from '../CustomAvatar';
 import AppComponent from '../AppComponent';
+import ContactFormContainer from '../../Containers/Contact/ContactFormContainer';
 
 
 class ContactComponent extends React.Component {
-  previewContact = contact => () => {
-    // TODO: SHOW INFORMATION OF THE CONTACT
+  state = {
+    open: false,
+    previewContact: {
+      phones: [],
+      emails: [],
+      notes: [],
+    },
   }
+
+  handleOpenPreview = contact => () => {
+    this.setState({ previewContact: contact, open: true });
+  }
+  handleClosePreview = () => { this.setState({ open: false }); }
 
   handleFavouriteClick = contact => evt => {
     evt.preventDefault();
@@ -47,6 +58,8 @@ class ContactComponent extends React.Component {
 
   render() {
     const { classes, auth, contacts } = this.props;
+    const { previewContact } = this.state;
+
     let contactsToShow = contacts;
 
     return (
@@ -82,22 +95,34 @@ class ContactComponent extends React.Component {
                           </TableCell>
                           <TableCell
                             className={`${classes.shrink} ${classes.clickable} ${classes.centered}`}
-                            onClick={this.previewContac}>
+                            onClick={this.handleOpenPreview(contact)}>
                             <div className={classes.avatar}>
                               <CustomAvatar index={i} name={contact.name} />
                             </div>
                           </TableCell>
-                          <TableCell className={classes.clickable} onClick={this.previewContac}>
+                          <TableCell
+                            className={classes.clickable}
+                            onClick={this.handleOpenPreview(contact)}
+                          >
                             {contact.name}
                           </TableCell>
-                          <TableCell className={classes.clickable} onClick={this.previewContact}>
+                          <TableCell
+                            className={classes.clickable}
+                            onClick={this.handleOpenPreview(contact)}
+                          >
                             {contact.last_name}
                           </TableCell>
-                          <TableCell className={classes.clickable} onClick={this.previewContact}>
+                          <TableCell
+                            className={classes.clickable}
+                            onClick={this.handleOpenPreview(contact)}
+                          >
                             {contact.phones && contact.phones.length > 0 && (contact.phones[0].phone)}
                           </TableCell>
                           <TableCell className={classes.shrink} numeric>
-                            <ListItemCompositionContainer auth={this.props.auth} contact={contact} />
+                            <ListItemCompositionContainer
+                              auth={this.props.auth}
+                              contact={contact}
+                            />
                           </TableCell>
                         </TableRow>
                       );
@@ -113,6 +138,22 @@ class ContactComponent extends React.Component {
             </section>
           </main>
         </div>
+        <Dialog
+          className={classes.size}
+          open={this.state.open}
+          onClose={this.handleClosePreview}
+          aria-labelledby="scroll-preview-title"
+          scroll='paper'
+        >
+          <DialogTitle id="scroll-preview-title">Preview Contact</DialogTitle>
+          <Divider />
+          <ContactFormContainer
+            auth={auth}
+            handleClose={this.handleClosePreview}
+            contact={previewContact}
+            preview
+          />
+        </Dialog>
       </Fragment>
     );
   }

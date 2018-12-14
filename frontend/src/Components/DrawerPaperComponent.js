@@ -165,7 +165,7 @@ class DrawerPaper extends React.Component {
     return (
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar className={classes.appBar} >
+        <AppBar className={classes.appBar} color='secondary'>
           <Toolbar>
             <Typography variant="h6" color="inherit" noWrap>Contactboard</Typography>
             <div className={classes.grow} />
