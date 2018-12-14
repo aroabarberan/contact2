@@ -62,9 +62,8 @@ class GroupComponent extends React.Component {
       },
     })
       .then(res => res.json())
-      .then(console.log)
+      .then(() => this.props.deleteGroup(group.id))
       .catch(console.log);
-    this.props.deleteGroup(group.id);
     this.handleCloseEdit();
   }
 
@@ -140,6 +139,7 @@ class GroupComponent extends React.Component {
               name="name"
               label="Name"
               type="text"
+              variant='outlined'
               defaultValue={this.state.name}
               onChange={this.handleChange('name')}
             />

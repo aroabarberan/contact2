@@ -68,6 +68,26 @@ export default (state = initialState, action) => {
       let contacts = [...state]
       return contacts.sort((a, b) => (a.favourite > b.favourite) ? 1 : 0);
 
+    case 'EDIT_GROUP':
+      return state.map(contact => {
+        const newContact = {...contact};
+        newContact.groups = newContact.groups.map(group => {
+          const newGroup = {...group};
+          if (newGroup.id === action.payload) {
+            newGroup.name = action.value.name;
+          }
+          return newGroup;
+        })
+        return newContact;
+      });
+
+    case 'DELETE_GROUP':
+      return state.map(contact => {
+        const newContact = {...contact};
+        newContact.groups = newContact.groups.filter(group => group.id !== action.payload);
+        return newContact;
+      });
+
     case 'UPDATE_FORM':
       return state;
       case 'RESET_FORM':

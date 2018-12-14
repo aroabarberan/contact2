@@ -83,7 +83,7 @@ class CreateGroupComponent extends React.Component {
                         type="text"
                         variant='outlined'
                         fullWidth
-                        error={props.errors.name}
+                        error={!!props.errors.name}
                       />
                     )}
                   />
