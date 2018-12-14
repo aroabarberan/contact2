@@ -61,8 +61,11 @@ class ContactComponent extends React.Component {
                 <Table>
                   <TableHead>
                     <TableRow>
-                      <TableCell className={classes.firstShrink}></TableCell>
-                      <TableCell className={classes.shrink}>Avatar</TableCell>
+                      <TableCell className={`${classes.firstShrink} ${classes.centered}`}>
+                      </TableCell>
+                      <TableCell className={`${classes.shrink} ${classes.centered}`}>
+                        Avatar
+                      </TableCell>
                       <TableCell>Name</TableCell>
                       <TableCell>Last Name</TableCell>
                       <TableCell>Phone</TableCell>
@@ -73,13 +76,18 @@ class ContactComponent extends React.Component {
                     {contactsToShow.map((contact, i) => {
                       return (
                         <TableRow key={i} hover>
-                          <TableCell component="th" scope="row" className={classes.firstShrink}>
+                          <TableCell component="th" scope="row"
+                            className={`${classes.firstShrink} ${classes.centered}`}>
                             <IconButton onClick={this.handleFavouriteClick(contact)}>
                               {contact.favourite ? <Starfilled style={{ color: '#fbc02d' }} /> : <StarBorder />}
                             </IconButton>
                           </TableCell>
-                          <TableCell className={classes.shrink + ' ' + classes.clickable} onClick={this.previewContac}>
-                            <CustomAvatar index={i} name={contact.name} />
+                          <TableCell
+                            className={`${classes.shrink} ${classes.clickable} ${classes.centered}`}
+                            onClick={this.previewContac}>
+                            <div className={classes.avatar}>
+                              <CustomAvatar index={i} name={contact.name} />
+                            </div>
                           </TableCell>
                           <TableCell className={classes.clickable} onClick={this.previewContac}>
                             {contact.name}
@@ -137,7 +145,15 @@ const styles = theme => ({
     justifyContent: 'center',
   },
   firstShrink: {
-    paddingRight: 0,
+    width: 1,
+    paddingRight: 8,
+  },
+  centered: {
+    textAlign: 'center',
+  },
+  avatar: {
+    display: 'flex',
+    justifyContent: 'center',
   },
   shrink: {
     paddingLeft: 0,
