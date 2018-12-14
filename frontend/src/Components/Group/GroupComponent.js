@@ -23,7 +23,7 @@ class GroupComponent extends React.Component {
   }
   componentWillMount() {
     const token = this.props.auth.getAccessToken();
-    if (this.props.groups.groups.length === 0) {
+    if (this.props.groups.length === 0) {
       fetch(QUERIES.group,
         {
           method: "GET",
@@ -98,9 +98,8 @@ class GroupComponent extends React.Component {
   }
 
   render() {
-    const { classes, history } = this.props;
+    const { classes, history, groups } = this.props;
     const { openEdit } = this.state;
-    const { groups } = this.props.groups;
     return (
       <div >
         {groups.map((group, i) => {

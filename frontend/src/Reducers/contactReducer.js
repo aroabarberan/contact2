@@ -1,16 +1,4 @@
-const initialState = {
-  contacts: [
-  ],
-  favourites: [],
-  form: {
-    create: {
-      last_name: '',
-      name: '',
-      // phones: [],
-      favourite: '',
-    }
-  },
-}
+const initialState = []
 
 const emptyContact = {
   id: '',
@@ -36,93 +24,51 @@ const emptyContact = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case 'ADD_CONTACT':
-      return {
-        ...state,
-        contacts: [...state.contacts, { ...emptyContact, ...action.payload }]
-      };
+      return [...state, { ...emptyContact, ...action.payload }];
 
     case 'ADD_CONTACTS':
-      return {
-        ...state,
-        contacts: [...state.contacts, ...action.payload.map(c => ({ ...emptyContact, ...c }))]
-      };
+      return [...state, ...action.payload.map(c => ({ ...emptyContact, ...c }))];
 
     case 'EDIT_CONTACT':
       let contact = action.payload;
-      const newContacts = [...state.contacts];
-      const indexOfContact = state.contacts.map(c => c.id).indexOf(contact.id);
+      const newContacts = [...state];
+      const indexOfContact = state.map(c => c.id).indexOf(contact.id);
       if (indexOfContact >= 0) {
-        contact = { ...state.contacts[indexOfContact], ...contact };
+        contact = { ...state[indexOfContact], ...contact };
         newContacts.splice(indexOfContact, 1, contact);
       }
-      return {
-        ...state,
-        contacts: newContacts,
-      }
+      return newContacts;
 
     case 'ADD_CONTACT_GROUP':
       const addContact = { ...action.payload.contact };
-      const allContacts = [...state.contacts];
+      const allContacts = [...state];
       addContact.groups = [...addContact.groups, action.payload.group];
-      const indexAddContact = state.contacts.map(c => c.id).indexOf(addContact.id);
+      const indexAddContact = state.map(c => c.id).indexOf(addContact.id);
       allContacts.splice(indexAddContact, 1, addContact);
-      return {
-        ...state,
-        contacts: allContacts,
-      }
+      return allContacts;
 
     case 'REMOVE_CONTACT_GROUP':
       const contactToRemoveGroup = { ...action.payload.contact };
       contactToRemoveGroup.groups = [...contactToRemoveGroup.groups].filter(g => g.id !== action.payload.group.id);
-      const newContacts2 = [...state.contacts];
-      const indexToRemoveContact = state.contacts.map(c => c.id).indexOf(contactToRemoveGroup.id);
+      const newContacts2 = [...state];
+      const indexToRemoveContact = state.map(c => c.id).indexOf(contactToRemoveGroup.id);
       newContacts2.splice(indexToRemoveContact, 1, contactToRemoveGroup);
-      return {
-        ...state,
-        contacts: newContacts2,
-      }
+      return newContacts2;
 
     case 'DELETE_CONTACT':
-      return {
-        ...state,
-        contacts: state.contacts.filter((c => c.id !== action.payload))
-      };
+      return state.filter((c => c.id !== action.payload));
 
     case 'UNSELECT_CONTACT':
-      return {
-        contacts: [...state.contacts],
-      };
+      return state;
 
     case 'SORT_CONTACTS_BY_FAVOURITE':
-      let contacts = [...state.contacts]
-      return {
-        contacts: contacts.sort((a, b) => (a.favourite > b.favourite) ? 1 : 0),
-      };
+      let contacts = [...state]
+      return contacts.sort((a, b) => (a.favourite > b.favourite) ? 1 : 0);
 
     case 'UPDATE_FORM':
-      return {
-        ...state,
-        form: {
-          ...state.form,
-          create: {
-            ...state.form.create,
-            ...action.payload,
-          }
-        },
-      }
+      return state;
       case 'RESET_FORM':
-      return {
-        ...state,
-        form: {
-          ...state.form,
-          create: {
-            last_name: '',
-            name: '',
-            phone: '',
-            favourite: '',
-          }
-        },
-      }
+      return state;
     default:
       return state
   }

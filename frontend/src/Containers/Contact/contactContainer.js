@@ -4,10 +4,7 @@ import { addContact, editContact } from "../../Actions/contactAction";
 
 
 const mapStateToProps = state => ({
-  contacts: {
-    ...state.contacts,
-    contacts: state.contacts.contacts.sort((a, b) => a.name.localeCompare(b.name)),
-  },
+  contacts: state.contacts.sort((a, b) => a.name.localeCompare(b.name)),
   groups: state.groups,
 })
 

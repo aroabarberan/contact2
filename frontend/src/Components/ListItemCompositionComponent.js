@@ -47,7 +47,7 @@ class ListItemComposition extends React.Component {
     const { location } = this.props;
     const regex = new RegExp(/\/group\/(.*)/);
     const results = regex.exec(location.pathname);
-    if (results.length >= 2) {
+    if (results && results.length >= 2) {
       const groupNameInPath = results[1];
       if (group.name === groupNameInPath) {
         console.log('CLOSING BECAUSE', group.name, '=', groupNameInPath);
@@ -57,8 +57,8 @@ class ListItemComposition extends React.Component {
   }
 
   delete = () => {
-    const { id } = this.props.contact;
-    fetch(QUERIES.contact + id, {
+    const { contact, deleteContact } = this.props;
+    fetch(QUERIES.contact + contact.id, {
       method: "DELETE",
       headers: {
         'Accept': 'application/json',
@@ -66,9 +66,8 @@ class ListItemComposition extends React.Component {
         'Authorization': 'Bearer ' + this.props.auth.getAccessToken(),
       },
     })
-      .then(res => res.json())
-      .then(data => this.props.deleteContact(data.contact.id))
-      .catch(console.log);
+      .then(() => deleteContact(contact.id))
+      .catch(console.error);
     this.handleClose();
   }
 
@@ -89,7 +88,6 @@ class ListItemComposition extends React.Component {
     })
       .then(res => res.json())
       .then(() => { addContactGroup(contact, group) })
-      // .then(data => this.props.addContact(data.contact))
       .catch(console.log);
   }
 
@@ -144,8 +142,7 @@ class ListItemComposition extends React.Component {
   render() {
     const { anchorEl, openEdit } = this.state;
     const open = Boolean(anchorEl);
-    const { classes, contact, auth } = this.props;
-    const { groups } = this.props.groups;
+    const { classes, contact, auth, groups } = this.props;
 
     return (
       <div>
@@ -220,7 +217,7 @@ class ListItemComposition extends React.Component {
           <ContactFormContainer
             auth={auth}
             contactInfo={contact}
-            handleClose={this.handleClose}
+            handleClose={this.handleCloseEdit}
           />
         </Dialog>
       </div>

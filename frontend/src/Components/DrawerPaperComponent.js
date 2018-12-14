@@ -231,7 +231,7 @@ class DrawerPaper extends React.Component {
                   render={onChange => <input type="file" onChange={onChange} />}
                 />
               </MenuItem> */}
-              <CSVLink data={this.props.contacts.contacts} className={classes.menuLink} separator={";"}>
+              <CSVLink data={this.props.contacts} className={classes.menuLink} separator={";"}>
                 <MenuItem className={classes.menuItem}>
                   <CloudDownload />
                   <ListItemText>Export</ListItemText>

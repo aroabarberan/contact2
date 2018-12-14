@@ -11,9 +11,10 @@ class ContactFormComponent extends React.Component {
   handleSubmit = (values, actions) => {
     const { auth, addContact, handleClose } = this.props;
     let {
-      phones, emails, notes, name, last_name, favourite,
+      name, last_name, favourite,
       second_name, second_last_name, nickname,
       direction, city, province, job,
+      phones, emails, notes
     } = values;
 
     fetch(QUERIES.contact, {
@@ -37,6 +38,11 @@ class ContactFormComponent extends React.Component {
 
   render() {
     const { classes, contactInfo, handleClose } = this.props;
+
+    contactInfo.phones = [...contactInfo.phones];
+    contactInfo.emails = [...contactInfo.emails];
+    contactInfo.notes = [...contactInfo.notes];
+
     console.log(contactInfo);
     return (
       <div className={classes.root}>

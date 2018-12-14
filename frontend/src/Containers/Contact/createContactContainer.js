@@ -2,13 +2,9 @@
 import { connect } from 'react-redux';
 import CreateContactComponent from "../../Components/Contact/CreateContactComponent";
 import { addContact, editContact, updateForm, resetForm } from "../../Actions/contactAction";
-import { addPhone } from "../../Actions/phoneAction";
-
 
 const mapStateToProps = state => ({
   contacts: state.contacts,
-  phones: state.phones,
-  // form : state.contacts.form,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -21,9 +17,6 @@ const mapDispatchToProps = dispatch => ({
   },
   updateForm: contact => {
     dispatch(updateForm(contact))
-  },
-  addPhone: phone => {
-    dispatch(addPhone(phone))
   },
 })
 

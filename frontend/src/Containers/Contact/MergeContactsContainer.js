@@ -15,8 +15,8 @@ const count = (contacts, contact, index) => {
 
 const duplicatedContacts = (contacts) => {
   let duplicated = [];
-  contacts.contacts.forEach((contact, index) => {
-    const contactDuplicates = count(contacts.contacts, contact, index);
+  contacts.forEach((contact, index) => {
+    const contactDuplicates = count(contacts, contact, index);
     const numberAppeared = contactDuplicates.length;
 
     if (numberAppeared > 1) {
@@ -26,14 +26,12 @@ const duplicatedContacts = (contacts) => {
     }
   });
   duplicated = duplicated.sort((a, b) => a.name.localeCompare(b.name));
-  return { ...contacts, contacts: duplicated };
+  return duplicated;
 }
 
 const mapStateToProps = state => ({
   contacts: duplicatedContacts(state.contacts),
   groups: state.groups,
-  // form : state.contacts.form,
-  // favourite: state.contacts.favourite,
 })
 
 const mapDispatchToProps = dispatch => ({

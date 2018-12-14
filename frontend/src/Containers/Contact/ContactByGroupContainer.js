@@ -14,10 +14,7 @@ const getContactsByGroup = (contacts, groups, groupName) => {
 }
 
 const mapStateToProps = (state, { groupName }) => ({
-  contacts: {
-    ...state.contacts,
-    contacts: getContactsByGroup(state.contacts.contacts, state.groups.groups, groupName),
-  },
+  contacts: getContactsByGroup(state.contacts, state.groups, groupName),
   groups: state.groups,
 })
 
