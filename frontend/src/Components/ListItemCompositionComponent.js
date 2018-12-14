@@ -60,13 +60,8 @@ class ListItemComposition extends React.Component {
     this.handleClose();
   }
 
-
   click = group => {
-    const groupId = group.id;
-    const contactId = this.props.contact.id
-
-    const method = this.hasGroup(group) ? this.removeFromGroup(group) : this.addToGroup(group);
-
+    this.hasGroup(group) ? this.removeFromGroup(group) : this.addToGroup(group);
   }
 
   addToGroup = (group) => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Edit from '@material-ui/icons/Edit';
 import Label from "@material-ui/icons/Label";
 import DeleteIcon from '@material-ui/icons/Delete';
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { QUERIES } from "../../querys";
 import {
   Button, Divider, TextField,
@@ -98,7 +98,7 @@ class GroupComponent extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, history } = this.props;
     const { openEdit } = this.state;
     const { groups } = this.props.groups;
     return (
@@ -108,16 +108,11 @@ class GroupComponent extends React.Component {
             <div key={i}>
               <Divider />
               <List>
-                <MenuItem className={classes.menuItem}>
+                <MenuItem className={classes.menuItem} onClick={() => history.push('/group/'+ group.name)}>
                   <Label />
                   <ListItemText>
-                    <Link
-                      to={{ pathname: '/group/'+ group.name, state: { group } }}
-                      className={classes.link}
-                    >
-                      {group.name}
-                    </Link>
-                    </ListItemText>
+                    {group.name}
+                  </ListItemText>
                   <Edit onClick={() => this.handleOpenEdit(group)} />
                   <DeleteIcon onClick={() => this.delete(group)} style={{ paddingLeft: 8 }} />
                 </MenuItem>
@@ -167,4 +162,4 @@ GroupComponent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(GroupComponent);
+export default withRouter(withStyles(styles)(GroupComponent));

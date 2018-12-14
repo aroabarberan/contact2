@@ -196,7 +196,11 @@ class DrawerPaper extends React.Component {
           <div className={classes.toolbar} />
           <List open>
             {listItem.map((item, i) => (
-              <MenuItem className={classes.menuItem} key={i} onClick={() => history.push(item.path)}>
+              <MenuItem
+                className={classes.menuItem}
+                key={i}
+                onClick={() => history.push(item.path)}
+              >
                 {item.icon} <ListItemText>{item.name}</ListItemText>
               </MenuItem>)
             )}
