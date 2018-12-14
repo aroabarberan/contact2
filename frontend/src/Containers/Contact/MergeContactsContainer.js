@@ -4,9 +4,13 @@ import { addContact, editContact } from "../../Actions/contactAction";
 
 const count = (contacts, contact, index) => {
   const countContacts = [];
+  console.log(contact);
   for (let i = 0; i < contacts.length; i++) {
-    if (contacts[i].name === contact.name &&
-      contacts[i].last_name === contact.last_name) {
+    const sameName = contacts[i].name === contact.name;
+    const sameSecondName = contacts[i].second_name === contact.second_name;
+    const sameLastName = contacts[i].last_name === contact.last_name;
+    const sameSecondLastName = contacts[i].second_last_name === contact.second_last_name;
+    if (sameName && sameSecondName && sameLastName && sameSecondLastName) {
       countContacts.push(contact);
     }
   }

@@ -81,11 +81,8 @@ class ContactController extends Controller
     private function createContactWithEverything(Request $request, $id = null)
     {
         try {
-            $contact = new Contact;
+            $contact = new Contact($request->all());
             $contact->user = \Auth0::jwtUser()->sub;
-            $contact->last_name = $request['last_name'];
-            $contact->name = $request['name'];
-            $contact->favourite = $request['favourite'];
             if ($id) {
                 $contact->id = $id;
             }

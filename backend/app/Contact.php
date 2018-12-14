@@ -5,7 +5,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
-    protected $fillable = ['user', 'last_name', 'name', 'favourite'];
+    protected $fillable = [
+        'user',
+        'last_name',
+        'name',
+        'favourite',
+        'second_name',
+        'second_last_name',
+        'direction',
+        'city',
+        'province',
+        'job',
+        'nickname',
+        'id',
+    ];
 
     public function phones() {
         return $this->hasMany('App\Phone');

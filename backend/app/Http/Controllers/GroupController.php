@@ -21,7 +21,7 @@ class GroupController extends Controller
     {
         $group = new Group;
         $group->user =\Auth0::jwtUser()->sub;
-        $group->name = $request['name'];
+        $group->name = ucfirst(strtolower($request['name']));
         $group->contacts;
         if (!$group->save()) return response('Error. Group not save', 404);
         return response()->json([

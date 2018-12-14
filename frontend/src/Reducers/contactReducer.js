@@ -34,7 +34,10 @@ export default (state = initialState, action) => {
       const newContacts = [...state];
       const indexOfContact = state.map(c => c.id).indexOf(contact.id);
       if (indexOfContact >= 0) {
-        contact = { ...state[indexOfContact], ...contact };
+        contact = { ...emptyContact, ...state[indexOfContact], ...contact };
+        contact.phones = [...contact.phones];
+        contact.emails = [...contact.emails];
+        contact.notes = [...contact.notes];
         newContacts.splice(indexOfContact, 1, contact);
       }
       return newContacts;
